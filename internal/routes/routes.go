@@ -42,5 +42,16 @@ func SetupRoutes(router *gin.Engine) {
 			locations.PATCH("/:id", locationHandler.UpdateLocation)
 			locations.DELETE("/:id", locationHandler.DeleteLocation)
 		}
+
+		// Categories routes
+		categoryHandler := handlers.NewCategoryHandler()
+		categories := v1.Group("/categories")
+		{
+			categories.GET("", categoryHandler.GetCategories)
+			categories.GET("/:id", categoryHandler.GetCategoryByID)
+			categories.POST("", categoryHandler.CreateCategory)
+			categories.PATCH("/:id", categoryHandler.UpdateCategory)
+			categories.DELETE("/:id", categoryHandler.DeleteCategory)
+		}
 	}
 }
