@@ -1,0 +1,281 @@
+basePath: /api/v1
+definitions:
+  dto.CreateLocationRequest:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      closing_time:
+        type: string
+      has_dine_in:
+        type: boolean
+      is_active:
+        type: boolean
+      is_open_24_hours:
+        type: boolean
+      latitude:
+        type: number
+      longitude:
+        type: number
+      name:
+        type: string
+      opening_time:
+        type: string
+      phone:
+        type: string
+      supports_events:
+        type: boolean
+      supports_home_service:
+        type: boolean
+    required:
+    - address
+    - city
+    - name
+    type: object
+  dto.UpdateLocationRequest:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      closing_time:
+        type: string
+      has_dine_in:
+        type: boolean
+      is_active:
+        type: boolean
+      is_open_24_hours:
+        type: boolean
+      latitude:
+        type: number
+      longitude:
+        type: number
+      name:
+        type: string
+      opening_time:
+        type: string
+      phone:
+        type: string
+      supports_events:
+        type: boolean
+      supports_home_service:
+        type: boolean
+    type: object
+  handlers.HealthResponse:
+    properties:
+      status:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  models.Location:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      closing_time:
+        type: string
+      created_at:
+        type: string
+      has_dine_in:
+        type: boolean
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      is_open_24_hours:
+        type: boolean
+      latitude:
+        type: number
+      longitude:
+        type: number
+      name:
+        type: string
+      opening_time:
+        type: string
+      phone:
+        type: string
+      slug:
+        type: string
+      supports_events:
+        type: boolean
+      supports_home_service:
+        type: boolean
+      updated_at:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: This is the backend for Misoastory built with Go, Gin, and GORM.
+  title: Misoastory API
+  version: "1.0"
+paths:
+  /health:
+    get:
+      description: Returns the current status of the API
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.HealthResponse'
+      summary: Check API Health
+      tags:
+      - health
+  /locations:
+    get:
+      description: Get a list of all locations with optional search
+      parameters:
+      - description: Search by name or city
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              items:
+                $ref: '#/definitions/models.Location'
+              type: array
+            type: object
+      summary: Get all locations
+      tags:
+      - locations
+    post:
+      consumes:
+      - application/json
+      description: Create a new location
+      parameters:
+      - description: Location data
+        in: body
+        name: location
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateLocationRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Location'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: Conflict
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a new location
+      tags:
+      - locations
+  /locations/{id}:
+    delete:
+      description: Delete an existing location by ID
+      parameters:
+      - description: Location ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete a location
+      tags:
+      - locations
+    get:
+      description: Get a specific location by its ID
+      parameters:
+      - description: Location ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Location'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get location by ID
+      tags:
+      - locations
+    patch:
+      consumes:
+      - application/json
+      description: Update an existing location by ID
+      parameters:
+      - description: Location ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Location data
+        in: body
+        name: location
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateLocationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Location'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: Conflict
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Update a location
+      tags:
+      - locations
+swagger: "2.0"
