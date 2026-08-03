@@ -29,6 +29,8 @@ func main() {
 			&models.User{},
 			&models.Location{},
 			&models.Category{},
+			&models.Permission{},
+			&models.PositionPermission{},
 		)
 		if err != nil {
 			log.Fatalf("Failed to auto migrate database: %v", err)

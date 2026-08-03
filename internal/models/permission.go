@@ -6,15 +6,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type Position struct {
+type Permission struct {
 	ID          uint           `gorm:"primaryKey" json:"id"`
 	Name        string         `gorm:"unique;not null" json:"name"`
 	Description *string        `json:"description,omitempty"`
-	IsActive    bool           `gorm:"default:true" json:"is_active"`
+	Resource    string         `gorm:"not null" json:"resource"` // e.g., 'USER', 'TRANSACTION'
+	Action      string         `gorm:"not null" json:"action"`   // e.g., 'VIEW', 'ADD'
 	CreatedAt   time.Time      `json:"created_at"`
 	UpdatedAt   time.Time      `json:"updated_at"`
 	DeletedAt   gorm.DeletedAt `gorm:"index" json:"-"`
-	
-	Users               []User               `gorm:"foreignKey:PositionID" json:"users,omitempty"`
-	PositionPermissions []PositionPermission `gorm:"foreignKey:PositionID" json:"position_permissions,omitempty"`
+
+	PositionPermissions []PositionPermission `gorm:"foreignKey:PermissionID" json:"-"`
 }
