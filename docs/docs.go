@@ -15,6 +15,92 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/auth/login": {
+            "post": {
+                "description": "Authenticate user and return JWT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Login",
+                "parameters": [
+                    {
+                        "description": "Login credentials",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.AuthResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "description": "Register a new user and return JWT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Register a new user",
+                "parameters": [
+                    {
+                        "description": "Registration data",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.RegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.AuthResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/categories": {
             "get": {
                 "description": "Get a list of all categories with optional search",
@@ -41,7 +127,7 @@ const docTemplate = `{
                             "additionalProperties": {
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/definitions/dto.CategoryResponse"
+                                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse"
                                 }
                             }
                         }
@@ -67,7 +153,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.CreateCategoryRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.CreateCategoryRequest"
                         }
                     }
                 ],
@@ -75,7 +161,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/dto.CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse"
                         }
                     },
                     "400": {
@@ -122,7 +208,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse"
                         }
                     },
                     "404": {
@@ -204,7 +290,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.UpdateCategoryRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.UpdateCategoryRequest"
                         }
                     }
                 ],
@@ -212,7 +298,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse"
                         }
                     },
                     "400": {
@@ -259,7 +345,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.HealthResponse"
+                            "$ref": "#/definitions/internal_handlers.HealthResponse"
                         }
                     }
                 }
@@ -291,7 +377,7 @@ const docTemplate = `{
                             "additionalProperties": {
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/definitions/models.Location"
+                                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_models.Location"
                                 }
                             }
                         }
@@ -317,7 +403,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.CreateLocationRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.CreateLocationRequest"
                         }
                     }
                 ],
@@ -325,7 +411,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/models.Location"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_models.Location"
                         }
                     },
                     "400": {
@@ -372,7 +458,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Location"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_models.Location"
                         }
                     },
                     "404": {
@@ -454,7 +540,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.UpdateLocationRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.UpdateLocationRequest"
                         }
                     }
                 ],
@@ -462,7 +548,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Location"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_models.Location"
                         }
                     },
                     "400": {
@@ -497,7 +583,29 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "dto.CategoryResponse": {
+        "internal_handlers.HealthResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.AuthResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.UserResponse"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.CategoryResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -526,7 +634,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.CreateCategoryRequest": {
+        "project-2026-06-misoastory-be-go_internal_dto.CreateCategoryRequest": {
             "type": "object",
             "required": [
                 "name"
@@ -546,7 +654,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.CreateLocationRequest": {
+        "project-2026-06-misoastory-be-go_internal_dto.CreateLocationRequest": {
             "type": "object",
             "required": [
                 "address",
@@ -595,7 +703,46 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.UpdateCategoryRequest": {
+        "project-2026-06-misoastory-be-go_internal_dto.LoginRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.RegisterRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "first_name",
+                "last_name",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 6
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.UpdateCategoryRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -612,7 +759,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.UpdateLocationRequest": {
+        "project-2026-06-misoastory-be-go_internal_dto.UpdateLocationRequest": {
             "type": "object",
             "properties": {
                 "address": {
@@ -656,18 +803,27 @@ const docTemplate = `{
                 }
             }
         },
-        "handlers.HealthResponse": {
+        "project-2026-06-misoastory-be-go_internal_dto.UserResponse": {
             "type": "object",
             "properties": {
-                "status": {
+                "email": {
                     "type": "string"
                 },
-                "timestamp": {
+                "first_name": {
                     "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "position_id": {
+                    "type": "integer"
                 }
             }
         },
-        "models.Location": {
+        "project-2026-06-misoastory-be-go_internal_models.Location": {
             "type": "object",
             "properties": {
                 "address": {

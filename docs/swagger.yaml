@@ -1,6 +1,20 @@
 basePath: /api/v1
 definitions:
-  dto.CategoryResponse:
+  internal_handlers.HealthResponse:
+    properties:
+      status:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.AuthResponse:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.UserResponse'
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.CategoryResponse:
     properties:
       created_at:
         type: string
@@ -19,7 +33,7 @@ definitions:
       updated_at:
         type: string
     type: object
-  dto.CreateCategoryRequest:
+  project-2026-06-misoastory-be-go_internal_dto.CreateCategoryRequest:
     properties:
       description:
         type: string
@@ -32,7 +46,7 @@ definitions:
     required:
     - name
     type: object
-  dto.CreateLocationRequest:
+  project-2026-06-misoastory-be-go_internal_dto.CreateLocationRequest:
     properties:
       address:
         type: string
@@ -65,7 +79,34 @@ definitions:
     - city
     - name
     type: object
-  dto.UpdateCategoryRequest:
+  project-2026-06-misoastory-be-go_internal_dto.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.RegisterRequest:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - email
+    - first_name
+    - last_name
+    - password
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.UpdateCategoryRequest:
     properties:
       description:
         type: string
@@ -76,7 +117,7 @@ definitions:
       name:
         type: string
     type: object
-  dto.UpdateLocationRequest:
+  project-2026-06-misoastory-be-go_internal_dto.UpdateLocationRequest:
     properties:
       address:
         type: string
@@ -105,14 +146,20 @@ definitions:
       supports_home_service:
         type: boolean
     type: object
-  handlers.HealthResponse:
+  project-2026-06-misoastory-be-go_internal_dto.UserResponse:
     properties:
-      status:
+      email:
         type: string
-      timestamp:
+      first_name:
         type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      position_id:
+        type: integer
     type: object
-  models.Location:
+  project-2026-06-misoastory-be-go_internal_models.Location:
     properties:
       address:
         type: string
@@ -156,6 +203,62 @@ info:
   title: Misoastory API
   version: "1.0"
 paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user and return JWT
+      parameters:
+      - description: Login credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.AuthResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login
+      tags:
+      - auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user and return JWT
+      parameters:
+      - description: Registration data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register a new user
+      tags:
+      - auth
   /categories:
     get:
       description: Get a list of all categories with optional search
@@ -172,7 +275,7 @@ paths:
           schema:
             additionalProperties:
               items:
-                $ref: '#/definitions/dto.CategoryResponse'
+                $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse'
               type: array
             type: object
       summary: Get all categories
@@ -188,14 +291,14 @@ paths:
         name: category
         required: true
         schema:
-          $ref: '#/definitions/dto.CreateCategoryRequest'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.CreateCategoryRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/dto.CategoryResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse'
         "400":
           description: Bad Request
           schema:
@@ -254,7 +357,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.CategoryResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse'
         "404":
           description: Not Found
           schema:
@@ -279,14 +382,14 @@ paths:
         name: category
         required: true
         schema:
-          $ref: '#/definitions/dto.UpdateCategoryRequest'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.UpdateCategoryRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.CategoryResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse'
         "400":
           description: Bad Request
           schema:
@@ -317,7 +420,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.HealthResponse'
+            $ref: '#/definitions/internal_handlers.HealthResponse'
       summary: Check API Health
       tags:
       - health
@@ -337,7 +440,7 @@ paths:
           schema:
             additionalProperties:
               items:
-                $ref: '#/definitions/models.Location'
+                $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_models.Location'
               type: array
             type: object
       summary: Get all locations
@@ -353,14 +456,14 @@ paths:
         name: location
         required: true
         schema:
-          $ref: '#/definitions/dto.CreateLocationRequest'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.CreateLocationRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.Location'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_models.Location'
         "400":
           description: Bad Request
           schema:
@@ -419,7 +522,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Location'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_models.Location'
         "404":
           description: Not Found
           schema:
@@ -444,14 +547,14 @@ paths:
         name: location
         required: true
         schema:
-          $ref: '#/definitions/dto.UpdateLocationRequest'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.UpdateLocationRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Location'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_models.Location'
         "400":
           description: Bad Request
           schema:
