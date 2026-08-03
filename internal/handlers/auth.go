@@ -48,6 +48,9 @@ func (h *AuthHandler) Register(c *gin.Context) {
 		return
 	}
 
+	// Set JWT as an HttpOnly Cookie for automatic browser/swagger auth
+	c.SetCookie("token", res.Token, 3600*24, "/", "", false, true)
+
 	c.JSON(http.StatusCreated, res)
 }
 
@@ -73,6 +76,9 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
+
+	// Set JWT as an HttpOnly Cookie for automatic browser/swagger auth
+	c.SetCookie("token", res.Token, 3600*24, "/", "", false, true)
 
 	c.JSON(http.StatusOK, res)
 }

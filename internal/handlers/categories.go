@@ -76,7 +76,10 @@ func (h *CategoryHandler) GetCategoryByID(c *gin.Context) {
 // @Param category body dto.CreateCategoryRequest true "Category data"
 // @Success 201 {object} dto.CategoryResponse
 // @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 403 {object} map[string]string
 // @Failure 409 {object} map[string]string
+// @Security BearerAuth
 // @Router /categories [post]
 func (h *CategoryHandler) CreateCategory(c *gin.Context) {
 	var req dto.CreateCategoryRequest
@@ -107,8 +110,11 @@ func (h *CategoryHandler) CreateCategory(c *gin.Context) {
 // @Param category body dto.UpdateCategoryRequest true "Category data"
 // @Success 200 {object} dto.CategoryResponse
 // @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 403 {object} map[string]string
 // @Failure 404 {object} map[string]string
 // @Failure 409 {object} map[string]string
+// @Security BearerAuth
 // @Router /categories/{id} [patch]
 func (h *CategoryHandler) UpdateCategory(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
@@ -147,7 +153,10 @@ func (h *CategoryHandler) UpdateCategory(c *gin.Context) {
 // @Param id path int true "Category ID"
 // @Success 204 "No Content"
 // @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 403 {object} map[string]string
 // @Failure 404 {object} map[string]string
+// @Security BearerAuth
 // @Router /categories/{id} [delete]
 func (h *CategoryHandler) DeleteCategory(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))

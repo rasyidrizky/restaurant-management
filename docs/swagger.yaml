@@ -79,6 +79,43 @@ definitions:
     - city
     - name
     type: object
+  project-2026-06-misoastory-be-go_internal_dto.LocationResponse:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      closing_time:
+        type: string
+      created_at:
+        type: string
+      has_dine_in:
+        type: boolean
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      is_open_24_hours:
+        type: boolean
+      latitude:
+        type: number
+      longitude:
+        type: number
+      name:
+        type: string
+      opening_time:
+        type: string
+      phone:
+        type: string
+      slug:
+        type: string
+      supports_events:
+        type: boolean
+      supports_home_service:
+        type: boolean
+      updated_at:
+        type: string
+    type: object
   project-2026-06-misoastory-be-go_internal_dto.LoginRequest:
     properties:
       email:
@@ -305,12 +342,26 @@ paths:
             additionalProperties:
               type: string
             type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties:
+              type: string
+            type: object
         "409":
           description: Conflict
           schema:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Create a new category
       tags:
       - categories
@@ -334,12 +385,26 @@ paths:
             additionalProperties:
               type: string
             type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties:
+              type: string
+            type: object
         "404":
           description: Not Found
           schema:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Delete a category
       tags:
       - categories
@@ -396,6 +461,18 @@ paths:
             additionalProperties:
               type: string
             type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties:
+              type: string
+            type: object
         "404":
           description: Not Found
           schema:
@@ -408,6 +485,8 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Update a category
       tags:
       - categories
@@ -463,9 +542,21 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_models.Location'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.LocationResponse'
         "400":
           description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "403":
+          description: Forbidden
           schema:
             additionalProperties:
               type: string
@@ -476,6 +567,8 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Create a new location
       tags:
       - locations
@@ -499,12 +592,26 @@ paths:
             additionalProperties:
               type: string
             type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties:
+              type: string
+            type: object
         "404":
           description: Not Found
           schema:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Delete a location
       tags:
       - locations
@@ -561,6 +668,18 @@ paths:
             additionalProperties:
               type: string
             type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties:
+              type: string
+            type: object
         "404":
           description: Not Found
           schema:
@@ -573,7 +692,39 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - BearerAuth: []
       summary: Update a location
       tags:
       - locations
+  /users:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              items:
+                $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.UserResponse'
+              type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

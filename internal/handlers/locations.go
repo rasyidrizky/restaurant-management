@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"project-2026-06-misoastory-be-go/internal/dto"
+	_ "project-2026-06-misoastory-be-go/internal/models"
 	"project-2026-06-misoastory-be-go/internal/services"
 
 	"github.com/gin-gonic/gin"
@@ -74,9 +75,12 @@ func (h *LocationHandler) GetLocationByID(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param location body dto.CreateLocationRequest true "Location data"
-// @Success 201 {object} models.Location
+// @Success 201 {object} dto.LocationResponse
 // @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 403 {object} map[string]string
 // @Failure 409 {object} map[string]string
+// @Security BearerAuth
 // @Router /locations [post]
 func (h *LocationHandler) CreateLocation(c *gin.Context) {
 	var req dto.CreateLocationRequest
@@ -107,8 +111,11 @@ func (h *LocationHandler) CreateLocation(c *gin.Context) {
 // @Param location body dto.UpdateLocationRequest true "Location data"
 // @Success 200 {object} models.Location
 // @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 403 {object} map[string]string
 // @Failure 404 {object} map[string]string
 // @Failure 409 {object} map[string]string
+// @Security BearerAuth
 // @Router /locations/{id} [patch]
 func (h *LocationHandler) UpdateLocation(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
@@ -147,7 +154,10 @@ func (h *LocationHandler) UpdateLocation(c *gin.Context) {
 // @Param id path int true "Location ID"
 // @Success 204 "No Content"
 // @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 403 {object} map[string]string
 // @Failure 404 {object} map[string]string
+// @Security BearerAuth
 // @Router /locations/{id} [delete]
 func (h *LocationHandler) DeleteLocation(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))

@@ -10,22 +10,34 @@ import (
 	"project-2026-06-misoastory-be-go/internal/utils"
 )
 
-// RequireAuth validates the JWT token in the Authorization header
+// RequireAuth validates the JWT token in the Authorization header or Cookie
 func RequireAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		var token string
+
+		// 1. Try to get token from Authorization header
 		authHeader := c.GetHeader("Authorization")
-		if authHeader == "" {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Authorization header is required"})
+		if authHeader != "" {
+			parts := strings.Split(authHeader, " ")
+			if len(parts) == 2 && strings.ToLower(parts[0]) == "bearer" {
+				token = parts[1]
+			}
+		}
+
+		// 2. If no header, try to get token from Cookie
+		if token == "" {
+			if cookieToken, err := c.Cookie("token"); err == nil {
+				token = cookieToken
+			}
+		}
+
+		// 3. If still no token, reject request
+		if token == "" {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Authorization token is required"})
 			return
 		}
 
-		parts := strings.Split(authHeader, " ")
-		if len(parts) != 2 || strings.ToLower(parts[0]) != "bearer" {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Authorization header format must be Bearer {token}"})
-			return
-		}
-
-		claims, err := utils.ValidateJWT(parts[1])
+		claims, err := utils.ValidateJWT(token)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
 			return

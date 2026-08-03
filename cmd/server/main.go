@@ -17,6 +17,9 @@ import (
 // @description This is the backend for Misoastory built with Go, Gin, and GORM.
 // @host localhost:3000
 // @BasePath /api/v1
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 func main() {
 	// Load configuration
 	cfg := config.Load()
