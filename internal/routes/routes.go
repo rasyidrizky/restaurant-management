@@ -19,10 +19,12 @@ func SetupRoutes(router *gin.Engine) {
 	// API v1 group
 	v1 := router.Group("/api/v1")
 	{
-		// Auth routes placeholder
+		// Auth routes
+		authHandler := handlers.NewAuthHandler()
 		auth := v1.Group("/auth")
 		{
-			auth.POST("/login", func(c *gin.Context) { c.JSON(200, gin.H{"message": "login"}) })
+			auth.POST("/register", authHandler.Register)
+			auth.POST("/login", authHandler.Login)
 		}
 		
 		// Users routes
