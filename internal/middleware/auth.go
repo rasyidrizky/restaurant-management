@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"project-2026-06-misoastory-be-go/internal/database"
+	"project-2026-06-misoastory-be-go/internal/dto"
 	"project-2026-06-misoastory-be-go/internal/utils"
 )
 
@@ -33,13 +34,21 @@ func RequireAuth() gin.HandlerFunc {
 
 		// 3. If still no token, reject request
 		if token == "" {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Authorization token is required"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, dto.ErrorResponse{
+				Code:    http.StatusUnauthorized,
+				Message: "Unauthorized",
+				Error:   "Authorization token is required",
+			})
 			return
 		}
 
 		claims, err := utils.ValidateJWT(token)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, dto.ErrorResponse{
+				Code:    http.StatusUnauthorized,
+				Message: "Unauthorized",
+				Error:   "Invalid or expired token",
+			})
 			return
 		}
 
@@ -56,7 +65,10 @@ func RequirePermission(resource string, action string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		positionID, exists := c.Get("position_id")
 		if !exists {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized context"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, dto.ErrorResponse{
+				Code:    http.StatusUnauthorized,
+				Message: "Unauthorized context",
+			})
 			return
 		}
 
@@ -68,12 +80,19 @@ func RequirePermission(resource string, action string) gin.HandlerFunc {
 			Count(&count).Error
 
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Database error while verifying permissions"})
+			c.AbortWithStatusJSON(http.StatusInternalServerError, dto.ErrorResponse{
+				Code:    http.StatusInternalServerError,
+				Message: "Database error while verifying permissions",
+			})
 			return
 		}
 
 		if count == 0 {
-			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"error": "You do not have permission to perform this action"})
+			c.AbortWithStatusJSON(http.StatusForbidden, dto.ErrorResponse{
+				Code:    http.StatusForbidden,
+				Message: "Forbidden",
+				Error:   "You do not have permission to perform this action",
+			})
 			return
 		}
 

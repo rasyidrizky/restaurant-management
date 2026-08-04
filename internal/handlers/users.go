@@ -4,6 +4,7 @@ import (
 	"net/http"
 	_ "project-2026-06-misoastory-be-go/internal/dto"
 	"project-2026-06-misoastory-be-go/internal/services"
+	"project-2026-06-misoastory-be-go/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,17 +19,18 @@ func NewUserHandler() *UserHandler {
 	}
 }
 
-// @Success 200 {object} map[string][]dto.UserResponse
-// @Failure 401 {object} map[string]string
-// @Failure 403 {object} map[string]string
+// @Success 200 {object} dto.Response[[]dto.UserResponse]
+// @Failure 401 {object} dto.ErrorResponse
+// @Failure 403 {object} dto.ErrorResponse
+// @Failure 500 {object} dto.ErrorResponse
 // @Security BearerAuth
 // @Router /users [get]
 func (h *UserHandler) GetUsers(c *gin.Context) {
 	users, err := h.userService.GetUsers()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve users", err.Error())
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": users})
+	utils.SuccessResponse(c, http.StatusOK, "Users retrieved successfully", users)
 }

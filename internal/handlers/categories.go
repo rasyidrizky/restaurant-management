@@ -7,6 +7,7 @@ import (
 
 	"project-2026-06-misoastory-be-go/internal/dto"
 	"project-2026-06-misoastory-be-go/internal/services"
+	"project-2026-06-misoastory-be-go/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -27,16 +28,17 @@ func NewCategoryHandler() *CategoryHandler {
 // @Tags categories
 // @Produce json
 // @Param search query string false "Search by name or description"
-// @Success 200 {object} map[string][]dto.CategoryResponse
+// @Success 200 {object} dto.Response[[]dto.CategoryResponse]
+// @Failure 500 {object} dto.ErrorResponse
 // @Router /categories [get]
 func (h *CategoryHandler) GetCategories(c *gin.Context) {
 	search := c.Query("search")
 	categories, err := h.categoryService.GetAllCategories(search)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve categories", err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": dto.MapToCategoryResponses(categories)})
+	utils.SuccessResponse(c, http.StatusOK, "Categories retrieved successfully", dto.MapToCategoryResponses(categories))
 }
 
 // GetCategoryByID godoc
@@ -45,26 +47,28 @@ func (h *CategoryHandler) GetCategories(c *gin.Context) {
 // @Tags categories
 // @Produce json
 // @Param id path int true "Category ID"
-// @Success 200 {object} dto.CategoryResponse
-// @Failure 404 {object} map[string]string
+// @Success 200 {object} dto.Response[dto.CategoryResponse]
+// @Failure 400 {object} dto.ErrorResponse
+// @Failure 404 {object} dto.ErrorResponse
+// @Failure 500 {object} dto.ErrorResponse
 // @Router /categories/{id} [get]
 func (h *CategoryHandler) GetCategoryByID(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid category ID"})
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid category ID", err.Error())
 		return
 	}
 
 	category, err := h.categoryService.GetCategoryByID(uint(id))
 	if err != nil {
 		if errors.Is(err, services.ErrCategoryNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			utils.ErrorResponse(c, http.StatusNotFound, "Category not found", err.Error())
 			return
 		}
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve category", err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, dto.MapToCategoryResponse(category))
+	utils.SuccessResponse(c, http.StatusOK, "Category retrieved successfully", dto.MapToCategoryResponse(category))
 }
 
 // CreateCategory godoc
@@ -74,30 +78,31 @@ func (h *CategoryHandler) GetCategoryByID(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param category body dto.CreateCategoryRequest true "Category data"
-// @Success 201 {object} dto.CategoryResponse
-// @Failure 400 {object} map[string]string
-// @Failure 401 {object} map[string]string
-// @Failure 403 {object} map[string]string
-// @Failure 409 {object} map[string]string
+// @Success 201 {object} dto.Response[dto.CategoryResponse]
+// @Failure 400 {object} dto.ErrorResponse
+// @Failure 401 {object} dto.ErrorResponse
+// @Failure 403 {object} dto.ErrorResponse
+// @Failure 409 {object} dto.ErrorResponse
+// @Failure 500 {object} dto.ErrorResponse
 // @Security BearerAuth
 // @Router /categories [post]
 func (h *CategoryHandler) CreateCategory(c *gin.Context) {
 	var req dto.CreateCategoryRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request payload", err.Error())
 		return
 	}
 
 	category, err := h.categoryService.CreateCategory(&req)
 	if err != nil {
 		if errors.Is(err, services.ErrCategoryConflict) {
-			c.JSON(http.StatusConflict, gin.H{"error": err.Error()})
+			utils.ErrorResponse(c, http.StatusConflict, "Category conflict", err.Error())
 			return
 		}
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to create category", err.Error())
 		return
 	}
-	c.JSON(http.StatusCreated, dto.MapToCategoryResponse(category))
+	utils.SuccessResponse(c, http.StatusCreated, "Category created successfully", dto.MapToCategoryResponse(category))
 }
 
 // UpdateCategory godoc
@@ -108,41 +113,42 @@ func (h *CategoryHandler) CreateCategory(c *gin.Context) {
 // @Produce json
 // @Param id path int true "Category ID"
 // @Param category body dto.UpdateCategoryRequest true "Category data"
-// @Success 200 {object} dto.CategoryResponse
-// @Failure 400 {object} map[string]string
-// @Failure 401 {object} map[string]string
-// @Failure 403 {object} map[string]string
-// @Failure 404 {object} map[string]string
-// @Failure 409 {object} map[string]string
+// @Success 200 {object} dto.Response[dto.CategoryResponse]
+// @Failure 400 {object} dto.ErrorResponse
+// @Failure 401 {object} dto.ErrorResponse
+// @Failure 403 {object} dto.ErrorResponse
+// @Failure 404 {object} dto.ErrorResponse
+// @Failure 409 {object} dto.ErrorResponse
+// @Failure 500 {object} dto.ErrorResponse
 // @Security BearerAuth
 // @Router /categories/{id} [patch]
 func (h *CategoryHandler) UpdateCategory(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid category ID"})
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid category ID", err.Error())
 		return
 	}
 
 	var req dto.UpdateCategoryRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request payload", err.Error())
 		return
 	}
 
 	category, err := h.categoryService.UpdateCategory(uint(id), &req)
 	if err != nil {
 		if errors.Is(err, services.ErrCategoryNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			utils.ErrorResponse(c, http.StatusNotFound, "Category not found", err.Error())
 			return
 		}
 		if errors.Is(err, services.ErrCategoryConflict) {
-			c.JSON(http.StatusConflict, gin.H{"error": err.Error()})
+			utils.ErrorResponse(c, http.StatusConflict, "Category conflict", err.Error())
 			return
 		}
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to update category", err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, dto.MapToCategoryResponse(category))
+	utils.SuccessResponse(c, http.StatusOK, "Category updated successfully", dto.MapToCategoryResponse(category))
 }
 
 // DeleteCategory godoc
@@ -151,28 +157,29 @@ func (h *CategoryHandler) UpdateCategory(c *gin.Context) {
 // @Tags categories
 // @Produce json
 // @Param id path int true "Category ID"
-// @Success 204 "No Content"
-// @Failure 400 {object} map[string]string
-// @Failure 401 {object} map[string]string
-// @Failure 403 {object} map[string]string
-// @Failure 404 {object} map[string]string
+// @Success 200 {object} dto.Response[string]
+// @Failure 400 {object} dto.ErrorResponse
+// @Failure 401 {object} dto.ErrorResponse
+// @Failure 403 {object} dto.ErrorResponse
+// @Failure 404 {object} dto.ErrorResponse
+// @Failure 500 {object} dto.ErrorResponse
 // @Security BearerAuth
 // @Router /categories/{id} [delete]
 func (h *CategoryHandler) DeleteCategory(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid category ID"})
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid category ID", err.Error())
 		return
 	}
 
 	if err := h.categoryService.DeleteCategory(uint(id)); err != nil {
 		if errors.Is(err, services.ErrCategoryNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			utils.ErrorResponse(c, http.StatusNotFound, "Category not found", err.Error())
 			return
 		}
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to delete category", err.Error())
 		return
 	}
 
-	c.Status(http.StatusNoContent)
+	utils.SuccessResponse(c, http.StatusOK, "Category deleted successfully", nil)
 }

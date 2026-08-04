@@ -43,16 +43,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.AuthResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_AuthResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -86,16 +89,13 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.AuthResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_AuthResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -123,13 +123,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse"
-                                }
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-array_project-2026-06-misoastory-be-go_internal_dto_CategoryResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -166,43 +166,37 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_CategoryResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "409": {
                         "description": "Conflict",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -231,16 +225,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_CategoryResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -269,43 +272,40 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content"
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-string"
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -349,52 +349,43 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_CategoryResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "409": {
                         "description": "Conflict",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -414,7 +405,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/internal_handlers.HealthResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_HealthResponse"
                         }
                     }
                 }
@@ -442,13 +433,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_models.Location"
-                                }
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-array_project-2026-06-misoastory-be-go_internal_models_Location"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -485,43 +476,37 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.LocationResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_LocationResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "409": {
                         "description": "Conflict",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -550,16 +535,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_models.Location"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_models_Location"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -588,43 +582,40 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content"
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-string"
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -668,52 +659,43 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_models.Location"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_models_Location"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "409": {
                         "description": "Conflict",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -730,31 +712,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.UserResponse"
-                                }
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-array_project-2026-06-misoastory-be-go_internal_dto_UserResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse"
                         }
                     }
                 }
@@ -762,17 +738,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "internal_handlers.HealthResponse": {
-            "type": "object",
-            "properties": {
-                "status": {
-                    "type": "string"
-                },
-                "timestamp": {
-                    "type": "string"
-                }
-            }
-        },
         "project-2026-06-misoastory-be-go_internal_dto.AuthResponse": {
             "type": "object",
             "properties": {
@@ -882,6 +847,31 @@ const docTemplate = `{
                 }
             }
         },
+        "project-2026-06-misoastory-be-go_internal_dto.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.HealthResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                }
+            }
+        },
         "project-2026-06-misoastory-be-go_internal_dto.LocationResponse": {
             "type": "object",
             "properties": {
@@ -974,6 +964,141 @@ const docTemplate = `{
                 "password": {
                     "type": "string",
                     "minLength": 6
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.Response-array_project-2026-06-misoastory-be-go_internal_dto_CategoryResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.Response-array_project-2026-06-misoastory-be-go_internal_dto_UserResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.UserResponse"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.Response-array_project-2026-06-misoastory-be-go_internal_models_Location": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_models.Location"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_AuthResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.AuthResponse"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_CategoryResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_HealthResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.HealthResponse"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_LocationResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_dto.LocationResponse"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_models_Location": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_models.Location"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_dto.Response-string": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
                 }
             }
         },

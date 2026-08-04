@@ -8,6 +8,7 @@ import (
 	"project-2026-06-misoastory-be-go/internal/dto"
 	_ "project-2026-06-misoastory-be-go/internal/models"
 	"project-2026-06-misoastory-be-go/internal/services"
+	"project-2026-06-misoastory-be-go/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -28,16 +29,17 @@ func NewLocationHandler() *LocationHandler {
 // @Tags locations
 // @Produce json
 // @Param search query string false "Search by name or city"
-// @Success 200 {object} map[string][]models.Location
+// @Success 200 {object} dto.Response[[]models.Location]
+// @Failure 500 {object} dto.ErrorResponse
 // @Router /locations [get]
 func (h *LocationHandler) GetLocations(c *gin.Context) {
 	search := c.Query("search")
 	locations, err := h.locationService.GetAllLocations(search)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve locations", err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": locations})
+	utils.SuccessResponse(c, http.StatusOK, "Locations retrieved successfully", locations)
 }
 
 // GetLocationByID godoc
@@ -46,26 +48,28 @@ func (h *LocationHandler) GetLocations(c *gin.Context) {
 // @Tags locations
 // @Produce json
 // @Param id path int true "Location ID"
-// @Success 200 {object} models.Location
-// @Failure 404 {object} map[string]string
+// @Success 200 {object} dto.Response[models.Location]
+// @Failure 400 {object} dto.ErrorResponse
+// @Failure 404 {object} dto.ErrorResponse
+// @Failure 500 {object} dto.ErrorResponse
 // @Router /locations/{id} [get]
 func (h *LocationHandler) GetLocationByID(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid location ID"})
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid location ID", err.Error())
 		return
 	}
 
 	location, err := h.locationService.GetLocationByID(uint(id))
 	if err != nil {
 		if errors.Is(err, services.ErrLocationNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			utils.ErrorResponse(c, http.StatusNotFound, "Location not found", err.Error())
 			return
 		}
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve location", err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, location)
+	utils.SuccessResponse(c, http.StatusOK, "Location retrieved successfully", location)
 }
 
 // CreateLocation godoc
@@ -75,30 +79,31 @@ func (h *LocationHandler) GetLocationByID(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param location body dto.CreateLocationRequest true "Location data"
-// @Success 201 {object} dto.LocationResponse
-// @Failure 400 {object} map[string]string
-// @Failure 401 {object} map[string]string
-// @Failure 403 {object} map[string]string
-// @Failure 409 {object} map[string]string
+// @Success 201 {object} dto.Response[dto.LocationResponse]
+// @Failure 400 {object} dto.ErrorResponse
+// @Failure 401 {object} dto.ErrorResponse
+// @Failure 403 {object} dto.ErrorResponse
+// @Failure 409 {object} dto.ErrorResponse
+// @Failure 500 {object} dto.ErrorResponse
 // @Security BearerAuth
 // @Router /locations [post]
 func (h *LocationHandler) CreateLocation(c *gin.Context) {
 	var req dto.CreateLocationRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request payload", err.Error())
 		return
 	}
 
 	location, err := h.locationService.CreateLocation(&req)
 	if err != nil {
 		if errors.Is(err, services.ErrLocationConflict) {
-			c.JSON(http.StatusConflict, gin.H{"error": err.Error()})
+			utils.ErrorResponse(c, http.StatusConflict, "Location conflict", err.Error())
 			return
 		}
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to create location", err.Error())
 		return
 	}
-	c.JSON(http.StatusCreated, location)
+	utils.SuccessResponse(c, http.StatusCreated, "Location created successfully", location)
 }
 
 // UpdateLocation godoc
@@ -109,41 +114,42 @@ func (h *LocationHandler) CreateLocation(c *gin.Context) {
 // @Produce json
 // @Param id path int true "Location ID"
 // @Param location body dto.UpdateLocationRequest true "Location data"
-// @Success 200 {object} models.Location
-// @Failure 400 {object} map[string]string
-// @Failure 401 {object} map[string]string
-// @Failure 403 {object} map[string]string
-// @Failure 404 {object} map[string]string
-// @Failure 409 {object} map[string]string
+// @Success 200 {object} dto.Response[models.Location]
+// @Failure 400 {object} dto.ErrorResponse
+// @Failure 401 {object} dto.ErrorResponse
+// @Failure 403 {object} dto.ErrorResponse
+// @Failure 404 {object} dto.ErrorResponse
+// @Failure 409 {object} dto.ErrorResponse
+// @Failure 500 {object} dto.ErrorResponse
 // @Security BearerAuth
 // @Router /locations/{id} [patch]
 func (h *LocationHandler) UpdateLocation(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid location ID"})
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid location ID", err.Error())
 		return
 	}
 
 	var req dto.UpdateLocationRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request payload", err.Error())
 		return
 	}
 
 	location, err := h.locationService.UpdateLocation(uint(id), &req)
 	if err != nil {
 		if errors.Is(err, services.ErrLocationNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			utils.ErrorResponse(c, http.StatusNotFound, "Location not found", err.Error())
 			return
 		}
 		if errors.Is(err, services.ErrLocationConflict) {
-			c.JSON(http.StatusConflict, gin.H{"error": err.Error()})
+			utils.ErrorResponse(c, http.StatusConflict, "Location conflict", err.Error())
 			return
 		}
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to update location", err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, location)
+	utils.SuccessResponse(c, http.StatusOK, "Location updated successfully", location)
 }
 
 // DeleteLocation godoc
@@ -152,28 +158,29 @@ func (h *LocationHandler) UpdateLocation(c *gin.Context) {
 // @Tags locations
 // @Produce json
 // @Param id path int true "Location ID"
-// @Success 204 "No Content"
-// @Failure 400 {object} map[string]string
-// @Failure 401 {object} map[string]string
-// @Failure 403 {object} map[string]string
-// @Failure 404 {object} map[string]string
+// @Success 200 {object} dto.Response[string]
+// @Failure 400 {object} dto.ErrorResponse
+// @Failure 401 {object} dto.ErrorResponse
+// @Failure 403 {object} dto.ErrorResponse
+// @Failure 404 {object} dto.ErrorResponse
+// @Failure 500 {object} dto.ErrorResponse
 // @Security BearerAuth
 // @Router /locations/{id} [delete]
 func (h *LocationHandler) DeleteLocation(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid location ID"})
+		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid location ID", err.Error())
 		return
 	}
 
 	if err := h.locationService.DeleteLocation(uint(id)); err != nil {
 		if errors.Is(err, services.ErrLocationNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			utils.ErrorResponse(c, http.StatusNotFound, "Location not found", err.Error())
 			return
 		}
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to delete location", err.Error())
 		return
 	}
 	
-	c.Status(http.StatusNoContent)
+	utils.SuccessResponse(c, http.StatusOK, "Location deleted successfully", nil)
 }

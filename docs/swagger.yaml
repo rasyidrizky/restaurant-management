@@ -1,12 +1,5 @@
 basePath: /api/v1
 definitions:
-  internal_handlers.HealthResponse:
-    properties:
-      status:
-        type: string
-      timestamp:
-        type: string
-    type: object
   project-2026-06-misoastory-be-go_internal_dto.AuthResponse:
     properties:
       token:
@@ -79,6 +72,22 @@ definitions:
     - city
     - name
     type: object
+  project-2026-06-misoastory-be-go_internal_dto.ErrorResponse:
+    properties:
+      code:
+        type: integer
+      error:
+        type: string
+      message:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.HealthResponse:
+    properties:
+      status:
+        type: string
+      timestamp:
+        type: string
+    type: object
   project-2026-06-misoastory-be-go_internal_dto.LocationResponse:
     properties:
       address:
@@ -142,6 +151,93 @@ definitions:
     - first_name
     - last_name
     - password
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.Response-array_project-2026-06-misoastory-be-go_internal_dto_CategoryResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse'
+        type: array
+      message:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.Response-array_project-2026-06-misoastory-be-go_internal_dto_UserResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.UserResponse'
+        type: array
+      message:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.Response-array_project-2026-06-misoastory-be-go_internal_models_Location:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_models.Location'
+        type: array
+      message:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_AuthResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.AuthResponse'
+      message:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_CategoryResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse'
+      message:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_HealthResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.HealthResponse'
+      message:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_LocationResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.LocationResponse'
+      message:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_models_Location:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_models.Location'
+      message:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_dto.Response-string:
+    properties:
+      code:
+        type: integer
+      data:
+        type: string
+      message:
+        type: string
     type: object
   project-2026-06-misoastory-be-go_internal_dto.UpdateCategoryRequest:
     properties:
@@ -258,13 +354,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.AuthResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "401":
           description: Unauthorized
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       summary: Login
       tags:
       - auth
@@ -286,13 +384,11 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.AuthResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_AuthResponse'
         "400":
           description: Bad Request
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       summary: Register a new user
       tags:
       - auth
@@ -310,11 +406,11 @@ paths:
         "200":
           description: OK
           schema:
-            additionalProperties:
-              items:
-                $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse'
-              type: array
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-array_project-2026-06-misoastory-be-go_internal_dto_CategoryResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       summary: Get all categories
       tags:
       - categories
@@ -335,31 +431,27 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_CategoryResponse'
         "400":
           description: Bad Request
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "401":
           description: Unauthorized
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "403":
           description: Forbidden
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "409":
           description: Conflict
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       security:
       - BearerAuth: []
       summary: Create a new category
@@ -377,32 +469,30 @@ paths:
       produces:
       - application/json
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-string'
         "400":
           description: Bad Request
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "401":
           description: Unauthorized
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "403":
           description: Forbidden
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       security:
       - BearerAuth: []
       summary: Delete a category
@@ -422,13 +512,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_CategoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       summary: Get category by ID
       tags:
       - categories
@@ -454,37 +550,31 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.CategoryResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_CategoryResponse'
         "400":
           description: Bad Request
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "401":
           description: Unauthorized
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "403":
           description: Forbidden
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "409":
           description: Conflict
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       security:
       - BearerAuth: []
       summary: Update a category
@@ -499,7 +589,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/internal_handlers.HealthResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_HealthResponse'
       summary: Check API Health
       tags:
       - health
@@ -517,11 +607,11 @@ paths:
         "200":
           description: OK
           schema:
-            additionalProperties:
-              items:
-                $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_models.Location'
-              type: array
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-array_project-2026-06-misoastory-be-go_internal_models_Location'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       summary: Get all locations
       tags:
       - locations
@@ -542,31 +632,27 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.LocationResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_dto_LocationResponse'
         "400":
           description: Bad Request
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "401":
           description: Unauthorized
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "403":
           description: Forbidden
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "409":
           description: Conflict
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       security:
       - BearerAuth: []
       summary: Create a new location
@@ -584,32 +670,30 @@ paths:
       produces:
       - application/json
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-string'
         "400":
           description: Bad Request
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "401":
           description: Unauthorized
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "403":
           description: Forbidden
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       security:
       - BearerAuth: []
       summary: Delete a location
@@ -629,13 +713,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_models.Location'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_models_Location'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       summary: Get location by ID
       tags:
       - locations
@@ -661,37 +751,31 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_models.Location'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-project-2026-06-misoastory-be-go_internal_models_Location'
         "400":
           description: Bad Request
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "401":
           description: Unauthorized
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "403":
           description: Forbidden
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "409":
           description: Conflict
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       security:
       - BearerAuth: []
       summary: Update a location
@@ -703,23 +787,19 @@ paths:
         "200":
           description: OK
           schema:
-            additionalProperties:
-              items:
-                $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.UserResponse'
-              type: array
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.Response-array_project-2026-06-misoastory-be-go_internal_dto_UserResponse'
         "401":
           description: Unauthorized
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
         "403":
           description: Forbidden
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_dto.ErrorResponse'
       security:
       - BearerAuth: []
 securityDefinitions:
