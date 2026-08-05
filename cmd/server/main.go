@@ -69,33 +69,50 @@ func NewHTTPServer(lc fx.Lifecycle, cfg *config.Config, db *gorm.DB) *gin.Engine
 	return router
 }
 
+var CoreModule = fx.Module("core",
+	fx.Provide(
+		config.Load,
+		database.NewDatabase,
+		NewHTTPServer,
+	),
+)
+
+var AuthModule = fx.Module("auth",
+	fx.Provide(
+		services.NewAuthService,
+		middleware.NewAuthMiddleware,
+		handlers.NewAuthHandler,
+	),
+)
+
+var CategoryModule = fx.Module("categories",
+	fx.Provide(
+		services.NewCategoryService,
+		handlers.NewCategoryHandler,
+	),
+)
+
+var LocationModule = fx.Module("locations",
+	fx.Provide(
+		services.NewLocationService,
+		handlers.NewLocationHandler,
+	),
+)
+
+var UserModule = fx.Module("users",
+	fx.Provide(
+		services.NewUserService,
+		handlers.NewUserHandler,
+	),
+)
+
 func main() {
 	fx.New(
-		fx.Provide(
-			// Load config
-			config.Load,
-			// Load database
-			database.NewDatabase,
-			
-			// Inject Services
-			services.NewAuthService,
-			services.NewCategoryService,
-			services.NewLocationService,
-			services.NewUserService,
-			
-			// Inject Middleware
-			middleware.NewAuthMiddleware,
-			
-			// Inject Handlers
-			handlers.NewAuthHandler,
-			handlers.NewCategoryHandler,
-			handlers.NewLocationHandler,
-			handlers.NewUserHandler,
-			
-			// Inject HTTP Server (returns *gin.Engine)
-			NewHTTPServer,
-		),
-		// Invoke the router setup which will pull everything together
+		CoreModule,
+		AuthModule,
+		CategoryModule,
+		LocationModule,
+		UserModule,
 		fx.Invoke(routes.SetupRoutes),
 	).Run()
 }
