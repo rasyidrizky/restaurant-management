@@ -1,4 +1,4 @@
-package handlers
+package auth
 
 import (
 	"net/http"
@@ -6,15 +6,15 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"project-2026-06-misoastory-be-go/internal/dto"
-	"project-2026-06-misoastory-be-go/internal/services"
+
 	"project-2026-06-misoastory-be-go/internal/utils"
 )
 
 type AuthHandler struct {
-	authService *services.AuthService
+	authService *AuthService
 }
 
-func NewAuthHandler(authService *services.AuthService) *AuthHandler {
+func NewAuthHandler(authService *AuthService) *AuthHandler {
 	return &AuthHandler{authService: authService}
 }
 

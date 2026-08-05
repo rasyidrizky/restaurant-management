@@ -1,25 +1,38 @@
-package handlers
+package locations
 
 import (
 	"errors"
 	"net/http"
 	"strconv"
 
+	"project-2026-06-misoastory-be-go/internal/core/middleware"
 	"project-2026-06-misoastory-be-go/internal/dto"
 	_ "project-2026-06-misoastory-be-go/internal/models"
-	"project-2026-06-misoastory-be-go/internal/services"
 	"project-2026-06-misoastory-be-go/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
 type LocationHandler struct {
-	locationService *services.LocationService
+	locationService *LocationService
 }
 
-func NewLocationHandler(locationService *services.LocationService) *LocationHandler {
+func NewLocationHandler(locationService *LocationService) *LocationHandler {
 	return &LocationHandler{
 		locationService: locationService,
+	}
+}
+
+func (h *LocationHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.AuthMiddleware) {
+	locations := router.Group("/locations")
+	{
+		// Public read
+		locations.GET("", h.GetLocations)
+		locations.GET("/:id", h.GetLocationByID)
+		// Protected write
+		locations.POST("", m.RequireAuth(), m.RequirePermission("LOCATION", "ADD"), h.CreateLocation)
+		locations.PATCH("/:id", m.RequireAuth(), m.RequirePermission("LOCATION", "UPDATE"), h.UpdateLocation)
+		locations.DELETE("/:id", m.RequireAuth(), m.RequirePermission("LOCATION", "DELETE"), h.DeleteLocation)
 	}
 }
 
@@ -62,7 +75,7 @@ func (h *LocationHandler) GetLocationByID(c *gin.Context) {
 
 	location, err := h.locationService.GetLocationByID(uint(id))
 	if err != nil {
-		if errors.Is(err, services.ErrLocationNotFound) {
+		if errors.Is(err, ErrLocationNotFound) {
 			utils.ErrorResponse(c, http.StatusNotFound, "Location not found", err.Error())
 			return
 		}
@@ -96,7 +109,7 @@ func (h *LocationHandler) CreateLocation(c *gin.Context) {
 
 	location, err := h.locationService.CreateLocation(&req)
 	if err != nil {
-		if errors.Is(err, services.ErrLocationConflict) {
+		if errors.Is(err, ErrLocationConflict) {
 			utils.ErrorResponse(c, http.StatusConflict, "Location conflict", err.Error())
 			return
 		}
@@ -138,11 +151,11 @@ func (h *LocationHandler) UpdateLocation(c *gin.Context) {
 
 	location, err := h.locationService.UpdateLocation(uint(id), &req)
 	if err != nil {
-		if errors.Is(err, services.ErrLocationNotFound) {
+		if errors.Is(err, ErrLocationNotFound) {
 			utils.ErrorResponse(c, http.StatusNotFound, "Location not found", err.Error())
 			return
 		}
-		if errors.Is(err, services.ErrLocationConflict) {
+		if errors.Is(err, ErrLocationConflict) {
 			utils.ErrorResponse(c, http.StatusConflict, "Location conflict", err.Error())
 			return
 		}
@@ -174,7 +187,7 @@ func (h *LocationHandler) DeleteLocation(c *gin.Context) {
 	}
 
 	if err := h.locationService.DeleteLocation(uint(id)); err != nil {
-		if errors.Is(err, services.ErrLocationNotFound) {
+		if errors.Is(err, ErrLocationNotFound) {
 			utils.ErrorResponse(c, http.StatusNotFound, "Location not found", err.Error())
 			return
 		}

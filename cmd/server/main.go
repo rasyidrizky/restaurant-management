@@ -1,22 +1,22 @@
 package main
 
 import (
-	"context"
 	"fmt"
-	"log"
-	"net/http"
 
-	"project-2026-06-misoastory-be-go/internal/config"
-	"project-2026-06-misoastory-be-go/internal/database"
-	"project-2026-06-misoastory-be-go/internal/handlers"
-	"project-2026-06-misoastory-be-go/internal/middleware"
-	"project-2026-06-misoastory-be-go/internal/models"
-	"project-2026-06-misoastory-be-go/internal/routes"
-	"project-2026-06-misoastory-be-go/internal/services"
+	"project-2026-06-misoastory-be-go/internal/core"
+	"project-2026-06-misoastory-be-go/internal/core/config"
+	"project-2026-06-misoastory-be-go/internal/core/health"
+	"project-2026-06-misoastory-be-go/internal/core/middleware"
+	"project-2026-06-misoastory-be-go/internal/modules/auth"
+	"project-2026-06-misoastory-be-go/internal/modules/categories"
+	"project-2026-06-misoastory-be-go/internal/modules/locations"
+	"project-2026-06-misoastory-be-go/internal/modules/users"
+	"project-2026-06-misoastory-be-go/docs"
 
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"go.uber.org/fx"
-	"gorm.io/gorm"
 )
 
 // @title Misoastory API
@@ -28,91 +28,37 @@ import (
 // @in header
 // @name Authorization
 
-func NewHTTPServer(lc fx.Lifecycle, cfg *config.Config, db *gorm.DB) *gin.Engine {
-	// AutoMigrate database
-	if err := db.AutoMigrate(
-		&models.Position{},
-		&models.User{},
-		&models.Location{},
-		&models.Category{},
-		&models.Permission{},
-		&models.PositionPermission{},
-	); err != nil {
-		log.Fatalf("Failed to auto migrate database: %v", err)
-	}
+func registerAllRoutes(
+	r *gin.Engine,
+	cfg *config.Config,
+	m *middleware.AuthMiddleware,
+	authH *auth.AuthHandler,
+	catH *categories.CategoryHandler,
+	locH *locations.LocationHandler,
+	userH *users.UserHandler,
+) {
+	// Swagger route
+	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%d", cfg.Port)
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	router := gin.Default()
-	addr := fmt.Sprintf(":%d", cfg.Port)
-
-	// Create a standard http.Server so we can gracefully shut it down
-	srv := &http.Server{
-		Addr:    addr,
-		Handler: router,
-	}
-
-	lc.Append(fx.Hook{
-		OnStart: func(ctx context.Context) error {
-			log.Printf("Server starting on %s", addr)
-			go func() {
-				if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-					log.Fatalf("listen: %s\n", err)
-				}
-			}()
-			return nil
-		},
-		OnStop: func(ctx context.Context) error {
-			log.Println("Shutting down gracefully...")
-			return srv.Shutdown(ctx)
-		},
-	})
-
-	return router
+	// API v1 route group
+	v1 := r.Group("/api/v1")
+	v1.GET("/health", health.HealthCheck)
+	
+	// Let each module register its own routes
+	authH.RegisterRoutes(v1)
+	catH.RegisterRoutes(v1, m)
+	locH.RegisterRoutes(v1, m)
+	userH.RegisterRoutes(v1, m)
 }
-
-var CoreModule = fx.Module("core",
-	fx.Provide(
-		config.Load,
-		database.NewDatabase,
-		NewHTTPServer,
-	),
-)
-
-var AuthModule = fx.Module("auth",
-	fx.Provide(
-		services.NewAuthService,
-		middleware.NewAuthMiddleware,
-		handlers.NewAuthHandler,
-	),
-)
-
-var CategoryModule = fx.Module("categories",
-	fx.Provide(
-		services.NewCategoryService,
-		handlers.NewCategoryHandler,
-	),
-)
-
-var LocationModule = fx.Module("locations",
-	fx.Provide(
-		services.NewLocationService,
-		handlers.NewLocationHandler,
-	),
-)
-
-var UserModule = fx.Module("users",
-	fx.Provide(
-		services.NewUserService,
-		handlers.NewUserHandler,
-	),
-)
 
 func main() {
 	fx.New(
-		CoreModule,
-		AuthModule,
-		CategoryModule,
-		LocationModule,
-		UserModule,
-		fx.Invoke(routes.SetupRoutes),
+		core.Module,
+		auth.Module,
+		categories.Module,
+		locations.Module,
+		users.Module,
+		fx.Invoke(registerAllRoutes),
 	).Run()
 }

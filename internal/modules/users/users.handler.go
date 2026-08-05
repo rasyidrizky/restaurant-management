@@ -1,21 +1,28 @@
-package handlers
+package users
 
 import (
 	"net/http"
+	"project-2026-06-misoastory-be-go/internal/core/middleware"
 	_ "project-2026-06-misoastory-be-go/internal/dto"
-	"project-2026-06-misoastory-be-go/internal/services"
 	"project-2026-06-misoastory-be-go/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
 type UserHandler struct {
-	userService *services.UserService
+	userService *UserService
 }
 
-func NewUserHandler(userService *services.UserService) *UserHandler {
+func NewUserHandler(userService *UserService) *UserHandler {
 	return &UserHandler{
 		userService: userService,
+	}
+}
+
+func (h *UserHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.AuthMiddleware) {
+	users := router.Group("/users")
+	{
+		users.GET("", m.RequireAuth(), m.RequirePermission("USER", "VIEW"), h.GetUsers)
 	}
 }
 

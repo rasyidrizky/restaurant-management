@@ -2,15 +2,15 @@ package main
 
 import (
 	"log"
-	
-	"project-2026-06-misoastory-be-go/internal/config"
-	"project-2026-06-misoastory-be-go/internal/database"
+
+	"project-2026-06-misoastory-be-go/internal/core/config"
+	"project-2026-06-misoastory-be-go/internal/core/database"
 	"project-2026-06-misoastory-be-go/internal/models"
 )
 
 func main() {
 	config.Load()
-	
+
 	db, err := database.NewDatabase()
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
@@ -36,7 +36,7 @@ func main() {
 	// 3. Create permissions and link them to Admin
 	for _, p := range permissions {
 		var perm models.Permission
-		
+
 		// Create or find permission
 		if err := db.Where("resource = ? AND action = ?", p.Resource, p.Action).FirstOrCreate(&perm, p).Error; err != nil {
 			log.Printf("Failed to create permission %s: %v", p.Name, err)
