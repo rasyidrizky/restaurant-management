@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"project-2026-06-misoastory-be-go/internal/config"
+	"project-2026-06-misoastory-be-go/internal/common/middleware"
 	"project-2026-06-misoastory-be-go/internal/common/models"
 
 	"github.com/gin-gonic/gin"
@@ -30,6 +31,7 @@ func NewHTTPServer(lc fx.Lifecycle, cfg *config.Config, db *gorm.DB) *gin.Engine
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
 	router.Use(gin.Recovery())
+	router.Use(middleware.ErrorHandler())
 
 	addr := fmt.Sprintf(":%d", cfg.Port)
 

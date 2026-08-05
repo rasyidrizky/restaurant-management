@@ -52,7 +52,7 @@ func (h *LocationHandler) GetLocations(c *gin.Context) {
 	search := c.Query("search")
 	locations, err := h.locationService.GetAllLocations(search)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve locations", err.Error())
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve locations", err))
 		return
 	}
 	utils.SuccessResponse(c, http.StatusOK, "Locations retrieved successfully", locations)
@@ -72,17 +72,17 @@ func (h *LocationHandler) GetLocations(c *gin.Context) {
 func (h *LocationHandler) GetLocationByID(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid location ID", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid location ID", err))
 		return
 	}
 
 	location, err := h.locationService.GetLocationByID(uint(id))
 	if err != nil {
 		if errors.Is(err, ErrLocationNotFound) {
-			utils.ErrorResponse(c, http.StatusNotFound, "Location not found", err.Error())
+			c.Error(utils.NewAppError(http.StatusNotFound, "Location not found", err))
 			return
 		}
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve location", err.Error())
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve location", err))
 		return
 	}
 	utils.SuccessResponse(c, http.StatusOK, "Location retrieved successfully", location)
@@ -106,17 +106,17 @@ func (h *LocationHandler) GetLocationByID(c *gin.Context) {
 func (h *LocationHandler) CreateLocation(c *gin.Context) {
 	var req dto.CreateLocationRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request payload", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
 	}
 
 	location, err := h.locationService.CreateLocation(&req)
 	if err != nil {
 		if errors.Is(err, ErrLocationConflict) {
-			utils.ErrorResponse(c, http.StatusConflict, "Location conflict", err.Error())
+			c.Error(utils.NewAppError(http.StatusConflict, "Location conflict", err))
 			return
 		}
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to create location", err.Error())
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to create location", err))
 		return
 	}
 	utils.SuccessResponse(c, http.StatusCreated, "Location created successfully", location)
@@ -142,27 +142,27 @@ func (h *LocationHandler) CreateLocation(c *gin.Context) {
 func (h *LocationHandler) UpdateLocation(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid location ID", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid location ID", err))
 		return
 	}
 
 	var req dto.UpdateLocationRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request payload", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
 	}
 
 	location, err := h.locationService.UpdateLocation(uint(id), &req)
 	if err != nil {
 		if errors.Is(err, ErrLocationNotFound) {
-			utils.ErrorResponse(c, http.StatusNotFound, "Location not found", err.Error())
+			c.Error(utils.NewAppError(http.StatusNotFound, "Location not found", err))
 			return
 		}
 		if errors.Is(err, ErrLocationConflict) {
-			utils.ErrorResponse(c, http.StatusConflict, "Location conflict", err.Error())
+			c.Error(utils.NewAppError(http.StatusConflict, "Location conflict", err))
 			return
 		}
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to update location", err.Error())
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to update location", err))
 		return
 	}
 	utils.SuccessResponse(c, http.StatusOK, "Location updated successfully", location)
@@ -185,16 +185,16 @@ func (h *LocationHandler) UpdateLocation(c *gin.Context) {
 func (h *LocationHandler) DeleteLocation(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid location ID", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid location ID", err))
 		return
 	}
 
 	if err := h.locationService.DeleteLocation(uint(id)); err != nil {
 		if errors.Is(err, ErrLocationNotFound) {
-			utils.ErrorResponse(c, http.StatusNotFound, "Location not found", err.Error())
+			c.Error(utils.NewAppError(http.StatusNotFound, "Location not found", err))
 			return
 		}
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to delete location", err.Error())
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to delete location", err))
 		return
 	}
 	

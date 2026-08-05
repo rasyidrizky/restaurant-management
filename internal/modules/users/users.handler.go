@@ -38,7 +38,7 @@ func (h *UserHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.Auth
 func (h *UserHandler) GetUsers(c *gin.Context) {
 	users, err := h.userService.GetUsers()
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve users", err.Error())
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve users", err))
 		return
 	}
 

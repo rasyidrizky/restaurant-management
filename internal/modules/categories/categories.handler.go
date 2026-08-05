@@ -51,7 +51,7 @@ func (h *CategoryHandler) GetCategories(c *gin.Context) {
 	search := c.Query("search")
 	categories, err := h.categoryService.GetAllCategories(search)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve categories", err.Error())
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve categories", err))
 		return
 	}
 	utils.SuccessResponse(c, http.StatusOK, "Categories retrieved successfully", dto.MapToCategoryResponses(categories))
@@ -71,17 +71,17 @@ func (h *CategoryHandler) GetCategories(c *gin.Context) {
 func (h *CategoryHandler) GetCategoryByID(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid category ID", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid category ID", err))
 		return
 	}
 
 	category, err := h.categoryService.GetCategoryByID(uint(id))
 	if err != nil {
 		if errors.Is(err, ErrCategoryNotFound) {
-			utils.ErrorResponse(c, http.StatusNotFound, "Category not found", err.Error())
+			c.Error(utils.NewAppError(http.StatusNotFound, "Category not found", err))
 			return
 		}
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve category", err.Error())
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve category", err))
 		return
 	}
 	utils.SuccessResponse(c, http.StatusOK, "Category retrieved successfully", dto.MapToCategoryResponse(category))
@@ -105,17 +105,17 @@ func (h *CategoryHandler) GetCategoryByID(c *gin.Context) {
 func (h *CategoryHandler) CreateCategory(c *gin.Context) {
 	var req dto.CreateCategoryRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request payload", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
 	}
 
 	category, err := h.categoryService.CreateCategory(&req)
 	if err != nil {
 		if errors.Is(err, ErrCategoryConflict) {
-			utils.ErrorResponse(c, http.StatusConflict, "Category conflict", err.Error())
+			c.Error(utils.NewAppError(http.StatusConflict, "Category conflict", err))
 			return
 		}
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to create category", err.Error())
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to create category", err))
 		return
 	}
 	utils.SuccessResponse(c, http.StatusCreated, "Category created successfully", dto.MapToCategoryResponse(category))
@@ -141,27 +141,27 @@ func (h *CategoryHandler) CreateCategory(c *gin.Context) {
 func (h *CategoryHandler) UpdateCategory(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid category ID", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid category ID", err))
 		return
 	}
 
 	var req dto.UpdateCategoryRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request payload", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
 	}
 
 	category, err := h.categoryService.UpdateCategory(uint(id), &req)
 	if err != nil {
 		if errors.Is(err, ErrCategoryNotFound) {
-			utils.ErrorResponse(c, http.StatusNotFound, "Category not found", err.Error())
+			c.Error(utils.NewAppError(http.StatusNotFound, "Category not found", err))
 			return
 		}
 		if errors.Is(err, ErrCategoryConflict) {
-			utils.ErrorResponse(c, http.StatusConflict, "Category conflict", err.Error())
+			c.Error(utils.NewAppError(http.StatusConflict, "Category conflict", err))
 			return
 		}
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to update category", err.Error())
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to update category", err))
 		return
 	}
 	utils.SuccessResponse(c, http.StatusOK, "Category updated successfully", dto.MapToCategoryResponse(category))
@@ -184,16 +184,16 @@ func (h *CategoryHandler) UpdateCategory(c *gin.Context) {
 func (h *CategoryHandler) DeleteCategory(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid category ID", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid category ID", err))
 		return
 	}
 
 	if err := h.categoryService.DeleteCategory(uint(id)); err != nil {
 		if errors.Is(err, ErrCategoryNotFound) {
-			utils.ErrorResponse(c, http.StatusNotFound, "Category not found", err.Error())
+			c.Error(utils.NewAppError(http.StatusNotFound, "Category not found", err))
 			return
 		}
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to delete category", err.Error())
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to delete category", err))
 		return
 	}
 

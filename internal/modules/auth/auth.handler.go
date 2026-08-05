@@ -42,13 +42,13 @@ func (h *AuthHandler) RegisterRoutes(router *gin.RouterGroup) {
 func (h *AuthHandler) Register(c *gin.Context) {
 	var req dto.RegisterRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request payload", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
 	}
 
 	res, err := h.authService.Register(&req)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Failed to register user", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Failed to register user", err))
 		return
 	}
 
@@ -72,13 +72,13 @@ func (h *AuthHandler) Register(c *gin.Context) {
 func (h *AuthHandler) Login(c *gin.Context) {
 	var req dto.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request payload", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
 	}
 
 	res, err := h.authService.Login(&req)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusUnauthorized, "Authentication failed", err.Error())
+		c.Error(utils.NewAppError(http.StatusUnauthorized, "Authentication failed", err))
 		return
 	}
 
