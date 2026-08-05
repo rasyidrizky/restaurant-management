@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"project-2026-06-misoastory-be-go/internal/core/config"
-	"project-2026-06-misoastory-be-go/internal/models"
+	"project-2026-06-misoastory-be-go/internal/config"
+	"project-2026-06-misoastory-be-go/internal/common/models"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/fx"

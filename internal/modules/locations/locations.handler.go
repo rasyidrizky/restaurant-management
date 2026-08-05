@@ -5,24 +5,27 @@ import (
 	"net/http"
 	"strconv"
 
-	"project-2026-06-misoastory-be-go/internal/core/middleware"
-	"project-2026-06-misoastory-be-go/internal/dto"
-	_ "project-2026-06-misoastory-be-go/internal/models"
-	"project-2026-06-misoastory-be-go/internal/utils"
+	"project-2026-06-misoastory-be-go/internal/common/middleware"
+	"project-2026-06-misoastory-be-go/internal/common/dto"
+	_ "project-2026-06-misoastory-be-go/internal/common/models"
+	"project-2026-06-misoastory-be-go/internal/common/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
+// LocationHandler processes HTTP requests for Locations
 type LocationHandler struct {
 	locationService *LocationService
 }
 
+// NewLocationHandler acts as the constructor for LocationHandler
 func NewLocationHandler(locationService *LocationService) *LocationHandler {
 	return &LocationHandler{
 		locationService: locationService,
 	}
 }
 
+// RegisterRoutes defines the API endpoints for this module
 func (h *LocationHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.AuthMiddleware) {
 	locations := router.Group("/locations")
 	{

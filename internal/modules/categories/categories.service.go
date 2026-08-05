@@ -4,9 +4,9 @@ import (
 	"errors"
 	"strings"
 
-	"project-2026-06-misoastory-be-go/internal/dto"
-	"project-2026-06-misoastory-be-go/internal/models"
-	"project-2026-06-misoastory-be-go/internal/utils"
+	"project-2026-06-misoastory-be-go/internal/common/dto"
+	"project-2026-06-misoastory-be-go/internal/common/models"
+	"project-2026-06-misoastory-be-go/internal/common/utils"
 
 	"gorm.io/gorm"
 )
@@ -16,10 +16,12 @@ var (
 	ErrCategoryConflict = errors.New("category slug already exists")
 )
 
+// CategoryService handles business logic for Categories
 type CategoryService struct {
 	db *gorm.DB
 }
 
+// NewCategoryService acts as the constructor for CategoryService
 func NewCategoryService(db *gorm.DB) *CategoryService {
 	return &CategoryService{
 		db: db,

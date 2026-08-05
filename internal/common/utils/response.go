@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"project-2026-06-misoastory-be-go/internal/dto"
+	"project-2026-06-misoastory-be-go/internal/common/dto"
 
 	"github.com/gin-gonic/gin"
 )

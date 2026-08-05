@@ -5,23 +5,26 @@ import (
 	"net/http"
 	"strconv"
 
-	"project-2026-06-misoastory-be-go/internal/core/middleware"
-	"project-2026-06-misoastory-be-go/internal/dto"
-	"project-2026-06-misoastory-be-go/internal/utils"
+	"project-2026-06-misoastory-be-go/internal/common/middleware"
+	"project-2026-06-misoastory-be-go/internal/common/dto"
+	"project-2026-06-misoastory-be-go/internal/common/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
+// CategoryHandler processes HTTP requests for Categories
 type CategoryHandler struct {
 	categoryService *CategoryService
 }
 
+// NewCategoryHandler acts as the constructor for CategoryHandler
 func NewCategoryHandler(categoryService *CategoryService) *CategoryHandler {
 	return &CategoryHandler{
 		categoryService: categoryService,
 	}
 }
 
+// RegisterRoutes defines the API endpoints for this module
 func (h *CategoryHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.AuthMiddleware) {
 	categories := router.Group("/categories")
 	{

@@ -3,13 +3,15 @@ package users
 import (
 	"errors"
 	"gorm.io/gorm"
-	"project-2026-06-misoastory-be-go/internal/models"
+	"project-2026-06-misoastory-be-go/internal/common/models"
 )
 
+// UserService handles business logic for Users
 type UserService struct {
 	db *gorm.DB
 }
 
+// NewUserService acts as the constructor for UserService
 func NewUserService(db *gorm.DB) *UserService {
 	return &UserService{
 		db: db,

@@ -5,19 +5,22 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"project-2026-06-misoastory-be-go/internal/dto"
+	"project-2026-06-misoastory-be-go/internal/common/dto"
 
-	"project-2026-06-misoastory-be-go/internal/utils"
+	"project-2026-06-misoastory-be-go/internal/common/utils"
 )
 
+// AuthHandler processes HTTP requests for Authentication
 type AuthHandler struct {
 	authService *AuthService
 }
 
+// NewAuthHandler acts as the constructor for AuthHandler
 func NewAuthHandler(authService *AuthService) *AuthHandler {
 	return &AuthHandler{authService: authService}
 }
 
+// RegisterRoutes defines the API endpoints for this module
 func (h *AuthHandler) RegisterRoutes(router *gin.RouterGroup) {
 	auth := router.Group("/auth")
 	{

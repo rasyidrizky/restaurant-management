@@ -2,23 +2,26 @@ package users
 
 import (
 	"net/http"
-	"project-2026-06-misoastory-be-go/internal/core/middleware"
-	_ "project-2026-06-misoastory-be-go/internal/dto"
-	"project-2026-06-misoastory-be-go/internal/utils"
+	"project-2026-06-misoastory-be-go/internal/common/middleware"
+	_ "project-2026-06-misoastory-be-go/internal/common/dto"
+	"project-2026-06-misoastory-be-go/internal/common/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
+// UserHandler processes HTTP requests for Users
 type UserHandler struct {
 	userService *UserService
 }
 
+// NewUserHandler acts as the constructor for UserHandler
 func NewUserHandler(userService *UserService) *UserHandler {
 	return &UserHandler{
 		userService: userService,
 	}
 }
 
+// RegisterRoutes defines the API endpoints for this module
 func (h *UserHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.AuthMiddleware) {
 	users := router.Group("/users")
 	{

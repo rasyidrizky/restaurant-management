@@ -6,8 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"project-2026-06-misoastory-be-go/internal/dto"
-	"project-2026-06-misoastory-be-go/internal/utils"
+	"project-2026-06-misoastory-be-go/internal/common/dto"
+	"project-2026-06-misoastory-be-go/internal/common/utils"
 )
 
 // HealthCheck godoc

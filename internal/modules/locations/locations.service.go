@@ -2,9 +2,9 @@ package locations
 
 import (
 	"errors"
-	"project-2026-06-misoastory-be-go/internal/dto"
-	"project-2026-06-misoastory-be-go/internal/models"
-	"project-2026-06-misoastory-be-go/internal/utils"
+	"project-2026-06-misoastory-be-go/internal/common/dto"
+	"project-2026-06-misoastory-be-go/internal/common/models"
+	"project-2026-06-misoastory-be-go/internal/common/utils"
 
 	"gorm.io/gorm"
 )
@@ -14,10 +14,12 @@ var (
 	ErrLocationConflict = errors.New("location with slug already exists")
 )
 
+// LocationService handles business logic for Locations
 type LocationService struct {
 	db *gorm.DB
 }
 
+// NewLocationService acts as the constructor for LocationService
 func NewLocationService(db *gorm.DB) *LocationService {
 	return &LocationService{
 		db: db,

@@ -4,13 +4,13 @@ import (
 	"fmt"
 
 	"project-2026-06-misoastory-be-go/internal/core"
-	"project-2026-06-misoastory-be-go/internal/core/config"
-	"project-2026-06-misoastory-be-go/internal/core/health"
-	"project-2026-06-misoastory-be-go/internal/core/middleware"
+	"project-2026-06-misoastory-be-go/internal/config"
+	"project-2026-06-misoastory-be-go/internal/common/middleware"
 	"project-2026-06-misoastory-be-go/internal/modules/auth"
 	"project-2026-06-misoastory-be-go/internal/modules/categories"
 	"project-2026-06-misoastory-be-go/internal/modules/locations"
 	"project-2026-06-misoastory-be-go/internal/modules/users"
+	"project-2026-06-misoastory-be-go/internal/modules/health"
 	"project-2026-06-misoastory-be-go/docs"
 
 	"github.com/gin-gonic/gin"
@@ -59,6 +59,7 @@ func main() {
 		categories.Module,
 		locations.Module,
 		users.Module,
+		health.Module,
 		fx.Invoke(registerAllRoutes),
 	).Run()
 }

@@ -3,7 +3,7 @@ package dto
 import (
 	"time"
 	
-	"project-2026-06-misoastory-be-go/internal/models"
+	"project-2026-06-misoastory-be-go/internal/common/models"
 )
 
 type CreateLocationRequest struct {

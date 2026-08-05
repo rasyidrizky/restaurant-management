@@ -6,15 +6,17 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
-	"project-2026-06-misoastory-be-go/internal/dto"
-	"project-2026-06-misoastory-be-go/internal/models"
-	"project-2026-06-misoastory-be-go/internal/utils"
+	"project-2026-06-misoastory-be-go/internal/common/dto"
+	"project-2026-06-misoastory-be-go/internal/common/models"
+	"project-2026-06-misoastory-be-go/internal/common/utils"
 )
 
+// AuthService handles business logic for Authentication
 type AuthService struct {
 	db *gorm.DB
 }
 
+// NewAuthService acts as the constructor for AuthService
 func NewAuthService(db *gorm.DB) *AuthService {
 	return &AuthService{db: db}
 }

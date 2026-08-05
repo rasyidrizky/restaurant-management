@@ -3,15 +3,14 @@ package main
 import (
 	"log"
 
-	"project-2026-06-misoastory-be-go/internal/core/config"
-	"project-2026-06-misoastory-be-go/internal/core/database"
-	"project-2026-06-misoastory-be-go/internal/models"
+	"project-2026-06-misoastory-be-go/internal/config"
+	"project-2026-06-misoastory-be-go/internal/common/models"
 )
 
 func main() {
 	config.Load()
 
-	db, err := database.NewDatabase()
+	db, err := config.NewDatabase()
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
