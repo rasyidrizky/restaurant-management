@@ -1,5 +1,11 @@
 package dto
 
+import (
+	"project-2026-06-misoastory-be-go/internal/common/models"
+
+	"github.com/jinzhu/copier"
+)
+
 type RegisterRequest struct {
 	FirstName string `json:"first_name" binding:"required"`
 	LastName  string `json:"last_name" binding:"required"`
@@ -23,4 +29,19 @@ type UserResponse struct {
 	LastName   string `json:"last_name"`
 	Email      string `json:"email"`
 	PositionID uint   `json:"position_id"`
+}
+
+func MapToUserResponse(user *models.User) UserResponse {
+	var resp UserResponse
+	copier.Copy(&resp, user)
+	return resp
+}
+
+func MapToUserResponses(users []models.User) []UserResponse {
+	var responses []UserResponse
+	copier.Copy(&responses, &users)
+	if responses == nil {
+		return []UserResponse{}
+	}
+	return responses
 }

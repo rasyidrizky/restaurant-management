@@ -4,6 +4,8 @@ import (
 	"time"
 	
 	"project-2026-06-misoastory-be-go/internal/common/models"
+	
+	"github.com/jinzhu/copier"
 )
 
 type CreateLocationRequest struct {
@@ -59,31 +61,16 @@ type LocationResponse struct {
 }
 
 func MapToLocationResponse(location *models.Location) LocationResponse {
-	return LocationResponse{
-		ID:                  location.ID,
-		Name:                location.Name,
-		Slug:                location.Slug,
-		Address:             location.Address,
-		City:                location.City,
-		Phone:               location.Phone,
-		Latitude:            location.Latitude,
-		Longitude:           location.Longitude,
-		OpeningTime:         location.OpeningTime,
-		ClosingTime:         location.ClosingTime,
-		IsActive:            location.IsActive,
-		IsOpen24Hours:       location.IsOpen24Hours,
-		HasDineIn:           location.HasDineIn,
-		SupportsHomeService: location.SupportsHomeService,
-		SupportsEvents:      location.SupportsEvents,
-		CreatedAt:           location.CreatedAt,
-		UpdatedAt:           location.UpdatedAt,
-	}
+	var resp LocationResponse
+	copier.Copy(&resp, location)
+	return resp
 }
 
 func MapToLocationResponses(locations []models.Location) []LocationResponse {
-	responses := make([]LocationResponse, len(locations))
-	for i, loc := range locations {
-		responses[i] = MapToLocationResponse(&loc)
+	var responses []LocationResponse
+	copier.Copy(&responses, &locations)
+	if responses == nil {
+		return []LocationResponse{}
 	}
 	return responses
 }

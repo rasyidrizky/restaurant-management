@@ -3,7 +3,7 @@ package users
 import (
 	"net/http"
 	"project-2026-06-misoastory-be-go/internal/common/middleware"
-	_ "project-2026-06-misoastory-be-go/internal/common/dto"
+	"project-2026-06-misoastory-be-go/internal/common/dto"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 
 	"github.com/gin-gonic/gin"
@@ -42,5 +42,5 @@ func (h *UserHandler) GetUsers(c *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(c, http.StatusOK, "Users retrieved successfully", users)
+	utils.SuccessResponse(c, http.StatusOK, "Users retrieved successfully", dto.MapToUserResponses(users))
 }

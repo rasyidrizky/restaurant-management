@@ -4,6 +4,8 @@ import (
 	"time"
 
 	"project-2026-06-misoastory-be-go/internal/common/models"
+	
+	"github.com/jinzhu/copier"
 )
 
 type CreateCategoryRequest struct {
@@ -32,22 +34,16 @@ type CategoryResponse struct {
 }
 
 func MapToCategoryResponse(category *models.Category) CategoryResponse {
-	return CategoryResponse{
-		ID:           category.ID,
-		Name:         category.Name,
-		Slug:         category.Slug,
-		Description:  category.Description,
-		DisplayOrder: category.DisplayOrder,
-		IsActive:     category.IsActive,
-		CreatedAt:    category.CreatedAt,
-		UpdatedAt:    category.UpdatedAt,
-	}
+	var resp CategoryResponse
+	copier.Copy(&resp, category)
+	return resp
 }
 
 func MapToCategoryResponses(categories []models.Category) []CategoryResponse {
-	responses := make([]CategoryResponse, len(categories))
-	for i, cat := range categories {
-		responses[i] = MapToCategoryResponse(&cat)
+	var responses []CategoryResponse
+	copier.Copy(&responses, &categories)
+	if responses == nil {
+		return []CategoryResponse{}
 	}
 	return responses
 }

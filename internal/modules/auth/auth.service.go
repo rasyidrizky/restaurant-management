@@ -68,13 +68,7 @@ func (s *AuthService) Register(req *dto.RegisterRequest) (*dto.AuthResponse, err
 
 	return &dto.AuthResponse{
 		Token: token,
-		User: dto.UserResponse{
-			ID:         user.ID,
-			FirstName:  user.FirstName,
-			LastName:   user.LastName,
-			Email:      user.Email,
-			PositionID: user.PositionID,
-		},
+		User:  dto.MapToUserResponse(&user),
 	}, nil
 }
 
@@ -95,12 +89,6 @@ func (s *AuthService) Login(req *dto.LoginRequest) (*dto.AuthResponse, error) {
 
 	return &dto.AuthResponse{
 		Token: token,
-		User: dto.UserResponse{
-			ID:         user.ID,
-			FirstName:  user.FirstName,
-			LastName:   user.LastName,
-			Email:      user.Email,
-			PositionID: user.PositionID,
-		},
+		User:  dto.MapToUserResponse(&user),
 	}, nil
 }
