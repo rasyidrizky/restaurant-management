@@ -4,7 +4,6 @@ import (
 	"errors"
 	"strings"
 
-	"project-2026-06-misoastory-be-go/internal/database"
 	"project-2026-06-misoastory-be-go/internal/dto"
 	"project-2026-06-misoastory-be-go/internal/models"
 	"project-2026-06-misoastory-be-go/internal/utils"
@@ -21,9 +20,9 @@ type CategoryService struct {
 	db *gorm.DB
 }
 
-func NewCategoryService() *CategoryService {
+func NewCategoryService(db *gorm.DB) *CategoryService {
 	return &CategoryService{
-		db: database.DB,
+		db: db,
 	}
 }
 

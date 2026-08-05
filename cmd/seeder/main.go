@@ -9,9 +9,12 @@ import (
 )
 
 func main() {
-	cfg := config.Load()
-	database.Connect(cfg.DBURL)
-	db := database.DB
+	config.Load()
+	
+	db, err := database.NewDatabase()
+	if err != nil {
+		log.Fatalf("Failed to connect to database: %v", err)
+	}
 
 	// 1. Get the Admin position
 	var admin models.Position

@@ -5,14 +5,22 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 
-	"project-2026-06-misoastory-be-go/internal/database"
 	"project-2026-06-misoastory-be-go/internal/dto"
 	"project-2026-06-misoastory-be-go/internal/utils"
 )
 
+type AuthMiddleware struct {
+	db *gorm.DB
+}
+
+func NewAuthMiddleware(db *gorm.DB) *AuthMiddleware {
+	return &AuthMiddleware{db: db}
+}
+
 // RequireAuth validates the JWT token in the Authorization header or Cookie
-func RequireAuth() gin.HandlerFunc {
+func (m *AuthMiddleware) RequireAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var token string
 
@@ -61,7 +69,7 @@ func RequireAuth() gin.HandlerFunc {
 }
 
 // RequirePermission checks if the authenticated user's position has the exact permission
-func RequirePermission(resource string, action string) gin.HandlerFunc {
+func (m *AuthMiddleware) RequirePermission(resource string, action string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		positionID, exists := c.Get("position_id")
 		if !exists {
@@ -74,7 +82,7 @@ func RequirePermission(resource string, action string) gin.HandlerFunc {
 
 		var count int64
 		// Join PositionPermission with Permission to check if the specific resource/action is granted
-		err := database.DB.Table("position_permissions").
+		err := m.db.Table("position_permissions").
 			Joins("JOIN permissions ON permissions.id = position_permissions.permission_id").
 			Where("position_permissions.position_id = ? AND permissions.resource = ? AND permissions.action = ?", positionID, resource, action).
 			Count(&count).Error

@@ -17,9 +17,9 @@ type LocationHandler struct {
 	locationService *services.LocationService
 }
 
-func NewLocationHandler() *LocationHandler {
+func NewLocationHandler(locationService *services.LocationService) *LocationHandler {
 	return &LocationHandler{
-		locationService: services.NewLocationService(),
+		locationService: locationService,
 	}
 }
 

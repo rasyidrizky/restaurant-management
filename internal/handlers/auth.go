@@ -14,8 +14,8 @@ type AuthHandler struct {
 	authService *services.AuthService
 }
 
-func NewAuthHandler() *AuthHandler {
-	return &AuthHandler{authService: services.NewAuthService()}
+func NewAuthHandler(authService *services.AuthService) *AuthHandler {
+	return &AuthHandler{authService: authService}
 }
 
 func (h *AuthHandler) RegisterRoutes(router *gin.RouterGroup) {

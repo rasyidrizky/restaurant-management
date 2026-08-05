@@ -6,7 +6,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
-	"project-2026-06-misoastory-be-go/internal/database"
 	"project-2026-06-misoastory-be-go/internal/dto"
 	"project-2026-06-misoastory-be-go/internal/models"
 	"project-2026-06-misoastory-be-go/internal/utils"
@@ -16,8 +15,8 @@ type AuthService struct {
 	db *gorm.DB
 }
 
-func NewAuthService() *AuthService {
-	return &AuthService{db: database.DB}
+func NewAuthService(db *gorm.DB) *AuthService {
+	return &AuthService{db: db}
 }
 
 func (s *AuthService) Register(req *dto.RegisterRequest) (*dto.AuthResponse, error) {

@@ -2,7 +2,6 @@ package services
 
 import (
 	"errors"
-	"project-2026-06-misoastory-be-go/internal/database"
 	"project-2026-06-misoastory-be-go/internal/dto"
 	"project-2026-06-misoastory-be-go/internal/models"
 	"project-2026-06-misoastory-be-go/internal/utils"
@@ -15,19 +14,23 @@ var (
 	ErrLocationConflict = errors.New("location with slug already exists")
 )
 
-type LocationService struct{}
+type LocationService struct {
+	db *gorm.DB
+}
 
-func NewLocationService() *LocationService {
-	return &LocationService{}
+func NewLocationService(db *gorm.DB) *LocationService {
+	return &LocationService{
+		db: db,
+	}
 }
 
 func (s *LocationService) GetAllLocations(search string) ([]models.Location, error) {
 	var locations []models.Location
-	if database.DB == nil {
+	if s.db == nil {
 		return nil, errors.New("database not connected")
 	}
 
-	query := database.DB.Model(&models.Location{})
+	query := s.db.Model(&models.Location{})
 	
 	if search != "" {
 		query = query.Where("name ILIKE ? OR city ILIKE ?", "%"+search+"%", "%"+search+"%")
@@ -39,7 +42,7 @@ func (s *LocationService) GetAllLocations(search string) ([]models.Location, err
 
 func (s *LocationService) GetLocationByID(id uint) (*models.Location, error) {
 	var location models.Location
-	if err := database.DB.First(&location, id).Error; err != nil {
+	if err := s.db.First(&location, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrLocationNotFound
 		}
@@ -53,7 +56,7 @@ func (s *LocationService) CreateLocation(req *dto.CreateLocationRequest) (*model
 
 	// Check conflict
 	var count int64
-	database.DB.Model(&models.Location{}).Where("slug = ?", slug).Count(&count)
+	s.db.Model(&models.Location{}).Where("slug = ?", slug).Count(&count)
 	if count > 0 {
 		return nil, ErrLocationConflict
 	}
@@ -75,7 +78,7 @@ func (s *LocationService) CreateLocation(req *dto.CreateLocationRequest) (*model
 		SupportsEvents:      req.SupportsEvents,
 	}
 
-	if err := database.DB.Create(&location).Error; err != nil {
+	if err := s.db.Create(&location).Error; err != nil {
 		return nil, err
 	}
 	return &location, nil
@@ -90,7 +93,7 @@ func (s *LocationService) UpdateLocation(id uint, req *dto.UpdateLocationRequest
 	if req.Name != nil && *req.Name != location.Name {
 		newSlug := utils.ToSlug(*req.Name)
 		var count int64
-		database.DB.Model(&models.Location{}).Where("slug = ? AND id != ?", newSlug, id).Count(&count)
+		s.db.Model(&models.Location{}).Where("slug = ? AND id != ?", newSlug, id).Count(&count)
 		if count > 0 {
 			return nil, ErrLocationConflict
 		}
@@ -135,7 +138,7 @@ func (s *LocationService) UpdateLocation(id uint, req *dto.UpdateLocationRequest
 		location.SupportsEvents = *req.SupportsEvents
 	}
 
-	if err := database.DB.Save(location).Error; err != nil {
+	if err := s.db.Save(location).Error; err != nil {
 		return nil, err
 	}
 
@@ -148,5 +151,5 @@ func (s *LocationService) DeleteLocation(id uint) error {
 		return err
 	}
 	
-	return database.DB.Delete(location).Error
+	return s.db.Delete(location).Error
 }
