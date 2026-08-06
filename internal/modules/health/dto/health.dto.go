@@ -1,4 +1,4 @@
-package dto
+package healthdto
 
 import "time"
 

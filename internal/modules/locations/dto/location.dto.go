@@ -1,4 +1,4 @@
-package dto
+package locationdto
 
 import (
 	"time"

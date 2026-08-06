@@ -2,7 +2,7 @@ package locations
 
 import (
 	"errors"
-	"project-2026-06-misoastory-be-go/internal/common/dto"
+	locationdto "project-2026-06-misoastory-be-go/internal/modules/locations/dto"
 	"project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 
@@ -54,7 +54,7 @@ func (s *LocationService) GetLocationByID(id uint) (*models.Location, error) {
 	return &location, nil
 }
 
-func (s *LocationService) CreateLocation(req *dto.CreateLocationRequest) (*models.Location, error) {
+func (s *LocationService) CreateLocation(req *locationdto.CreateLocationRequest) (*models.Location, error) {
 	slug := utils.ToSlug(req.Name)
 
 	// Check conflict
@@ -75,7 +75,7 @@ func (s *LocationService) CreateLocation(req *dto.CreateLocationRequest) (*model
 	return &location, nil
 }
 
-func (s *LocationService) UpdateLocation(id uint, req *dto.UpdateLocationRequest) (*models.Location, error) {
+func (s *LocationService) UpdateLocation(id uint, req *locationdto.UpdateLocationRequest) (*models.Location, error) {
 	location, err := s.GetLocationByID(id)
 	if err != nil {
 		return nil, err

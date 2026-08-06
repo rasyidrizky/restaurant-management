@@ -35,7 +35,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.LoginRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.LoginRequest"
                         }
                     }
                 ],
@@ -43,7 +43,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_common_dto_AuthResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_dto_AuthResponse"
                         }
                     },
                     "400": {
@@ -81,7 +81,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.RegisterRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.RegisterRequest"
                         }
                     }
                 ],
@@ -89,7 +89,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_common_dto_AuthResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_dto_AuthResponse"
                         }
                     },
                     "400": {
@@ -123,7 +123,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_common_dto_CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse"
                         }
                     },
                     "500": {
@@ -158,7 +158,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.CreateCategoryRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.CreateCategoryRequest"
                         }
                     }
                 ],
@@ -166,7 +166,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_common_dto_CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse"
                         }
                     },
                     "400": {
@@ -225,7 +225,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_common_dto_CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse"
                         }
                     },
                     "400": {
@@ -341,7 +341,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.UpdateCategoryRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.UpdateCategoryRequest"
                         }
                     }
                 ],
@@ -349,7 +349,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_common_dto_CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse"
                         }
                     },
                     "400": {
@@ -405,7 +405,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_common_dto_HealthResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_dto_HealthResponse"
                         }
                     }
                 }
@@ -468,7 +468,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.CreateLocationRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.CreateLocationRequest"
                         }
                     }
                 ],
@@ -476,7 +476,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_common_dto_LocationResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_dto_LocationResponse"
                         }
                     },
                     "400": {
@@ -651,7 +651,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.UpdateLocationRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.UpdateLocationRequest"
                         }
                     }
                 ],
@@ -712,7 +712,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_common_dto_UserResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_users_dto_UserResponse"
                         }
                     },
                     "401": {
@@ -738,115 +738,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "project-2026-06-misoastory-be-go_internal_common_dto.AuthResponse": {
-            "type": "object",
-            "properties": {
-                "token": {
-                    "type": "string"
-                },
-                "user": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.UserResponse"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.CategoryResponse": {
-            "type": "object",
-            "properties": {
-                "created_at": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "display_order": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "is_active": {
-                    "type": "boolean"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "slug": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.CreateCategoryRequest": {
-            "type": "object",
-            "required": [
-                "name"
-            ],
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "display_order": {
-                    "type": "integer"
-                },
-                "is_active": {
-                    "type": "boolean"
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.CreateLocationRequest": {
-            "type": "object",
-            "required": [
-                "address",
-                "city",
-                "name"
-            ],
-            "properties": {
-                "address": {
-                    "type": "string"
-                },
-                "city": {
-                    "type": "string"
-                },
-                "closing_time": {
-                    "type": "string"
-                },
-                "has_dine_in": {
-                    "type": "boolean"
-                },
-                "is_active": {
-                    "type": "boolean"
-                },
-                "is_open_24_hours": {
-                    "type": "boolean"
-                },
-                "latitude": {
-                    "type": "number"
-                },
-                "longitude": {
-                    "type": "number"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "opening_time": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                },
-                "supports_events": {
-                    "type": "boolean"
-                },
-                "supports_home_service": {
-                    "type": "boolean"
-                }
-            }
-        },
         "project-2026-06-misoastory-be-go_internal_common_dto.ErrorResponse": {
             "type": "object",
             "properties": {
@@ -855,146 +746,6 @@ const docTemplate = `{
                 },
                 "error": {
                     "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.HealthResponse": {
-            "type": "object",
-            "properties": {
-                "status": {
-                    "type": "string"
-                },
-                "timestamp": {
-                    "type": "string"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.LocationResponse": {
-            "type": "object",
-            "properties": {
-                "address": {
-                    "type": "string"
-                },
-                "city": {
-                    "type": "string"
-                },
-                "closing_time": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "has_dine_in": {
-                    "type": "boolean"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "is_active": {
-                    "type": "boolean"
-                },
-                "is_open_24_hours": {
-                    "type": "boolean"
-                },
-                "latitude": {
-                    "type": "number"
-                },
-                "longitude": {
-                    "type": "number"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "opening_time": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                },
-                "slug": {
-                    "type": "string"
-                },
-                "supports_events": {
-                    "type": "boolean"
-                },
-                "supports_home_service": {
-                    "type": "boolean"
-                },
-                "updated_at": {
-                    "type": "string"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.LoginRequest": {
-            "type": "object",
-            "required": [
-                "email",
-                "password"
-            ],
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.RegisterRequest": {
-            "type": "object",
-            "required": [
-                "email",
-                "first_name",
-                "last_name",
-                "password"
-            ],
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "first_name": {
-                    "type": "string"
-                },
-                "last_name": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string",
-                    "minLength": 6
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_common_dto_CategoryResponse": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.CategoryResponse"
-                    }
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_common_dto_UserResponse": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.UserResponse"
-                    }
                 },
                 "message": {
                     "type": "string"
@@ -1018,56 +769,34 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_common_dto_AuthResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.AuthResponse"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse"
+                    }
                 },
                 "message": {
                     "type": "string"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_common_dto_CategoryResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_users_dto_UserResponse": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.CategoryResponse"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_common_dto_HealthResponse": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.HealthResponse"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_common_dto_LocationResponse": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.LocationResponse"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_dto.UserResponse"
+                    }
                 },
                 "message": {
                     "type": "string"
@@ -1088,6 +817,62 @@ const docTemplate = `{
                 }
             }
         },
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_dto_AuthResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.AuthResponse"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_dto_HealthResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_health_dto.HealthResponse"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_dto_LocationResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.LocationResponse"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "project-2026-06-misoastory-be-go_internal_common_dto.Response-string": {
             "type": "object",
             "properties": {
@@ -1099,87 +884,6 @@ const docTemplate = `{
                 },
                 "message": {
                     "type": "string"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.UpdateCategoryRequest": {
-            "type": "object",
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "display_order": {
-                    "type": "integer"
-                },
-                "is_active": {
-                    "type": "boolean"
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.UpdateLocationRequest": {
-            "type": "object",
-            "properties": {
-                "address": {
-                    "type": "string"
-                },
-                "city": {
-                    "type": "string"
-                },
-                "closing_time": {
-                    "type": "string"
-                },
-                "has_dine_in": {
-                    "type": "boolean"
-                },
-                "is_active": {
-                    "type": "boolean"
-                },
-                "is_open_24_hours": {
-                    "type": "boolean"
-                },
-                "latitude": {
-                    "type": "number"
-                },
-                "longitude": {
-                    "type": "number"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "opening_time": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                },
-                "supports_events": {
-                    "type": "boolean"
-                },
-                "supports_home_service": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "project-2026-06-misoastory-be-go_internal_common_dto.UserResponse": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "first_name": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "last_name": {
-                    "type": "string"
-                },
-                "position_id": {
-                    "type": "integer"
                 }
             }
         },
@@ -1236,6 +940,302 @@ const docTemplate = `{
                 },
                 "updated_at": {
                     "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_auth_dto.AuthResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_dto.UserResponse"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_auth_dto.LoginRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_auth_dto.RegisterRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "first_name",
+                "last_name",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 6
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "display_order": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_categories_dto.CreateCategoryRequest": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "display_order": {
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_categories_dto.UpdateCategoryRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "display_order": {
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_health_dto.HealthResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_locations_dto.CreateLocationRequest": {
+            "type": "object",
+            "required": [
+                "address",
+                "city",
+                "name"
+            ],
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "closing_time": {
+                    "type": "string"
+                },
+                "has_dine_in": {
+                    "type": "boolean"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "is_open_24_hours": {
+                    "type": "boolean"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_time": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "supports_events": {
+                    "type": "boolean"
+                },
+                "supports_home_service": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_locations_dto.LocationResponse": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "closing_time": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "has_dine_in": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "is_open_24_hours": {
+                    "type": "boolean"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_time": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "supports_events": {
+                    "type": "boolean"
+                },
+                "supports_home_service": {
+                    "type": "boolean"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_locations_dto.UpdateLocationRequest": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "closing_time": {
+                    "type": "string"
+                },
+                "has_dine_in": {
+                    "type": "boolean"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "is_open_24_hours": {
+                    "type": "boolean"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "opening_time": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "supports_events": {
+                    "type": "boolean"
+                },
+                "supports_home_service": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_users_dto.UserResponse": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "position_id": {
+                    "type": "integer"
                 }
             }
         }

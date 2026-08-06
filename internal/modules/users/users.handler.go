@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"project-2026-06-misoastory-be-go/internal/common/middleware"
 	"project-2026-06-misoastory-be-go/internal/common/dto"
+	userdto "project-2026-06-misoastory-be-go/internal/modules/users/dto"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 
 	"github.com/gin-gonic/gin"
@@ -29,7 +30,7 @@ func (h *UserHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.Auth
 	}
 }
 
-// @Success 200 {object} dto.Response[[]dto.UserResponse]
+// @Success 200 {object} dto.Response[[]userdto.UserResponse]
 // @Failure 401 {object} dto.ErrorResponse
 // @Failure 403 {object} dto.ErrorResponse
 // @Failure 500 {object} dto.ErrorResponse
@@ -42,5 +43,7 @@ func (h *UserHandler) GetUsers(c *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(c, http.StatusOK, "Users retrieved successfully", dto.MapToUserResponses(users))
+	utils.SuccessResponse(c, http.StatusOK, "Users retrieved successfully", userdto.MapToUserResponses(users))
 }
+
+var _ dto.Response[any]
