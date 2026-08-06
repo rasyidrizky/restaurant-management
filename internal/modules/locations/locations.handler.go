@@ -52,13 +52,13 @@ func (h *LocationHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.
 // @Success 200 {object} dto.PaginatedResponse[[]locationtypes.LocationResponse]
 // @Router /locations [get]
 func (h *LocationHandler) GetLocations(c *gin.Context) {
-	var req locationtypes.GetAllLocationsRequest
+	var req locationtypes.LocationQuery
 	if err := c.ShouldBindQuery(&req); err != nil {
 		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid query parameters", err))
 		return
 	}
 
-	locations, meta, err := h.locationService.GetAllLocations(&req)
+	locations, meta, err := h.locationService.GetLocations(&req)
 	if err != nil {
 		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve locations", err))
 		return

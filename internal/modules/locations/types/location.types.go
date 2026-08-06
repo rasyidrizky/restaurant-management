@@ -9,7 +9,7 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-type GetAllLocationsRequest struct {
+type LocationQuery struct {
 	dto.PaginationQuery
 }
 

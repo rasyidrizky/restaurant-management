@@ -28,12 +28,9 @@ func NewLocationService(db *gorm.DB) *LocationService {
 	}
 }
 
-func (s *LocationService) GetAllLocations(req *locationtypes.GetAllLocationsRequest) ([]models.Location, dto.Meta, error) {
+func (s *LocationService) GetLocations(req *locationtypes.LocationQuery) ([]models.Location, dto.Meta, error) {
 	var locations []models.Location
 	var total int64
-	if s.db == nil {
-		return nil, dto.Meta{}, errors.New("database not connected")
-	}
 
 	query := s.db.Model(&models.Location{})
 	
@@ -74,10 +71,11 @@ func (s *LocationService) CreateLocation(req *locationtypes.CreateLocationReques
 	slug := utils.ToSlug(req.Name)
 
 	// Check conflict
-	var count int64
-	s.db.Model(&models.Location{}).Where("slug = ?", slug).Count(&count)
-	if count > 0 {
+	var existing models.Location
+	if err := s.db.Where("slug = ?", slug).First(&existing).Error; err == nil {
 		return nil, ErrLocationConflict
+	} else if !errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, err
 	}
 
 	location := models.Location{
@@ -99,10 +97,11 @@ func (s *LocationService) UpdateLocation(id uint, req *locationtypes.UpdateLocat
 
 	if req.Name != nil && *req.Name != location.Name {
 		newSlug := utils.ToSlug(*req.Name)
-		var count int64
-		s.db.Model(&models.Location{}).Where("slug = ? AND id != ?", newSlug, id).Count(&count)
-		if count > 0 {
+		var existing models.Location
+		if err := s.db.Where("slug = ? AND id != ?", newSlug, id).First(&existing).Error; err == nil {
 			return nil, ErrLocationConflict
+		} else if !errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, err
 		}
 		location.Slug = newSlug
 	}
