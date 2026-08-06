@@ -12,14 +12,17 @@ import (
 	productstypes "project-2026-06-misoastory-be-go/internal/modules/products/types"
 )
 
+// ProductHandler processes HTTP requests for Products.
 type ProductHandler struct {
 	service *ProductService
 }
 
+// NewProductHandler acts as the constructor for ProductHandler, injecting the ProductService.
 func NewProductHandler(service *ProductService) *ProductHandler {
 	return &ProductHandler{service: service}
 }
 
+// RegisterRoutes defines the API endpoints and maps them to their respective handler functions.
 func (h *ProductHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.AuthMiddleware) {
 	products := router.Group("/products")
 	{
@@ -100,7 +103,7 @@ func (h *ProductHandler) GetProducts(c *gin.Context) {
 // @Success 200 {object} dto.Response[productstypes.ProductResponse]
 // @Router /api/v1/products/{id} [get]
 func (h *ProductHandler) GetProductByID(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid product ID", err.Error())
 		return
@@ -127,7 +130,7 @@ func (h *ProductHandler) GetProductByID(c *gin.Context) {
 // @Success 200 {object} dto.Response[productstypes.ProductResponse]
 // @Router /api/v1/products/{id} [patch]
 func (h *ProductHandler) UpdateProduct(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid product ID", err.Error())
 		return

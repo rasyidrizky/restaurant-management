@@ -12,10 +12,12 @@ import (
 	"gorm.io/gorm"
 )
 
+// ProductService handles the core business logic and database interactions for Products.
 type ProductService struct {
 	db *gorm.DB
 }
 
+// NewProductService acts as the constructor for ProductService, injecting the GORM DB instance.
 func NewProductService(db *gorm.DB) *ProductService {
 	return &ProductService{db: db}
 }

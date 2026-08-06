@@ -7,15 +7,15 @@ import (
 
 // CreateProductRequest represents the body for creating a product
 type CreateProductRequest struct {
-	Name         string   `json:"name" binding:"required"`
-	Description  *string  `json:"description"`
-	Price        float64  `json:"price" binding:"required,min=0"`
-	ImageURL     *string  `json:"imageUrl"`
-	CategoryID   uint     `json:"categoryId" binding:"required"`
-	IsAvailable  *bool    `json:"isAvailable"`
-	IsBestSeller *bool    `json:"isBestSeller"`
-	DisplayOrder *int     `json:"displayOrder"`
-	LocationIDs  []uint   `json:"locationIds"`
+	Name         string  `json:"name" binding:"required"`
+	Description  *string `json:"description"`
+	Price        float64 `json:"price" binding:"required,min=0"`
+	ImageURL     *string `json:"imageUrl"`
+	CategoryID   uint    `json:"categoryId" binding:"required"`
+	IsAvailable  *bool   `json:"isAvailable"`
+	IsBestSeller *bool   `json:"isBestSeller"`
+	DisplayOrder *int    `json:"displayOrder"`
+	LocationIDs  []uint  `json:"locationIds"`
 }
 
 // UpdateProductRequest represents the body for updating a product
