@@ -22,6 +22,8 @@ func main() {
 
 	log.Println("🌱 Starting database seeding...")
 
+	db.AutoMigrate(&models.Product{}, &models.ProductLocation{})
+	
 	cleanDatabase(db)
 
 	// 1. Seed Positions
@@ -55,7 +57,9 @@ func cleanDatabase(db *gorm.DB) {
 			permissions, 
 			positions, 
 			categories, 
-			locations 
+			locations,
+			products,
+			product_locations
 		RESTART IDENTITY CASCADE;
 	`).Error
 	if err != nil {
@@ -111,6 +115,8 @@ func seedPermissions(db *gorm.DB) []models.Permission {
 		{Name: "ADD_PRODUCT", Resource: "PRODUCT", Action: "ADD"},
 		{Name: "UPDATE_PRODUCT", Resource: "PRODUCT", Action: "UPDATE"},
 		{Name: "DELETE_PRODUCT", Resource: "PRODUCT", Action: "DELETE"},
+
+
 
 		// Location Management
 		{Name: "VIEW_LOCATION", Resource: "LOCATION", Action: "VIEW"},
@@ -171,25 +177,29 @@ func seedUsers(db *gorm.DB, adminPos, adminMisoaPos, memberPos, staffPos models.
 }
 
 func seedRestaurantData(db *gorm.DB) {
-	log.Println("🍜 Seeding restaurant data (Categories & Locations)...")
+	log.Println("🍜 Seeding restaurant data (Categories, Locations, Products)...")
 
 	// Locations
-	locations := []models.Location{
-		{Name: "Misoa Bandung", Slug: "misoa-bandung", Address: "Jl. Dago No. 1", City: "Bandung", Phone: utils.StringPtr("022-1234567")},
-		{Name: "Misoa Jakarta", Slug: "misoa-jakarta", Address: "Jl. Sudirman No. 10", City: "Jakarta", Phone: utils.StringPtr("021-7654321")},
-	}
-	for _, l := range locations {
-		db.Where("slug = ?", l.Slug).FirstOrCreate(&l, l)
-	}
+	bandung := models.Location{Name: "Misoa Bandung", Slug: "misoa-bandung", Address: "Jl. Dago No. 1", City: "Bandung", Phone: utils.StringPtr("022-1234567"), IsActive: true, IsOpen24Hours: false, HasDineIn: true, SupportsHomeService: true, SupportsEvents: true}
+	jakarta := models.Location{Name: "Misoa Jakarta", Slug: "misoa-jakarta", Address: "Jl. Sudirman No. 10", City: "Jakarta", Phone: utils.StringPtr("021-7654321"), IsActive: true, IsOpen24Hours: true, HasDineIn: true, SupportsHomeService: false, SupportsEvents: false}
+	db.Where("slug = ?", bandung.Slug).FirstOrCreate(&bandung, bandung)
+	db.Where("slug = ?", jakarta.Slug).FirstOrCreate(&jakarta, jakarta)
 
 	// Categories
-	categories := []models.Category{
-		{Name: "Snacks", Slug: "snacks"},
-		{Name: "Drinks", Slug: "drinks"},
-	}
-	for _, c := range categories {
-		db.Where("slug = ?", c.Slug).FirstOrCreate(&c, c)
-	}
+	snacks := models.Category{Name: "Snacks", Slug: "snacks", DisplayOrder: 1, IsActive: true}
+	drinks := models.Category{Name: "Drinks", Slug: "drinks", DisplayOrder: 2, IsActive: true}
+	db.Where("slug = ?", snacks.Slug).FirstOrCreate(&snacks, snacks)
+	db.Where("slug = ?", drinks.Slug).FirstOrCreate(&drinks, drinks)
+
+	// Products
+	misoGoreng := models.Product{Name: "Miso Goreng Original", Slug: "miso-goreng-original", Description: utils.StringPtr("Mie soa goreng khas Misoa"), Price: 18000, IsBestSeller: true, CategoryID: snacks.ID, IsAvailable: true}
+	esTehManis := models.Product{Name: "Es Teh Manis", Slug: "es-teh-manis", Description: utils.StringPtr("Teh manis dingin segar"), Price: 5000, CategoryID: drinks.ID, IsAvailable: true}
+	db.Where("slug = ?", misoGoreng.Slug).FirstOrCreate(&misoGoreng, misoGoreng)
+	db.Where("slug = ?", esTehManis.Slug).FirstOrCreate(&esTehManis, esTehManis)
+
+	// Product Locations
+	db.FirstOrCreate(&models.ProductLocation{}, models.ProductLocation{ProductID: misoGoreng.ID, LocationID: bandung.ID, IsAvailable: true})
+	db.FirstOrCreate(&models.ProductLocation{}, models.ProductLocation{ProductID: misoGoreng.ID, LocationID: jakarta.ID, IsAvailable: true})
 
 	log.Println("✅ Restaurant data seeded")
 }

@@ -25,5 +25,16 @@ func HealthCheck(c *gin.Context) {
 	})
 }
 
+// Ping godoc
+// @Summary Ping the API
+// @Description Returns a simple pong response
+// @Tags health
+// @Produce json
+// @Success 200 {object} dto.Response[string]
+// @Router /ping [get]
+func Ping(c *gin.Context) {
+	utils.SuccessResponse(c, http.StatusOK, "Pong!", "pong")
+}
+
 var _ dto.Response[any]
 

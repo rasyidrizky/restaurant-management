@@ -9,6 +9,7 @@ import (
 	"project-2026-06-misoastory-be-go/internal/modules/auth"
 	"project-2026-06-misoastory-be-go/internal/modules/categories"
 	"project-2026-06-misoastory-be-go/internal/modules/locations"
+	"project-2026-06-misoastory-be-go/internal/modules/products"
 	"project-2026-06-misoastory-be-go/internal/modules/users"
 	"project-2026-06-misoastory-be-go/internal/modules/health"
 	"project-2026-06-misoastory-be-go/docs"
@@ -36,6 +37,7 @@ func registerAllRoutes(
 	catH *categories.CategoryHandler,
 	locH *locations.LocationHandler,
 	userH *users.UserHandler,
+	prodH *products.ProductHandler,
 ) {
 	// Swagger route
 	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%d", cfg.Port)
@@ -44,12 +46,14 @@ func registerAllRoutes(
 	// API v1 route group
 	v1 := r.Group("/api/v1")
 	v1.GET("/health", health.HealthCheck)
+	v1.GET("/ping", health.Ping)
 	
 	// Let each module register its own routes
 	authH.RegisterRoutes(v1)
 	catH.RegisterRoutes(v1, m)
 	locH.RegisterRoutes(v1, m)
 	userH.RegisterRoutes(v1, m)
+	prodH.RegisterRoutes(v1, m)
 }
 
 func main() {
@@ -59,6 +63,7 @@ func main() {
 		categories.Module,
 		locations.Module,
 		users.Module,
+		products.Module,
 		health.Module,
 		fx.Invoke(registerAllRoutes),
 	).Run()

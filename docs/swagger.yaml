@@ -1,5 +1,13 @@
 basePath: /api/v1
 definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
   project-2026-06-misoastory-be-go_internal_common_dto.ErrorResponse:
     properties:
       code:
@@ -40,6 +48,19 @@ definitions:
       data:
         items:
           $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.LocationResponse'
+        type: array
+      message:
+        type: string
+      meta:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Meta'
+    type: object
+  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse
+  : properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_types.ProductResponse'
         type: array
       message:
         type: string
@@ -104,6 +125,15 @@ definitions:
       message:
         type: string
     type: object
+  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse
+  : properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_types.ProductResponse'
+      message:
+        type: string
+    type: object
   project-2026-06-misoastory-be-go_internal_common_dto.Response-string:
     properties:
       code:
@@ -111,6 +141,25 @@ definitions:
       data:
         type: string
       message:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_common_models.Category:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      display_order:
+        type: integer
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      name:
+        type: string
+      slug:
+        type: string
+      updated_at:
         type: string
     type: object
   project-2026-06-misoastory-be-go_internal_common_models.Location:
@@ -149,6 +198,58 @@ definitions:
         type: boolean
       updated_at:
         type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_common_models.Product:
+    properties:
+      category:
+        allOf:
+        - $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_models.Category'
+        description: Relations
+      categoryId:
+        type: integer
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      displayOrder:
+        type: integer
+      id:
+        type: integer
+      imageUrl:
+        type: string
+      isAvailable:
+        type: boolean
+      isBestSeller:
+        type: boolean
+      locations:
+        items:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_models.ProductLocation'
+        type: array
+      name:
+        type: string
+      price:
+        type: number
+      slug:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_common_models.ProductLocation:
+    properties:
+      isAvailable:
+        type: boolean
+      location:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_models.Location'
+      locationId:
+        type: integer
+      product:
+        allOf:
+        - $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_models.Product'
+        description: Relations (using pointers for preloading)
+      productId:
+        type: integer
     type: object
   project-2026-06-misoastory-be-go_internal_modules_auth_types.AuthResponse:
     properties:
@@ -333,6 +434,87 @@ definitions:
       supports_home_service:
         type: boolean
     type: object
+  project-2026-06-misoastory-be-go_internal_modules_products_types.CreateProductRequest:
+    properties:
+      categoryId:
+        type: integer
+      description:
+        type: string
+      displayOrder:
+        type: integer
+      imageUrl:
+        type: string
+      isAvailable:
+        type: boolean
+      isBestSeller:
+        type: boolean
+      locationIds:
+        items:
+          type: integer
+        type: array
+      name:
+        type: string
+      price:
+        minimum: 0
+        type: number
+    required:
+    - categoryId
+    - name
+    - price
+    type: object
+  project-2026-06-misoastory-be-go_internal_modules_products_types.ProductResponse:
+    properties:
+      category:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_models.Category'
+      categoryId:
+        type: integer
+      description:
+        type: string
+      displayOrder:
+        type: integer
+      id:
+        type: integer
+      imageUrl:
+        type: string
+      isAvailable:
+        type: boolean
+      isBestSeller:
+        type: boolean
+      locations:
+        items:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_models.ProductLocation'
+        type: array
+      name:
+        type: string
+      price:
+        type: number
+      slug:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_modules_products_types.UpdateProductRequest:
+    properties:
+      categoryId:
+        type: integer
+      description:
+        type: string
+      displayOrder:
+        type: integer
+      imageUrl:
+        type: string
+      isAvailable:
+        type: boolean
+      isBestSeller:
+        type: boolean
+      locationIds:
+        items:
+          type: integer
+        type: array
+      name:
+        type: string
+      price:
+        minimum: 0
+        type: number
+    type: object
   project-2026-06-misoastory-be-go_internal_modules_users_types.UserResponse:
     properties:
       email:
@@ -353,6 +535,140 @@ info:
   title: Misoastory API
   version: "1.0"
 paths:
+  /api/v1/products:
+    get:
+      consumes:
+      - application/json
+      description: Get a paginated list of products
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Search by name
+        in: query
+        name: search
+        type: string
+      - description: Sort order
+        in: query
+        name: sort
+        type: string
+      - description: Filter by category ID
+        in: query
+        name: categoryId
+        type: integer
+      - description: Filter by location ID
+        in: query
+        name: locationId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse'
+      summary: Get all products
+      tags:
+      - Products
+    post:
+      consumes:
+      - application/json
+      description: Create a new product with optional locations mapping
+      parameters:
+      - description: Product data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_types.CreateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a product
+      tags:
+      - Products
+  /api/v1/products/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an existing product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-string'
+      security:
+      - BearerAuth: []
+      summary: Delete a product by ID
+      tags:
+      - Products
+    get:
+      consumes:
+      - application/json
+      description: Get a product's details by ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse'
+      summary: Get a product by ID
+      tags:
+      - Products
+    patch:
+      consumes:
+      - application/json
+      description: Update an existing product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_types.UpdateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse'
+      security:
+      - BearerAuth: []
+      summary: Update a product by ID
+      tags:
+      - Products
   /auth/login:
     post:
       consumes:
@@ -814,6 +1130,19 @@ paths:
       summary: Update a location
       tags:
       - locations
+  /ping:
+    get:
+      description: Returns a simple pong response
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-string'
+      summary: Ping the API
+      tags:
+      - health
   /users:
     get:
       parameters:

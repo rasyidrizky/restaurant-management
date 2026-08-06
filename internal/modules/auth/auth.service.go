@@ -68,6 +68,12 @@ func (s *AuthService) Register(req *authtypes.RegisterRequest) (*authtypes.AuthR
 				{Name: "UPDATE_CATEGORY", Resource: "CATEGORY", Action: "UPDATE"},
 				{Name: "DELETE_CATEGORY", Resource: "CATEGORY", Action: "DELETE"},
 
+				// Product Management
+				{Name: "VIEW_PRODUCT", Resource: "PRODUCT", Action: "VIEW"},
+				{Name: "ADD_PRODUCT", Resource: "PRODUCT", Action: "ADD"},
+				{Name: "UPDATE_PRODUCT", Resource: "PRODUCT", Action: "UPDATE"},
+				{Name: "DELETE_PRODUCT", Resource: "PRODUCT", Action: "DELETE"},
+
 				// Location Management
 				{Name: "VIEW_LOCATION", Resource: "LOCATION", Action: "VIEW"},
 				{Name: "ADD_LOCATION", Resource: "LOCATION", Action: "ADD"},
