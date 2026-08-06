@@ -8,6 +8,7 @@ import (
 	"project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 
+	"github.com/jinzhu/copier"
 	"gorm.io/gorm"
 )
 
@@ -64,19 +65,11 @@ func (s *CategoryService) CreateCategory(req *dto.CreateCategoryRequest) (*model
 	}
 
 	category := models.Category{
-		Name: req.Name,
 		Slug: slug,
 	}
-
-	if req.Description != nil {
-		category.Description = req.Description
-	}
-	if req.DisplayOrder != nil {
-		category.DisplayOrder = *req.DisplayOrder
-	}
-	if req.IsActive != nil {
-		category.IsActive = *req.IsActive
-	} else {
+	copier.Copy(&category, req)
+	
+	if req.IsActive == nil {
 		category.IsActive = true // default
 	}
 
@@ -95,10 +88,7 @@ func (s *CategoryService) UpdateCategory(id uint, req *dto.UpdateCategoryRequest
 
 	// Update fields
 	if req.Name != nil {
-		category.Name = *req.Name
 		newSlug := utils.ToSlug(*req.Name)
-		
-		// Only check for conflict if the slug is actually changing
 		if newSlug != category.Slug {
 			var existingCategory models.Category
 			if err := s.db.Where("slug = ?", newSlug).First(&existingCategory).Error; err == nil {
@@ -110,15 +100,8 @@ func (s *CategoryService) UpdateCategory(id uint, req *dto.UpdateCategoryRequest
 		}
 	}
 
-	if req.Description != nil {
-		category.Description = req.Description
-	}
-	if req.DisplayOrder != nil {
-		category.DisplayOrder = *req.DisplayOrder
-	}
-	if req.IsActive != nil {
-		category.IsActive = *req.IsActive
-	}
+	// Automatically copy all non-nil fields
+	copier.CopyWithOption(category, req, copier.Option{IgnoreEmpty: true})
 
 	if err := s.db.Save(category).Error; err != nil {
 		return nil, err

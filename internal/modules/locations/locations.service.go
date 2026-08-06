@@ -6,6 +6,7 @@ import (
 	"project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 
+	"github.com/jinzhu/copier"
 	"gorm.io/gorm"
 )
 
@@ -64,21 +65,9 @@ func (s *LocationService) CreateLocation(req *dto.CreateLocationRequest) (*model
 	}
 
 	location := models.Location{
-		Name:                req.Name,
-		Slug:                slug,
-		Address:             req.Address,
-		City:                req.City,
-		Phone:               req.Phone,
-		Latitude:            req.Latitude,
-		Longitude:           req.Longitude,
-		OpeningTime:         req.OpeningTime,
-		ClosingTime:         req.ClosingTime,
-		IsActive:            req.IsActive,
-		IsOpen24Hours:       req.IsOpen24Hours,
-		HasDineIn:           req.HasDineIn,
-		SupportsHomeService: req.SupportsHomeService,
-		SupportsEvents:      req.SupportsEvents,
+		Slug: slug,
 	}
+	copier.Copy(&location, req)
 
 	if err := s.db.Create(&location).Error; err != nil {
 		return nil, err
@@ -99,46 +88,11 @@ func (s *LocationService) UpdateLocation(id uint, req *dto.UpdateLocationRequest
 		if count > 0 {
 			return nil, ErrLocationConflict
 		}
-		location.Name = *req.Name
 		location.Slug = newSlug
 	}
 
-	if req.Address != nil {
-		location.Address = *req.Address
-	}
-	if req.City != nil {
-		location.City = *req.City
-	}
-	if req.Phone != nil {
-		location.Phone = req.Phone
-	}
-	if req.Latitude != nil {
-		location.Latitude = req.Latitude
-	}
-	if req.Longitude != nil {
-		location.Longitude = req.Longitude
-	}
-	if req.OpeningTime != nil {
-		location.OpeningTime = req.OpeningTime
-	}
-	if req.ClosingTime != nil {
-		location.ClosingTime = req.ClosingTime
-	}
-	if req.IsActive != nil {
-		location.IsActive = *req.IsActive
-	}
-	if req.IsOpen24Hours != nil {
-		location.IsOpen24Hours = *req.IsOpen24Hours
-	}
-	if req.HasDineIn != nil {
-		location.HasDineIn = *req.HasDineIn
-	}
-	if req.SupportsHomeService != nil {
-		location.SupportsHomeService = *req.SupportsHomeService
-	}
-	if req.SupportsEvents != nil {
-		location.SupportsEvents = *req.SupportsEvents
-	}
+	// Automatically copy all non-nil fields
+	copier.CopyWithOption(location, req, copier.Option{IgnoreEmpty: true})
 
 	if err := s.db.Save(location).Error; err != nil {
 		return nil, err
