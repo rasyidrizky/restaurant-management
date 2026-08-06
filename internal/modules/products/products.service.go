@@ -6,10 +6,15 @@ import (
 	"project-2026-06-misoastory-be-go/internal/common/dto"
 	"project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
-	productstypes "project-2026-06-misoastory-be-go/internal/modules/products/types"
+	producttypes "project-2026-06-misoastory-be-go/internal/modules/products/types"
 
 	"github.com/jinzhu/copier"
 	"gorm.io/gorm"
+)
+
+var (
+	ErrProductNotFound = errors.New("product not found")
+	ErrProductConflict = errors.New("product with this name already exists")
 )
 
 // ProductService handles the core business logic and database interactions for Products.
@@ -22,12 +27,12 @@ func NewProductService(db *gorm.DB) *ProductService {
 	return &ProductService{db: db}
 }
 
-func (s *ProductService) CreateProduct(req *productstypes.CreateProductRequest) (*models.Product, error) {
+func (s *ProductService) CreateProduct(req *producttypes.CreateProductRequest) (*models.Product, error) {
 	slug := utils.ToSlug(req.Name)
 
 	var existing models.Product
 	if err := s.db.Where("slug = ?", slug).First(&existing).Error; err == nil {
-		return nil, errors.New("product with this name already exists")
+		return nil, ErrProductConflict
 	} else if !errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, err
 	}
@@ -66,7 +71,7 @@ func (s *ProductService) CreateProduct(req *productstypes.CreateProductRequest) 
 	return s.GetProductByID(product.ID)
 }
 
-func (s *ProductService) UpdateProduct(id uint, req *productstypes.UpdateProductRequest) (*models.Product, error) {
+func (s *ProductService) UpdateProduct(id uint, req *producttypes.UpdateProductRequest) (*models.Product, error) {
 	product, err := s.GetProductByID(id)
 	if err != nil {
 		return nil, err
@@ -76,7 +81,7 @@ func (s *ProductService) UpdateProduct(id uint, req *productstypes.UpdateProduct
 		newSlug := utils.ToSlug(*req.Name)
 		var existing models.Product
 		if err := s.db.Where("slug = ? AND id != ?", newSlug, id).First(&existing).Error; err == nil {
-			return nil, errors.New("product with this name already exists")
+			return nil, ErrProductConflict
 		} else if !errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, err
 		}
@@ -121,7 +126,7 @@ func (s *ProductService) UpdateProduct(id uint, req *productstypes.UpdateProduct
 	return s.GetProductByID(product.ID)
 }
 
-func (s *ProductService) GetProducts(q *productstypes.ProductQuery) ([]models.Product, dto.Meta, error) {
+func (s *ProductService) GetProducts(q *producttypes.ProductQuery) ([]models.Product, dto.Meta, error) {
 	var products []models.Product
 	var total int64
 
@@ -161,6 +166,9 @@ func (s *ProductService) GetProducts(q *productstypes.ProductQuery) ([]models.Pr
 func (s *ProductService) GetProductByID(id uint) (*models.Product, error) {
 	var product models.Product
 	if err := s.db.Preload("Category").Preload("Locations").Preload("Locations.Location").First(&product, id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, ErrProductNotFound
+		}
 		return nil, err
 	}
 	return &product, nil

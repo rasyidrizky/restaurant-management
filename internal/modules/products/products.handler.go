@@ -1,6 +1,7 @@
 package products
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -9,17 +10,18 @@ import (
 	"project-2026-06-misoastory-be-go/internal/common/dto"
 	"project-2026-06-misoastory-be-go/internal/common/middleware"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
-	productstypes "project-2026-06-misoastory-be-go/internal/modules/products/types"
+	producttypes "project-2026-06-misoastory-be-go/internal/modules/products/types"
 )
 
 // ProductHandler processes HTTP requests for Products.
+// It acts as the controller layer, parsing requests and delegating to ProductService.
 type ProductHandler struct {
-	service *ProductService
+	productService *ProductService
 }
 
 // NewProductHandler acts as the constructor for ProductHandler, injecting the ProductService.
-func NewProductHandler(service *ProductService) *ProductHandler {
-	return &ProductHandler{service: service}
+func NewProductHandler(productService *ProductService) *ProductHandler {
+	return &ProductHandler{productService: productService}
 }
 
 // RegisterRoutes defines the API endpoints and maps them to their respective handler functions.
@@ -44,23 +46,27 @@ func (h *ProductHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.A
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Param request body productstypes.CreateProductRequest true "Product data"
-// @Success 201 {object} dto.Response[productstypes.ProductResponse]
+// @Param request body producttypes.CreateProductRequest true "Product data"
+// @Success 201 {object} dto.Response[producttypes.ProductResponse]
 // @Router /api/v1/products [post]
 func (h *ProductHandler) CreateProduct(c *gin.Context) {
-	var req productstypes.CreateProductRequest
+	var req producttypes.CreateProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request payload", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
 	}
 
-	product, err := h.service.CreateProduct(&req)
+	product, err := h.productService.CreateProduct(&req)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to create product", err.Error())
+		if errors.Is(err, ErrProductConflict) {
+			c.Error(utils.NewAppError(http.StatusConflict, "Product conflict", err))
+			return
+		}
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to create product", err))
 		return
 	}
 
-	utils.SuccessResponse(c, http.StatusCreated, "Product created successfully", productstypes.MapToProductResponse(product))
+	utils.SuccessResponse(c, http.StatusCreated, "Product created successfully", producttypes.MapToProductResponse(product))
 }
 
 // FindAll godoc
@@ -75,22 +81,22 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 // @Param sort query string false "Sort order"
 // @Param categoryId query int false "Filter by category ID"
 // @Param locationId query int false "Filter by location ID"
-// @Success 200 {object} dto.PaginatedResponse[[]productstypes.ProductResponse]
+// @Success 200 {object} dto.PaginatedResponse[[]producttypes.ProductResponse]
 // @Router /api/v1/products [get]
 func (h *ProductHandler) GetProducts(c *gin.Context) {
-	var q productstypes.ProductQuery
+	var q producttypes.ProductQuery
 	if err := c.ShouldBindQuery(&q); err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid query parameters", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid query parameters", err))
 		return
 	}
 
-	products, meta, err := h.service.GetProducts(&q)
+	products, meta, err := h.productService.GetProducts(&q)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve products", err.Error())
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve products", err))
 		return
 	}
 
-	utils.SuccessPaginatedResponse(c, http.StatusOK, "Products retrieved successfully", productstypes.MapToProductResponses(products), meta)
+	utils.SuccessPaginatedResponse(c, http.StatusOK, "Products retrieved successfully", producttypes.MapToProductResponses(products), meta)
 }
 
 // FindOne godoc
@@ -100,22 +106,26 @@ func (h *ProductHandler) GetProducts(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "Product ID"
-// @Success 200 {object} dto.Response[productstypes.ProductResponse]
+// @Success 200 {object} dto.Response[producttypes.ProductResponse]
 // @Router /api/v1/products/{id} [get]
 func (h *ProductHandler) GetProductByID(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid product ID", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid product ID", err))
 		return
 	}
 
-	product, err := h.service.GetProductByID(uint(id))
+	product, err := h.productService.GetProductByID(uint(id))
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusNotFound, "Product not found", err.Error())
+		if errors.Is(err, ErrProductNotFound) {
+			c.Error(utils.NewAppError(http.StatusNotFound, "Product not found", err))
+			return
+		}
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve product", err))
 		return
 	}
 
-	utils.SuccessResponse(c, http.StatusOK, "Product retrieved successfully", productstypes.MapToProductResponse(product))
+	utils.SuccessResponse(c, http.StatusOK, "Product retrieved successfully", producttypes.MapToProductResponse(product))
 }
 
 // Update godoc
@@ -126,29 +136,37 @@ func (h *ProductHandler) GetProductByID(c *gin.Context) {
 // @Produce json
 // @Security BearerAuth
 // @Param id path int true "Product ID"
-// @Param request body productstypes.UpdateProductRequest true "Updated data"
-// @Success 200 {object} dto.Response[productstypes.ProductResponse]
+// @Param request body producttypes.UpdateProductRequest true "Updated data"
+// @Success 200 {object} dto.Response[producttypes.ProductResponse]
 // @Router /api/v1/products/{id} [patch]
 func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid product ID", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid product ID", err))
 		return
 	}
 
-	var req productstypes.UpdateProductRequest
+	var req producttypes.UpdateProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request payload", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
 	}
 
-	product, err := h.service.UpdateProduct(uint(id), &req)
+	product, err := h.productService.UpdateProduct(uint(id), &req)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to update product", err.Error())
+		if errors.Is(err, ErrProductNotFound) {
+			c.Error(utils.NewAppError(http.StatusNotFound, "Product not found", err))
+			return
+		}
+		if errors.Is(err, ErrProductConflict) {
+			c.Error(utils.NewAppError(http.StatusConflict, "Product conflict", err))
+			return
+		}
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to update product", err))
 		return
 	}
 
-	utils.SuccessResponse(c, http.StatusOK, "Product updated successfully", productstypes.MapToProductResponse(product))
+	utils.SuccessResponse(c, http.StatusOK, "Product updated successfully", producttypes.MapToProductResponse(product))
 }
 
 // Delete godoc
@@ -162,14 +180,18 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 // @Success 200 {object} dto.Response[string]
 // @Router /api/v1/products/{id} [delete]
 func (h *ProductHandler) DeleteProduct(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid product ID", err.Error())
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid product ID", err))
 		return
 	}
 
-	if err := h.service.DeleteProduct(uint(id)); err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to delete product", err.Error())
+	if err := h.productService.DeleteProduct(uint(id)); err != nil {
+		if errors.Is(err, ErrProductNotFound) {
+			c.Error(utils.NewAppError(http.StatusNotFound, "Product not found", err))
+			return
+		}
+		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to delete product", err))
 		return
 	}
 
