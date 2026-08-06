@@ -84,13 +84,13 @@ func (h *ProductHandler) GetProducts(c *gin.Context) {
 		return
 	}
 
-	result, err := h.service.GetProducts(&q)
+	products, meta, err := h.service.GetProducts(&q)
 	if err != nil {
 		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve products", err.Error())
 		return
 	}
 
-	utils.SuccessPaginatedResponse(c, http.StatusOK, "Products retrieved successfully", productstypes.MapToProductResponses(result.Data), result.Meta)
+	utils.SuccessPaginatedResponse(c, http.StatusOK, "Products retrieved successfully", productstypes.MapToProductResponses(products), meta)
 }
 
 // FindOne godoc

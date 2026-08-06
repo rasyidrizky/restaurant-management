@@ -121,7 +121,7 @@ func (s *ProductService) UpdateProduct(id uint, req *productstypes.UpdateProduct
 	return s.GetProductByID(product.ID)
 }
 
-func (s *ProductService) GetProducts(q *productstypes.ProductQuery) (*dto.PaginatedResponse[[]models.Product], error) {
+func (s *ProductService) GetProducts(q *productstypes.ProductQuery) ([]models.Product, dto.Meta, error) {
 	var products []models.Product
 	var total int64
 
@@ -141,7 +141,7 @@ func (s *ProductService) GetProducts(q *productstypes.ProductQuery) (*dto.Pagina
 	}
 
 	if err := query.Count(&total).Error; err != nil {
-		return nil, err
+		return nil, dto.Meta{}, err
 	}
 
 	if q.Sort != "" {
@@ -151,13 +151,11 @@ func (s *ProductService) GetProducts(q *productstypes.ProductQuery) (*dto.Pagina
 	}
 
 	if err := query.Scopes(utils.Paginate(q.Page, q.Limit)).Find(&products).Error; err != nil {
-		return nil, err
+		return nil, dto.Meta{}, err
 	}
 
-	return &dto.PaginatedResponse[[]models.Product]{
-		Data: products,
-		Meta: utils.CalculateMeta(total, q.Page, q.Limit),
-	}, nil
+	meta := utils.CalculateMeta(total, q.Page, q.Limit)
+	return products, meta, nil
 }
 
 func (s *ProductService) GetProductByID(id uint) (*models.Product, error) {
