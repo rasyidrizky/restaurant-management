@@ -4,9 +4,14 @@ import (
 	"time"
 
 	"project-2026-06-misoastory-be-go/internal/common/models"
-	
+	"project-2026-06-misoastory-be-go/internal/common/dto"
+
 	"github.com/jinzhu/copier"
 )
+
+type GetAllCategoriesRequest struct {
+	dto.PaginationQuery
+}
 
 type CreateCategoryRequest struct {
 	Name         string  `json:"name" binding:"required"`

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"strings"
 
+	"project-2026-06-misoastory-be-go/internal/common/dto"
 	categorytypes "project-2026-06-misoastory-be-go/internal/modules/categories/types"
 	"project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
@@ -29,17 +30,31 @@ func NewCategoryService(db *gorm.DB) *CategoryService {
 	}
 }
 
-func (s *CategoryService) GetAllCategories(search string) ([]models.Category, error) {
+func (s *CategoryService) GetAllCategories(req *categorytypes.GetAllCategoriesRequest) ([]models.Category, dto.Meta, error) {
 	var categories []models.Category
+	var total int64
 	query := s.db.Model(&models.Category{})
 
-	if search != "" {
-		searchTerm := "%" + strings.ToLower(search) + "%"
+	if req.Search != "" {
+		searchTerm := "%" + strings.ToLower(req.Search) + "%"
 		query = query.Where("LOWER(name) LIKE ? OR LOWER(description) LIKE ?", searchTerm, searchTerm)
 	}
 
-	err := query.Order("display_order asc, name asc").Find(&categories).Error
-	return categories, err
+	// Count total before paginating
+	if err := query.Count(&total).Error; err != nil {
+		return nil, dto.Meta{}, err
+	}
+
+	// Default sort if not provided
+	sort := req.Sort
+	if sort == "" {
+		sort = "display_order asc, name asc"
+	}
+
+	err := query.Order(sort).Scopes(utils.Paginate(req.Page, req.Limit)).Find(&categories).Error
+	meta := utils.CalculateMeta(total, req.Page, req.Limit)
+	
+	return categories, meta, err
 }
 
 func (s *CategoryService) GetCategoryByID(id uint) (*models.Category, error) {

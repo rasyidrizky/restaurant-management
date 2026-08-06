@@ -44,18 +44,26 @@ func (h *CategoryHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.
 // @Description Get a list of all categories with optional search
 // @Tags categories
 // @Produce json
-// @Param search query string false "Search by name or description"
-// @Success 200 {object} dto.Response[[]categorytypes.CategoryResponse]
-// @Failure 500 {object} dto.ErrorResponse
+// @Param page query int false "Page number"
+// @Param limit query int false "Page size"
+// @Param search query string false "Search term"
+// @Param sort query string false "Sort order"
+// @Success 200 {object} dto.PaginatedResponse[[]categorytypes.CategoryResponse]
 // @Router /categories [get]
 func (h *CategoryHandler) GetCategories(c *gin.Context) {
-	search := c.Query("search")
-	categories, err := h.categoryService.GetAllCategories(search)
+	var req categorytypes.GetAllCategoriesRequest
+	if err := c.ShouldBindQuery(&req); err != nil {
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid query parameters", err))
+		return
+	}
+
+	categories, meta, err := h.categoryService.GetAllCategories(&req)
 	if err != nil {
 		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve categories", err))
 		return
 	}
-	utils.SuccessResponse(c, http.StatusOK, "Categories retrieved successfully", categorytypes.MapToCategoryResponses(categories))
+
+	utils.SuccessPaginatedResponse(c, http.StatusOK, "Categories retrieved successfully", categorytypes.MapToCategoryResponses(categories), meta)
 }
 
 // GetCategoryByID godoc

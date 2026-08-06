@@ -39,6 +39,51 @@ func (s *AuthService) Register(req *authtypes.RegisterRequest) (*authtypes.AuthR
 			if err := s.db.Create(&position).Error; err != nil {
 				return nil, err
 			}
+
+			// Seed basic admin permissions automatically for implemented modules
+			permissions := []models.Permission{
+				// User Management
+				{Name: "VIEW_USER", Resource: "USER", Action: "VIEW"},
+				{Name: "ADD_USER", Resource: "USER", Action: "ADD"},
+				{Name: "UPDATE_USER", Resource: "USER", Action: "UPDATE"},
+				{Name: "DELETE_USER", Resource: "USER", Action: "DELETE"},
+				{Name: "MANAGE_USER_PERMISSION", Resource: "USER", Action: "MANAGE_PERMISSION"},
+				{Name: "CHANGE_USER_POSITION", Resource: "USER", Action: "CHANGE_POSITION"},
+
+				// Position Management
+				{Name: "VIEW_POSITION", Resource: "POSITION", Action: "VIEW"},
+				{Name: "ADD_POSITION", Resource: "POSITION", Action: "ADD"},
+				{Name: "UPDATE_POSITION", Resource: "POSITION", Action: "UPDATE"},
+				{Name: "DELETE_POSITION", Resource: "POSITION", Action: "DELETE"},
+
+				// Permission Management
+				{Name: "VIEW_PERMISSION", Resource: "PERMISSION", Action: "VIEW"},
+				{Name: "ADD_PERMISSION", Resource: "PERMISSION", Action: "ADD"},
+				{Name: "UPDATE_PERMISSION", Resource: "PERMISSION", Action: "UPDATE"},
+				{Name: "DELETE_PERMISSION", Resource: "PERMISSION", Action: "DELETE"},
+
+				// Category Management
+				{Name: "VIEW_CATEGORY", Resource: "CATEGORY", Action: "VIEW"},
+				{Name: "ADD_CATEGORY", Resource: "CATEGORY", Action: "ADD"},
+				{Name: "UPDATE_CATEGORY", Resource: "CATEGORY", Action: "UPDATE"},
+				{Name: "DELETE_CATEGORY", Resource: "CATEGORY", Action: "DELETE"},
+
+				// Location Management
+				{Name: "VIEW_LOCATION", Resource: "LOCATION", Action: "VIEW"},
+				{Name: "ADD_LOCATION", Resource: "LOCATION", Action: "ADD"},
+				{Name: "UPDATE_LOCATION", Resource: "LOCATION", Action: "UPDATE"},
+				{Name: "DELETE_LOCATION", Resource: "LOCATION", Action: "DELETE"},
+			}
+			
+			for _, p := range permissions {
+				var perm models.Permission
+				s.db.Where("resource = ? AND action = ?", p.Resource, p.Action).FirstOrCreate(&perm, p)
+				
+				s.db.Create(&models.PositionPermission{
+					PositionID:   position.ID,
+					PermissionID: perm.ID,
+				})
+			}
 		} else {
 			return nil, err
 		}

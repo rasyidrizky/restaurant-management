@@ -113,9 +113,27 @@ const docTemplate = `{
                 "summary": "Get all categories",
                 "parameters": [
                     {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "Search by name or description",
+                        "description": "Search term",
                         "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort order",
+                        "name": "sort",
                         "in": "query"
                     }
                 ],
@@ -123,13 +141,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.ErrorResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse"
                         }
                     }
                 }
@@ -423,9 +435,27 @@ const docTemplate = `{
                 "summary": "Get all locations",
                 "parameters": [
                     {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "Search by name or city",
+                        "description": "Search term",
                         "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort order",
+                        "name": "sort",
                         "in": "query"
                     }
                 ],
@@ -433,13 +463,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_common_models_Location"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.ErrorResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse"
                         }
                     }
                 }
@@ -708,11 +732,37 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search term",
+                        "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort order",
+                        "name": "sort",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse"
                         }
                     },
                     "401": {
@@ -752,24 +802,24 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_common_models_Location": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Meta": {
             "type": "object",
             "properties": {
-                "code": {
+                "limit": {
                     "type": "integer"
                 },
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_models.Location"
-                    }
+                "page": {
+                    "type": "integer"
                 },
-                "message": {
-                    "type": "string"
+                "total": {
+                    "type": "integer"
+                },
+                "total_pages": {
+                    "type": "integer"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse": {
             "type": "object",
             "properties": {
                 "code": {
@@ -783,10 +833,33 @@ const docTemplate = `{
                 },
                 "message": {
                     "type": "string"
+                },
+                "meta": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Meta"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.LocationResponse"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "meta": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Meta"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse": {
             "type": "object",
             "properties": {
                 "code": {
@@ -800,6 +873,9 @@ const docTemplate = `{
                 },
                 "message": {
                     "type": "string"
+                },
+                "meta": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Meta"
                 }
             }
         },

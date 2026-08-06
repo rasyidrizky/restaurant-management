@@ -30,20 +30,30 @@ func (h *UserHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.Auth
 	}
 }
 
-// @Success 200 {object} dto.Response[[]usertypes.UserResponse]
+// @Param page query int false "Page number"
+// @Param limit query int false "Page size"
+// @Param search query string false "Search term"
+// @Param sort query string false "Sort order"
+// @Success 200 {object} dto.PaginatedResponse[[]usertypes.UserResponse]
 // @Failure 401 {object} dto.ErrorResponse
 // @Failure 403 {object} dto.ErrorResponse
 // @Failure 500 {object} dto.ErrorResponse
-// @Security BearerAuth
 // @Router /users [get]
+// @Security BearerAuth
 func (h *UserHandler) GetUsers(c *gin.Context) {
-	users, err := h.userService.GetUsers()
+	var req usertypes.GetAllUsersRequest
+	if err := c.ShouldBindQuery(&req); err != nil {
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid query parameters", err))
+		return
+	}
+
+	users, meta, err := h.userService.GetUsers(&req)
 	if err != nil {
 		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve users", err))
 		return
 	}
 
-	utils.SuccessResponse(c, http.StatusOK, "Users retrieved successfully", usertypes.MapToUserResponses(users))
+	utils.SuccessPaginatedResponse(c, http.StatusOK, "Users retrieved successfully", usertypes.MapToUserResponses(users), meta)
 }
 
 var _ dto.Response[any]

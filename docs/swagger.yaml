@@ -9,18 +9,18 @@ definitions:
       message:
         type: string
     type: object
-  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_common_models_Location
-  : properties:
-      code:
+  project-2026-06-misoastory-be-go_internal_common_dto.Meta:
+    properties:
+      limit:
         type: integer
-      data:
-        items:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_models.Location'
-        type: array
-      message:
-        type: string
+      page:
+        type: integer
+      total:
+        type: integer
+      total_pages:
+        type: integer
     type: object
-  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse
+  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse
   : properties:
       code:
         type: integer
@@ -30,8 +30,23 @@ definitions:
         type: array
       message:
         type: string
+      meta:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Meta'
     type: object
-  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse
+  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse
+  : properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.LocationResponse'
+        type: array
+      message:
+        type: string
+      meta:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Meta'
+    type: object
+  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse
   : properties:
       code:
         type: integer
@@ -41,6 +56,8 @@ definitions:
         type: array
       message:
         type: string
+      meta:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Meta'
     type: object
   project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_common_models_Location:
     properties:
@@ -396,9 +413,21 @@ paths:
     get:
       description: Get a list of all categories with optional search
       parameters:
-      - description: Search by name or description
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: limit
+        type: integer
+      - description: Search term
         in: query
         name: search
+        type: string
+      - description: Sort order
+        in: query
+        name: sort
         type: string
       produces:
       - application/json
@@ -406,11 +435,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.ErrorResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse'
       summary: Get all categories
       tags:
       - categories
@@ -597,9 +622,21 @@ paths:
     get:
       description: Get a list of all locations with optional search
       parameters:
-      - description: Search by name or city
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: limit
+        type: integer
+      - description: Search term
         in: query
         name: search
+        type: string
+      - description: Sort order
+        in: query
+        name: sort
         type: string
       produces:
       - application/json
@@ -607,11 +644,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_common_models_Location'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.ErrorResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse'
       summary: Get all locations
       tags:
       - locations
@@ -783,11 +816,28 @@ paths:
       - locations
   /users:
     get:
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: limit
+        type: integer
+      - description: Search term
+        in: query
+        name: search
+        type: string
+      - description: Sort order
+        in: query
+        name: sort
+        type: string
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse'
         "401":
           description: Unauthorized
           schema:

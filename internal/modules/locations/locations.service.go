@@ -2,6 +2,7 @@ package locations
 
 import (
 	"errors"
+	"project-2026-06-misoastory-be-go/internal/common/dto"
 	locationtypes "project-2026-06-misoastory-be-go/internal/modules/locations/types"
 	"project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
@@ -27,20 +28,35 @@ func NewLocationService(db *gorm.DB) *LocationService {
 	}
 }
 
-func (s *LocationService) GetAllLocations(search string) ([]models.Location, error) {
+func (s *LocationService) GetAllLocations(req *locationtypes.GetAllLocationsRequest) ([]models.Location, dto.Meta, error) {
 	var locations []models.Location
+	var total int64
 	if s.db == nil {
-		return nil, errors.New("database not connected")
+		return nil, dto.Meta{}, errors.New("database not connected")
 	}
 
 	query := s.db.Model(&models.Location{})
 	
-	if search != "" {
-		query = query.Where("name ILIKE ? OR city ILIKE ?", "%"+search+"%", "%"+search+"%")
+	if req.Search != "" {
+		searchTerm := "%" + req.Search + "%"
+		query = query.Where("name ILIKE ? OR city ILIKE ?", searchTerm, searchTerm)
 	}
 
-	result := query.Find(&locations)
-	return locations, result.Error
+	// Count total before paginating
+	if err := query.Count(&total).Error; err != nil {
+		return nil, dto.Meta{}, err
+	}
+
+	// Default sort if not provided
+	sort := req.Sort
+	if sort == "" {
+		sort = "name asc"
+	}
+
+	err := query.Order(sort).Scopes(utils.Paginate(req.Page, req.Limit)).Find(&locations).Error
+	meta := utils.CalculateMeta(total, req.Page, req.Limit)
+	
+	return locations, meta, err
 }
 
 func (s *LocationService) GetLocationByID(id uint) (*models.Location, error) {

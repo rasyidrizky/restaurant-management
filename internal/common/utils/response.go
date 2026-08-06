@@ -23,3 +23,13 @@ func ErrorResponse(c *gin.Context, statusCode int, message string, err string) {
 		Error:   err,
 	})
 }
+
+// SuccessPaginatedResponse formats and sends a paginated successful response
+func SuccessPaginatedResponse(c *gin.Context, statusCode int, message string, data any, meta dto.Meta) {
+	c.JSON(statusCode, dto.PaginatedResponse[any]{
+		Code:    statusCode,
+		Message: message,
+		Data:    data,
+		Meta:    meta,
+	})
+}

@@ -2,9 +2,14 @@ package usertypes
 
 import (
 	"project-2026-06-misoastory-be-go/internal/common/models"
+	"project-2026-06-misoastory-be-go/internal/common/dto"
 
 	"github.com/jinzhu/copier"
 )
+
+type GetAllUsersRequest struct {
+	dto.PaginationQuery
+}
 
 type UserResponse struct {
 	ID         uint   `json:"id"`

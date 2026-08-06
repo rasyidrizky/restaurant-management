@@ -45,18 +45,26 @@ func (h *LocationHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.
 // @Description Get a list of all locations with optional search
 // @Tags locations
 // @Produce json
-// @Param search query string false "Search by name or city"
-// @Success 200 {object} dto.Response[[]models.Location]
-// @Failure 500 {object} dto.ErrorResponse
+// @Param page query int false "Page number"
+// @Param limit query int false "Page size"
+// @Param search query string false "Search term"
+// @Param sort query string false "Sort order"
+// @Success 200 {object} dto.PaginatedResponse[[]locationtypes.LocationResponse]
 // @Router /locations [get]
 func (h *LocationHandler) GetLocations(c *gin.Context) {
-	search := c.Query("search")
-	locations, err := h.locationService.GetAllLocations(search)
+	var req locationtypes.GetAllLocationsRequest
+	if err := c.ShouldBindQuery(&req); err != nil {
+		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid query parameters", err))
+		return
+	}
+
+	locations, meta, err := h.locationService.GetAllLocations(&req)
 	if err != nil {
 		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve locations", err))
 		return
 	}
-	utils.SuccessResponse(c, http.StatusOK, "Locations retrieved successfully", locations)
+
+	utils.SuccessPaginatedResponse(c, http.StatusOK, "Locations retrieved successfully", locationtypes.MapToLocationResponses(locations), meta)
 }
 
 // GetLocationByID godoc
