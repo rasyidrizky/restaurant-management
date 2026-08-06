@@ -30,6 +30,7 @@ func NewHTTPServer(lc fx.Lifecycle, cfg *config.Config, db *gorm.DB) *gin.Engine
 
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
+	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	router.Use(middleware.ErrorHandler())
 
