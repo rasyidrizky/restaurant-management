@@ -3,15 +3,15 @@
 env_files = []
 root = "."
 testdata_dir = "testdata"
-tmp_dir = "tmp"
+tmp_dir = "dist"
 
 [build]
   args_bin = []
-  bin = "./tmp/main"
-  cmd = "go build -o ./tmp/main ."
+  bin = "./dist/main"
+  cmd = "go build -o ./dist/main ."
   delay = 1000
-  entrypoint = ["./tmp/main"]
-  exclude_dir = ["assets", "tmp", "vendor", "testdata"]
+  entrypoint = ["./dist/main"]
+  exclude_dir = ["assets", "dist", "vendor", "testdata"]
   exclude_file = []
   exclude_regex = ["_test.go"]
   exclude_unchanged = false
@@ -34,9 +34,9 @@ tmp_dir = "tmp"
 
   [build.windows]
     args_bin = []
-    bin = "tmp\\main.exe"
-    cmd = "go build -o ./tmp/main.exe ./cmd/server/main.go"
-    entrypoint = ["tmp\\main.exe"]
+    bin = "dist\\main.exe"
+    cmd = "go build -o ./dist/main.exe ./cmd/server/main.go"
+    entrypoint = ["dist\\main.exe"]
     full_bin = ""
     post_cmd = []
     pre_cmd = []
