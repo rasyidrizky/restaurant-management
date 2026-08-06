@@ -1,4 +1,4 @@
-package categorydto
+package categorytypes
 
 import (
 	"time"

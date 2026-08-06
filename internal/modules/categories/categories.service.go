@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	categorydto "project-2026-06-misoastory-be-go/internal/modules/categories/dto"
+	categorytypes "project-2026-06-misoastory-be-go/internal/modules/categories/types"
 	"project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 
@@ -53,7 +53,7 @@ func (s *CategoryService) GetCategoryByID(id uint) (*models.Category, error) {
 	return &category, nil
 }
 
-func (s *CategoryService) CreateCategory(req *categorydto.CreateCategoryRequest) (*models.Category, error) {
+func (s *CategoryService) CreateCategory(req *categorytypes.CreateCategoryRequest) (*models.Category, error) {
 	slug := utils.ToSlug(req.Name)
 
 	// Check if slug exists
@@ -80,7 +80,7 @@ func (s *CategoryService) CreateCategory(req *categorydto.CreateCategoryRequest)
 	return &category, nil
 }
 
-func (s *CategoryService) UpdateCategory(id uint, req *categorydto.UpdateCategoryRequest) (*models.Category, error) {
+func (s *CategoryService) UpdateCategory(id uint, req *categorytypes.UpdateCategoryRequest) (*models.Category, error) {
 	category, err := s.GetCategoryByID(id)
 	if err != nil {
 		return nil, err

@@ -1,7 +1,7 @@
-package authdto
+package authtypes
 
 import (
-	userdto "project-2026-06-misoastory-be-go/internal/modules/users/dto"
+	usertypes "project-2026-06-misoastory-be-go/internal/modules/users/types"
 )
 
 type RegisterRequest struct {
@@ -18,5 +18,5 @@ type LoginRequest struct {
 
 type AuthResponse struct {
 	Token string               `json:"token"`
-	User  userdto.UserResponse `json:"user"`
+	User  usertypes.UserResponse `json:"user"`
 }

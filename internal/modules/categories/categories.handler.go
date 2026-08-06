@@ -7,7 +7,7 @@ import (
 
 	"project-2026-06-misoastory-be-go/internal/common/middleware"
 	"project-2026-06-misoastory-be-go/internal/common/dto"
-	categorydto "project-2026-06-misoastory-be-go/internal/modules/categories/dto"
+	categorytypes "project-2026-06-misoastory-be-go/internal/modules/categories/types"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 
 	"github.com/gin-gonic/gin"
@@ -45,7 +45,7 @@ func (h *CategoryHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.
 // @Tags categories
 // @Produce json
 // @Param search query string false "Search by name or description"
-// @Success 200 {object} dto.Response[[]categorydto.CategoryResponse]
+// @Success 200 {object} dto.Response[[]categorytypes.CategoryResponse]
 // @Failure 500 {object} dto.ErrorResponse
 // @Router /categories [get]
 func (h *CategoryHandler) GetCategories(c *gin.Context) {
@@ -55,7 +55,7 @@ func (h *CategoryHandler) GetCategories(c *gin.Context) {
 		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve categories", err))
 		return
 	}
-	utils.SuccessResponse(c, http.StatusOK, "Categories retrieved successfully", categorydto.MapToCategoryResponses(categories))
+	utils.SuccessResponse(c, http.StatusOK, "Categories retrieved successfully", categorytypes.MapToCategoryResponses(categories))
 }
 
 // GetCategoryByID godoc
@@ -64,7 +64,7 @@ func (h *CategoryHandler) GetCategories(c *gin.Context) {
 // @Tags categories
 // @Produce json
 // @Param id path int true "Category ID"
-// @Success 200 {object} dto.Response[categorydto.CategoryResponse]
+// @Success 200 {object} dto.Response[categorytypes.CategoryResponse]
 // @Failure 400 {object} dto.ErrorResponse
 // @Failure 404 {object} dto.ErrorResponse
 // @Failure 500 {object} dto.ErrorResponse
@@ -85,7 +85,7 @@ func (h *CategoryHandler) GetCategoryByID(c *gin.Context) {
 		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to retrieve category", err))
 		return
 	}
-	utils.SuccessResponse(c, http.StatusOK, "Category retrieved successfully", categorydto.MapToCategoryResponse(category))
+	utils.SuccessResponse(c, http.StatusOK, "Category retrieved successfully", categorytypes.MapToCategoryResponse(category))
 }
 
 // CreateCategory godoc
@@ -94,8 +94,8 @@ func (h *CategoryHandler) GetCategoryByID(c *gin.Context) {
 // @Tags categories
 // @Accept json
 // @Produce json
-// @Param category body categorydto.CreateCategoryRequest true "Category data"
-// @Success 201 {object} dto.Response[categorydto.CategoryResponse]
+// @Param category body categorytypes.CreateCategoryRequest true "Category data"
+// @Success 201 {object} dto.Response[categorytypes.CategoryResponse]
 // @Failure 400 {object} dto.ErrorResponse
 // @Failure 401 {object} dto.ErrorResponse
 // @Failure 403 {object} dto.ErrorResponse
@@ -104,7 +104,7 @@ func (h *CategoryHandler) GetCategoryByID(c *gin.Context) {
 // @Security BearerAuth
 // @Router /categories [post]
 func (h *CategoryHandler) CreateCategory(c *gin.Context) {
-	var req categorydto.CreateCategoryRequest
+	var req categorytypes.CreateCategoryRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
@@ -119,7 +119,7 @@ func (h *CategoryHandler) CreateCategory(c *gin.Context) {
 		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to create category", err))
 		return
 	}
-	utils.SuccessResponse(c, http.StatusCreated, "Category created successfully", categorydto.MapToCategoryResponse(category))
+	utils.SuccessResponse(c, http.StatusCreated, "Category created successfully", categorytypes.MapToCategoryResponse(category))
 }
 
 // UpdateCategory godoc
@@ -129,8 +129,8 @@ func (h *CategoryHandler) CreateCategory(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "Category ID"
-// @Param category body categorydto.UpdateCategoryRequest true "Category data"
-// @Success 200 {object} dto.Response[categorydto.CategoryResponse]
+// @Param category body categorytypes.UpdateCategoryRequest true "Category data"
+// @Success 200 {object} dto.Response[categorytypes.CategoryResponse]
 // @Failure 400 {object} dto.ErrorResponse
 // @Failure 401 {object} dto.ErrorResponse
 // @Failure 403 {object} dto.ErrorResponse
@@ -146,7 +146,7 @@ func (h *CategoryHandler) UpdateCategory(c *gin.Context) {
 		return
 	}
 
-	var req categorydto.UpdateCategoryRequest
+	var req categorytypes.UpdateCategoryRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
@@ -165,7 +165,7 @@ func (h *CategoryHandler) UpdateCategory(c *gin.Context) {
 		c.Error(utils.NewAppError(http.StatusInternalServerError, "Failed to update category", err))
 		return
 	}
-	utils.SuccessResponse(c, http.StatusOK, "Category updated successfully", categorydto.MapToCategoryResponse(category))
+	utils.SuccessResponse(c, http.StatusOK, "Category updated successfully", categorytypes.MapToCategoryResponse(category))
 }
 
 // DeleteCategory godoc

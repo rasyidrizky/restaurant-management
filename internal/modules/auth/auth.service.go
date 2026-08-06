@@ -6,8 +6,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
-	authdto "project-2026-06-misoastory-be-go/internal/modules/auth/dto"
-	userdto "project-2026-06-misoastory-be-go/internal/modules/users/dto"
+	authtypes "project-2026-06-misoastory-be-go/internal/modules/auth/types"
+	usertypes "project-2026-06-misoastory-be-go/internal/modules/users/types"
 	"project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 )
@@ -22,7 +22,7 @@ func NewAuthService(db *gorm.DB) *AuthService {
 	return &AuthService{db: db}
 }
 
-func (s *AuthService) Register(req *authdto.RegisterRequest) (*authdto.AuthResponse, error) {
+func (s *AuthService) Register(req *authtypes.RegisterRequest) (*authtypes.AuthResponse, error) {
 	// Check if user already exists
 	var existingUser models.User
 	if err := s.db.Where("email = ?", req.Email).First(&existingUser).Error; err == nil {
@@ -67,13 +67,13 @@ func (s *AuthService) Register(req *authdto.RegisterRequest) (*authdto.AuthRespo
 		return nil, err
 	}
 
-	return &authdto.AuthResponse{
+	return &authtypes.AuthResponse{
 		Token: token,
-		User:  userdto.MapToUserResponse(&user),
+		User:  usertypes.MapToUserResponse(&user),
 	}, nil
 }
 
-func (s *AuthService) Login(req *authdto.LoginRequest) (*authdto.AuthResponse, error) {
+func (s *AuthService) Login(req *authtypes.LoginRequest) (*authtypes.AuthResponse, error) {
 	var user models.User
 	if err := s.db.Where("email = ?", req.Email).First(&user).Error; err != nil {
 		return nil, errors.New("invalid email or password")
@@ -88,8 +88,8 @@ func (s *AuthService) Login(req *authdto.LoginRequest) (*authdto.AuthResponse, e
 		return nil, err
 	}
 
-	return &authdto.AuthResponse{
+	return &authtypes.AuthResponse{
 		Token: token,
-		User:  userdto.MapToUserResponse(&user),
+		User:  usertypes.MapToUserResponse(&user),
 	}, nil
 }

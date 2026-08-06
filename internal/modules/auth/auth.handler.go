@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"project-2026-06-misoastory-be-go/internal/common/dto"
-	authdto "project-2026-06-misoastory-be-go/internal/modules/auth/dto"
+	authtypes "project-2026-06-misoastory-be-go/internal/modules/auth/types"
 
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 )
@@ -36,12 +36,12 @@ func (h *AuthHandler) RegisterRoutes(router *gin.RouterGroup) {
 // @Tags auth
 // @Accept json
 // @Produce json
-// @Param request body authdto.RegisterRequest true "Registration data"
-// @Success 201 {object} dto.Response[authdto.AuthResponse]
+// @Param request body authtypes.RegisterRequest true "Registration data"
+// @Success 201 {object} dto.Response[authtypes.AuthResponse]
 // @Failure 400 {object} dto.ErrorResponse
 // @Router /auth/register [post]
 func (h *AuthHandler) Register(c *gin.Context) {
-	var req authdto.RegisterRequest
+	var req authtypes.RegisterRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
@@ -65,13 +65,13 @@ func (h *AuthHandler) Register(c *gin.Context) {
 // @Tags auth
 // @Accept json
 // @Produce json
-// @Param request body authdto.LoginRequest true "Login credentials"
-// @Success 200 {object} dto.Response[authdto.AuthResponse]
+// @Param request body authtypes.LoginRequest true "Login credentials"
+// @Success 200 {object} dto.Response[authtypes.AuthResponse]
 // @Failure 400 {object} dto.ErrorResponse
 // @Failure 401 {object} dto.ErrorResponse
 // @Router /auth/login [post]
 func (h *AuthHandler) Login(c *gin.Context) {
-	var req authdto.LoginRequest
+	var req authtypes.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return

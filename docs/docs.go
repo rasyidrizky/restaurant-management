@@ -35,7 +35,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.LoginRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_types.LoginRequest"
                         }
                     }
                 ],
@@ -43,7 +43,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_dto_AuthResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_types_AuthResponse"
                         }
                     },
                     "400": {
@@ -81,7 +81,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.RegisterRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_types.RegisterRequest"
                         }
                     }
                 ],
@@ -89,7 +89,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_dto_AuthResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_types_AuthResponse"
                         }
                     },
                     "400": {
@@ -123,7 +123,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse"
                         }
                     },
                     "500": {
@@ -158,7 +158,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.CreateCategoryRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_types.CreateCategoryRequest"
                         }
                     }
                 ],
@@ -166,7 +166,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse"
                         }
                     },
                     "400": {
@@ -225,7 +225,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse"
                         }
                     },
                     "400": {
@@ -341,7 +341,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.UpdateCategoryRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_types.UpdateCategoryRequest"
                         }
                     }
                 ],
@@ -349,7 +349,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse"
                         }
                     },
                     "400": {
@@ -405,7 +405,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_dto_HealthResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_types_HealthResponse"
                         }
                     }
                 }
@@ -468,7 +468,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.CreateLocationRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.CreateLocationRequest"
                         }
                     }
                 ],
@@ -476,7 +476,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_dto_LocationResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse"
                         }
                     },
                     "400": {
@@ -651,7 +651,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.UpdateLocationRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.UpdateLocationRequest"
                         }
                     }
                 ],
@@ -712,7 +712,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_users_dto_UserResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse"
                         }
                     },
                     "401": {
@@ -769,7 +769,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse": {
             "type": "object",
             "properties": {
                 "code": {
@@ -778,7 +778,7 @@ const docTemplate = `{
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse"
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_types.CategoryResponse"
                     }
                 },
                 "message": {
@@ -786,7 +786,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_users_dto_UserResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse": {
             "type": "object",
             "properties": {
                 "code": {
@@ -795,7 +795,7 @@ const docTemplate = `{
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_dto.UserResponse"
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_types.UserResponse"
                     }
                 },
                 "message": {
@@ -817,56 +817,56 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_dto_AuthResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_types_AuthResponse": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.AuthResponse"
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_types.AuthResponse"
                 },
                 "message": {
                     "type": "string"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse"
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_types.CategoryResponse"
                 },
                 "message": {
                     "type": "string"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_dto_HealthResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_types_HealthResponse": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_health_dto.HealthResponse"
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_health_types.HealthResponse"
                 },
                 "message": {
                     "type": "string"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_dto_LocationResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.LocationResponse"
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.LocationResponse"
                 },
                 "message": {
                     "type": "string"
@@ -943,18 +943,18 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_auth_dto.AuthResponse": {
+        "project-2026-06-misoastory-be-go_internal_modules_auth_types.AuthResponse": {
             "type": "object",
             "properties": {
                 "token": {
                     "type": "string"
                 },
                 "user": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_dto.UserResponse"
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_types.UserResponse"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_auth_dto.LoginRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_auth_types.LoginRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -969,7 +969,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_auth_dto.RegisterRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_auth_types.RegisterRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -993,7 +993,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse": {
+        "project-2026-06-misoastory-be-go_internal_modules_categories_types.CategoryResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -1022,7 +1022,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_categories_dto.CreateCategoryRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_categories_types.CreateCategoryRequest": {
             "type": "object",
             "required": [
                 "name"
@@ -1042,7 +1042,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_categories_dto.UpdateCategoryRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_categories_types.UpdateCategoryRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -1059,7 +1059,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_health_dto.HealthResponse": {
+        "project-2026-06-misoastory-be-go_internal_modules_health_types.HealthResponse": {
             "type": "object",
             "properties": {
                 "status": {
@@ -1070,7 +1070,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_locations_dto.CreateLocationRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_locations_types.CreateLocationRequest": {
             "type": "object",
             "required": [
                 "address",
@@ -1119,7 +1119,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_locations_dto.LocationResponse": {
+        "project-2026-06-misoastory-be-go_internal_modules_locations_types.LocationResponse": {
             "type": "object",
             "properties": {
                 "address": {
@@ -1175,7 +1175,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_locations_dto.UpdateLocationRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_locations_types.UpdateLocationRequest": {
             "type": "object",
             "properties": {
                 "address": {
@@ -1219,7 +1219,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_users_dto.UserResponse": {
+        "project-2026-06-misoastory-be-go_internal_modules_users_types.UserResponse": {
             "type": "object",
             "properties": {
                 "email": {

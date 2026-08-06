@@ -1,4 +1,4 @@
-package healthdto
+package healthtypes
 
 import "time"
 

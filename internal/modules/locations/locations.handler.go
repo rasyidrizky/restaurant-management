@@ -7,7 +7,7 @@ import (
 
 	"project-2026-06-misoastory-be-go/internal/common/middleware"
 	"project-2026-06-misoastory-be-go/internal/common/dto"
-	locationdto "project-2026-06-misoastory-be-go/internal/modules/locations/dto"
+	locationtypes "project-2026-06-misoastory-be-go/internal/modules/locations/types"
 	_ "project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 
@@ -95,8 +95,8 @@ func (h *LocationHandler) GetLocationByID(c *gin.Context) {
 // @Tags locations
 // @Accept json
 // @Produce json
-// @Param location body locationdto.CreateLocationRequest true "Location data"
-// @Success 201 {object} dto.Response[locationdto.LocationResponse]
+// @Param location body locationtypes.CreateLocationRequest true "Location data"
+// @Success 201 {object} dto.Response[locationtypes.LocationResponse]
 // @Failure 400 {object} dto.ErrorResponse
 // @Failure 401 {object} dto.ErrorResponse
 // @Failure 403 {object} dto.ErrorResponse
@@ -105,7 +105,7 @@ func (h *LocationHandler) GetLocationByID(c *gin.Context) {
 // @Security BearerAuth
 // @Router /locations [post]
 func (h *LocationHandler) CreateLocation(c *gin.Context) {
-	var req locationdto.CreateLocationRequest
+	var req locationtypes.CreateLocationRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
@@ -130,7 +130,7 @@ func (h *LocationHandler) CreateLocation(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "Location ID"
-// @Param location body locationdto.UpdateLocationRequest true "Location data"
+// @Param location body locationtypes.UpdateLocationRequest true "Location data"
 // @Success 200 {object} dto.Response[models.Location]
 // @Failure 400 {object} dto.ErrorResponse
 // @Failure 401 {object} dto.ErrorResponse
@@ -147,7 +147,7 @@ func (h *LocationHandler) UpdateLocation(c *gin.Context) {
 		return
 	}
 
-	var req locationdto.UpdateLocationRequest
+	var req locationtypes.UpdateLocationRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
