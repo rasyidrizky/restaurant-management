@@ -28,52 +28,52 @@ definitions:
       total_pages:
         type: integer
     type: object
-  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse
+  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse
   : properties:
       code:
         type: integer
       data:
         items:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_types.CategoryResponse'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse'
         type: array
       message:
         type: string
       meta:
         $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Meta'
     type: object
-  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse
+  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_locations_dto_LocationResponse
   : properties:
       code:
         type: integer
       data:
         items:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.LocationResponse'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.LocationResponse'
         type: array
       message:
         type: string
       meta:
         $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Meta'
     type: object
-  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse
+  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_products_dto_ProductResponse
   : properties:
       code:
         type: integer
       data:
         items:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_types.ProductResponse'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_dto.ProductResponse'
         type: array
       message:
         type: string
       meta:
         $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Meta'
     type: object
-  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse
+  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_users_dto_UserResponse
   : properties:
       code:
         type: integer
       data:
         items:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_types.UserResponse'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_dto.UserResponse'
         type: array
       message:
         type: string
@@ -89,48 +89,48 @@ definitions:
       message:
         type: string
     type: object
-  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_types_AuthResponse
+  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_dto_AuthResponse
   : properties:
       code:
         type: integer
       data:
-        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_types.AuthResponse'
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.AuthResponse'
       message:
         type: string
     type: object
-  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse
+  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse
   : properties:
       code:
         type: integer
       data:
-        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_types.CategoryResponse'
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse'
       message:
         type: string
     type: object
-  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_types_HealthResponse
+  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_dto_HealthResponse
   : properties:
       code:
         type: integer
       data:
-        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_health_types.HealthResponse'
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_health_dto.HealthResponse'
       message:
         type: string
     type: object
-  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse
+  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_dto_LocationResponse
   : properties:
       code:
         type: integer
       data:
-        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.LocationResponse'
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.LocationResponse'
       message:
         type: string
     type: object
-  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse
+  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_dto_ProductResponse
   : properties:
       code:
         type: integer
       data:
-        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_types.ProductResponse'
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_dto.ProductResponse'
       message:
         type: string
     type: object
@@ -245,20 +245,18 @@ definitions:
       locationId:
         type: integer
       product:
-        allOf:
-        - $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_models.Product'
-        description: Relations (using pointers for preloading)
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_models.Product'
       productId:
         type: integer
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_auth_types.AuthResponse:
+  project-2026-06-misoastory-be-go_internal_modules_auth_dto.AuthResponse:
     properties:
       token:
         type: string
       user:
-        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_types.UserResponse'
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_dto.UserResponse'
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_auth_types.LoginRequest:
+  project-2026-06-misoastory-be-go_internal_modules_auth_dto.LoginRequest:
     properties:
       email:
         type: string
@@ -268,7 +266,7 @@ definitions:
     - email
     - password
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_auth_types.RegisterRequest:
+  project-2026-06-misoastory-be-go_internal_modules_auth_dto.RegisterRequest:
     properties:
       email:
         type: string
@@ -285,7 +283,7 @@ definitions:
     - last_name
     - password
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_categories_types.CategoryResponse:
+  project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse:
     properties:
       created_at:
         type: string
@@ -304,7 +302,7 @@ definitions:
       updated_at:
         type: string
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_categories_types.CreateCategoryRequest:
+  project-2026-06-misoastory-be-go_internal_modules_categories_dto.CreateCategoryRequest:
     properties:
       description:
         type: string
@@ -317,7 +315,7 @@ definitions:
     required:
     - name
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_categories_types.UpdateCategoryRequest:
+  project-2026-06-misoastory-be-go_internal_modules_categories_dto.UpdateCategoryRequest:
     properties:
       description:
         type: string
@@ -328,14 +326,14 @@ definitions:
       name:
         type: string
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_health_types.HealthResponse:
+  project-2026-06-misoastory-be-go_internal_modules_health_dto.HealthResponse:
     properties:
       status:
         type: string
       timestamp:
         type: string
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_locations_types.CreateLocationRequest:
+  project-2026-06-misoastory-be-go_internal_modules_locations_dto.CreateLocationRequest:
     properties:
       address:
         type: string
@@ -368,7 +366,7 @@ definitions:
     - city
     - name
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_locations_types.LocationResponse:
+  project-2026-06-misoastory-be-go_internal_modules_locations_dto.LocationResponse:
     properties:
       address:
         type: string
@@ -405,7 +403,7 @@ definitions:
       updated_at:
         type: string
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_locations_types.UpdateLocationRequest:
+  project-2026-06-misoastory-be-go_internal_modules_locations_dto.UpdateLocationRequest:
     properties:
       address:
         type: string
@@ -434,7 +432,7 @@ definitions:
       supports_home_service:
         type: boolean
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_products_types.CreateProductRequest:
+  project-2026-06-misoastory-be-go_internal_modules_products_dto.CreateProductRequest:
     properties:
       categoryId:
         type: integer
@@ -462,7 +460,7 @@ definitions:
     - name
     - price
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_products_types.ProductResponse:
+  project-2026-06-misoastory-be-go_internal_modules_products_dto.ProductResponse:
     properties:
       category:
         $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_models.Category'
@@ -491,7 +489,7 @@ definitions:
       slug:
         type: string
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_products_types.UpdateProductRequest:
+  project-2026-06-misoastory-be-go_internal_modules_products_dto.UpdateProductRequest:
     properties:
       categoryId:
         type: integer
@@ -515,7 +513,7 @@ definitions:
         minimum: 0
         type: number
     type: object
-  project-2026-06-misoastory-be-go_internal_modules_users_types.UserResponse:
+  project-2026-06-misoastory-be-go_internal_modules_users_dto.UserResponse:
     properties:
       email:
         type: string
@@ -535,140 +533,6 @@ info:
   title: Misoastory API
   version: "1.0"
 paths:
-  /api/v1/products:
-    get:
-      consumes:
-      - application/json
-      description: Get a paginated list of products
-      parameters:
-      - description: Page number
-        in: query
-        name: page
-        type: integer
-      - description: Items per page
-        in: query
-        name: limit
-        type: integer
-      - description: Search by name
-        in: query
-        name: search
-        type: string
-      - description: Sort order
-        in: query
-        name: sort
-        type: string
-      - description: Filter by category ID
-        in: query
-        name: categoryId
-        type: integer
-      - description: Filter by location ID
-        in: query
-        name: locationId
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse'
-      summary: Get all products
-      tags:
-      - Products
-    post:
-      consumes:
-      - application/json
-      description: Create a new product with optional locations mapping
-      parameters:
-      - description: Product data
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_types.CreateProductRequest'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse'
-      security:
-      - BearerAuth: []
-      summary: Create a product
-      tags:
-      - Products
-  /api/v1/products/{id}:
-    delete:
-      consumes:
-      - application/json
-      description: Delete an existing product
-      parameters:
-      - description: Product ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-string'
-      security:
-      - BearerAuth: []
-      summary: Delete a product by ID
-      tags:
-      - Products
-    get:
-      consumes:
-      - application/json
-      description: Get a product's details by ID
-      parameters:
-      - description: Product ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse'
-      summary: Get a product by ID
-      tags:
-      - Products
-    patch:
-      consumes:
-      - application/json
-      description: Update an existing product
-      parameters:
-      - description: Product ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: Updated data
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_types.UpdateProductRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse'
-      security:
-      - BearerAuth: []
-      summary: Update a product by ID
-      tags:
-      - Products
   /auth/login:
     post:
       consumes:
@@ -680,14 +544,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_types.LoginRequest'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.LoginRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_types_AuthResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_dto_AuthResponse'
         "400":
           description: Bad Request
           schema:
@@ -710,14 +574,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_types.RegisterRequest'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.RegisterRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_types_AuthResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_dto_AuthResponse'
         "400":
           description: Bad Request
           schema:
@@ -751,7 +615,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse'
       summary: Get all categories
       tags:
       - categories
@@ -765,14 +629,14 @@ paths:
         name: category
         required: true
         schema:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_types.CreateCategoryRequest'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.CreateCategoryRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse'
         "400":
           description: Bad Request
           schema:
@@ -853,7 +717,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse'
         "400":
           description: Bad Request
           schema:
@@ -884,14 +748,14 @@ paths:
         name: category
         required: true
         schema:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_types.UpdateCategoryRequest'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.UpdateCategoryRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse'
         "400":
           description: Bad Request
           schema:
@@ -930,7 +794,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_types_HealthResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_dto_HealthResponse'
       summary: Check API Health
       tags:
       - health
@@ -960,7 +824,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_locations_dto_LocationResponse'
       summary: Get all locations
       tags:
       - locations
@@ -974,14 +838,14 @@ paths:
         name: location
         required: true
         schema:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.CreateLocationRequest'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.CreateLocationRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_dto_LocationResponse'
         "400":
           description: Bad Request
           schema:
@@ -1093,7 +957,7 @@ paths:
         name: location
         required: true
         schema:
-          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.UpdateLocationRequest'
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.UpdateLocationRequest'
       produces:
       - application/json
       responses:
@@ -1143,6 +1007,140 @@ paths:
       summary: Ping the API
       tags:
       - health
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: Get a paginated list of products
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Search by name
+        in: query
+        name: search
+        type: string
+      - description: Sort order
+        in: query
+        name: sort
+        type: string
+      - description: Filter by category ID
+        in: query
+        name: categoryId
+        type: integer
+      - description: Filter by location ID
+        in: query
+        name: locationId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_products_dto_ProductResponse'
+      summary: Get all products
+      tags:
+      - Products
+    post:
+      consumes:
+      - application/json
+      description: Create a new product with optional locations mapping
+      parameters:
+      - description: Product data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_dto.CreateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_dto_ProductResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a product
+      tags:
+      - Products
+  /products/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an existing product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-string'
+      security:
+      - BearerAuth: []
+      summary: Delete a product by ID
+      tags:
+      - Products
+    get:
+      consumes:
+      - application/json
+      description: Get a product's details by ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_dto_ProductResponse'
+      summary: Get a product by ID
+      tags:
+      - Products
+    patch:
+      consumes:
+      - application/json
+      description: Update an existing product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_dto.UpdateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_dto_ProductResponse'
+      security:
+      - BearerAuth: []
+      summary: Update a product by ID
+      tags:
+      - Products
   /users:
     get:
       parameters:
@@ -1166,7 +1164,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse'
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_users_dto_UserResponse'
         "401":
           description: Unauthorized
           schema:

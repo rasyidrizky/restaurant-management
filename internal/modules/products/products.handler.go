@@ -39,7 +39,7 @@ func (h *ProductHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.A
 	}
 }
 
-// Create godoc
+// CreateProduct godoc
 // @Summary Create a product
 // @Description Create a new product with optional locations mapping
 // @Tags Products
@@ -48,7 +48,7 @@ func (h *ProductHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.A
 // @Security BearerAuth
 // @Param request body productdto.CreateProductRequest true "Product data"
 // @Success 201 {object} dto.Response[productdto.ProductResponse]
-// @Router /api/v1/products [post]
+// @Router /products [post]
 func (h *ProductHandler) CreateProduct(c *gin.Context) {
 	var req productdto.CreateProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -69,7 +69,7 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 	utils.SuccessResponse(c, http.StatusCreated, "Product created successfully", productdto.MapToProductResponse(product))
 }
 
-// FindAll godoc
+// GetProducts godoc
 // @Summary Get all products
 // @Description Get a paginated list of products
 // @Tags Products
@@ -82,7 +82,7 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 // @Param categoryId query int false "Filter by category ID"
 // @Param locationId query int false "Filter by location ID"
 // @Success 200 {object} dto.PaginatedResponse[[]productdto.ProductResponse]
-// @Router /api/v1/products [get]
+// @Router /products [get]
 func (h *ProductHandler) GetProducts(c *gin.Context) {
 	var q productdto.ProductQuery
 	if err := c.ShouldBindQuery(&q); err != nil {
@@ -99,7 +99,7 @@ func (h *ProductHandler) GetProducts(c *gin.Context) {
 	utils.SuccessPaginatedResponse(c, http.StatusOK, "Products retrieved successfully", productdto.MapToProductResponses(products), meta)
 }
 
-// FindOne godoc
+// GetProductByID godoc
 // @Summary Get a product by ID
 // @Description Get a product's details by ID
 // @Tags Products
@@ -107,7 +107,7 @@ func (h *ProductHandler) GetProducts(c *gin.Context) {
 // @Produce json
 // @Param id path int true "Product ID"
 // @Success 200 {object} dto.Response[productdto.ProductResponse]
-// @Router /api/v1/products/{id} [get]
+// @Router /products/{id} [get]
 func (h *ProductHandler) GetProductByID(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -128,7 +128,7 @@ func (h *ProductHandler) GetProductByID(c *gin.Context) {
 	utils.SuccessResponse(c, http.StatusOK, "Product retrieved successfully", productdto.MapToProductResponse(product))
 }
 
-// Update godoc
+// UpdateProduct godoc
 // @Summary Update a product by ID
 // @Description Update an existing product
 // @Tags Products
@@ -138,7 +138,7 @@ func (h *ProductHandler) GetProductByID(c *gin.Context) {
 // @Param id path int true "Product ID"
 // @Param request body productdto.UpdateProductRequest true "Updated data"
 // @Success 200 {object} dto.Response[productdto.ProductResponse]
-// @Router /api/v1/products/{id} [patch]
+// @Router /products/{id} [patch]
 func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -169,7 +169,7 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	utils.SuccessResponse(c, http.StatusOK, "Product updated successfully", productdto.MapToProductResponse(product))
 }
 
-// Delete godoc
+// DeleteProduct godoc
 // @Summary Delete a product by ID
 // @Description Delete an existing product
 // @Tags Products
@@ -178,7 +178,7 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 // @Security BearerAuth
 // @Param id path int true "Product ID"
 // @Success 200 {object} dto.Response[string]
-// @Router /api/v1/products/{id} [delete]
+// @Router /products/{id} [delete]
 func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

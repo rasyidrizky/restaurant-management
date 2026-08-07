@@ -15,215 +15,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/products": {
-            "get": {
-                "description": "Get a paginated list of products",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Get all products",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Page number",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Items per page",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Search by name",
-                        "name": "search",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Sort order",
-                        "name": "sort",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Filter by category ID",
-                        "name": "categoryId",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Filter by location ID",
-                        "name": "locationId",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Create a new product with optional locations mapping",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Create a product",
-                "parameters": [
-                    {
-                        "description": "Product data",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_types.CreateProductRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/products/{id}": {
-            "get": {
-                "description": "Get a product's details by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Get a product by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Product ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Delete an existing product",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Delete a product by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Product ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-string"
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Update an existing product",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Update a product by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Product ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Updated data",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_types.UpdateProductRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/auth/login": {
             "post": {
                 "description": "Authenticate user and return JWT",
@@ -244,7 +35,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_types.LoginRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.LoginRequest"
                         }
                     }
                 ],
@@ -252,7 +43,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_types_AuthResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_dto_AuthResponse"
                         }
                     },
                     "400": {
@@ -290,7 +81,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_types.RegisterRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.RegisterRequest"
                         }
                     }
                 ],
@@ -298,7 +89,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_types_AuthResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_dto_AuthResponse"
                         }
                     },
                     "400": {
@@ -350,7 +141,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse"
                         }
                     }
                 }
@@ -379,7 +170,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_types.CreateCategoryRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.CreateCategoryRequest"
                         }
                     }
                 ],
@@ -387,7 +178,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse"
                         }
                     },
                     "400": {
@@ -446,7 +237,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse"
                         }
                     },
                     "400": {
@@ -562,7 +353,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_types.UpdateCategoryRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.UpdateCategoryRequest"
                         }
                     }
                 ],
@@ -570,7 +361,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse"
                         }
                     },
                     "400": {
@@ -626,7 +417,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_types_HealthResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_dto_HealthResponse"
                         }
                     }
                 }
@@ -672,7 +463,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_locations_dto_LocationResponse"
                         }
                     }
                 }
@@ -701,7 +492,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.CreateLocationRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.CreateLocationRequest"
                         }
                     }
                 ],
@@ -709,7 +500,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_dto_LocationResponse"
                         }
                     },
                     "400": {
@@ -884,7 +675,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.UpdateLocationRequest"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.UpdateLocationRequest"
                         }
                     }
                 ],
@@ -954,6 +745,215 @@ const docTemplate = `{
                 }
             }
         },
+        "/products": {
+            "get": {
+                "description": "Get a paginated list of products",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get all products",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Items per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search by name",
+                        "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort order",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Filter by category ID",
+                        "name": "categoryId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Filter by location ID",
+                        "name": "locationId",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_products_dto_ProductResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create a new product with optional locations mapping",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Create a product",
+                "parameters": [
+                    {
+                        "description": "Product data",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_dto.CreateProductRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_dto_ProductResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "description": "Get a product's details by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get a product by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Product ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_dto_ProductResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Delete an existing product",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Delete a product by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Product ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-string"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update an existing product",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Update a product by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Product ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Updated data",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_dto.UpdateProductRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_dto_ProductResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "security": [
@@ -991,7 +991,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse"
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_users_dto_UserResponse"
                         }
                     },
                     "401": {
@@ -1060,7 +1060,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse": {
             "type": "object",
             "properties": {
                 "code": {
@@ -1069,7 +1069,7 @@ const docTemplate = `{
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_types.CategoryResponse"
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse"
                     }
                 },
                 "message": {
@@ -1080,7 +1080,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_locations_dto_LocationResponse": {
             "type": "object",
             "properties": {
                 "code": {
@@ -1089,7 +1089,7 @@ const docTemplate = `{
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.LocationResponse"
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.LocationResponse"
                     }
                 },
                 "message": {
@@ -1100,7 +1100,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_products_dto_ProductResponse": {
             "type": "object",
             "properties": {
                 "code": {
@@ -1109,7 +1109,7 @@ const docTemplate = `{
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_types.ProductResponse"
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_dto.ProductResponse"
                     }
                 },
                 "message": {
@@ -1120,7 +1120,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_users_types_UserResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_users_dto_UserResponse": {
             "type": "object",
             "properties": {
                 "code": {
@@ -1129,7 +1129,7 @@ const docTemplate = `{
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_types.UserResponse"
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_dto.UserResponse"
                     }
                 },
                 "message": {
@@ -1154,70 +1154,70 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_types_AuthResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_auth_dto_AuthResponse": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_types.AuthResponse"
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.AuthResponse"
                 },
                 "message": {
                     "type": "string"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_types_CategoryResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_types.CategoryResponse"
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse"
                 },
                 "message": {
                     "type": "string"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_types_HealthResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_health_dto_HealthResponse": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_health_types.HealthResponse"
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_health_dto.HealthResponse"
                 },
                 "message": {
                     "type": "string"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_types_LocationResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_locations_dto_LocationResponse": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_types.LocationResponse"
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_locations_dto.LocationResponse"
                 },
                 "message": {
                     "type": "string"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_types_ProductResponse": {
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_products_dto_ProductResponse": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_types.ProductResponse"
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_products_dto.ProductResponse"
                 },
                 "message": {
                     "type": "string"
@@ -1394,30 +1394,25 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "product": {
-                    "description": "Relations (using pointers for preloading)",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_models.Product"
-                        }
-                    ]
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_models.Product"
                 },
                 "productId": {
                     "type": "integer"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_auth_types.AuthResponse": {
+        "project-2026-06-misoastory-be-go_internal_modules_auth_dto.AuthResponse": {
             "type": "object",
             "properties": {
                 "token": {
                     "type": "string"
                 },
                 "user": {
-                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_types.UserResponse"
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_users_dto.UserResponse"
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_auth_types.LoginRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_auth_dto.LoginRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -1432,7 +1427,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_auth_types.RegisterRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_auth_dto.RegisterRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -1456,7 +1451,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_categories_types.CategoryResponse": {
+        "project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -1485,7 +1480,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_categories_types.CreateCategoryRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_categories_dto.CreateCategoryRequest": {
             "type": "object",
             "required": [
                 "name"
@@ -1505,7 +1500,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_categories_types.UpdateCategoryRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_categories_dto.UpdateCategoryRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -1522,7 +1517,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_health_types.HealthResponse": {
+        "project-2026-06-misoastory-be-go_internal_modules_health_dto.HealthResponse": {
             "type": "object",
             "properties": {
                 "status": {
@@ -1533,7 +1528,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_locations_types.CreateLocationRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_locations_dto.CreateLocationRequest": {
             "type": "object",
             "required": [
                 "address",
@@ -1582,7 +1577,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_locations_types.LocationResponse": {
+        "project-2026-06-misoastory-be-go_internal_modules_locations_dto.LocationResponse": {
             "type": "object",
             "properties": {
                 "address": {
@@ -1638,7 +1633,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_locations_types.UpdateLocationRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_locations_dto.UpdateLocationRequest": {
             "type": "object",
             "properties": {
                 "address": {
@@ -1682,7 +1677,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_products_types.CreateProductRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_products_dto.CreateProductRequest": {
             "type": "object",
             "required": [
                 "categoryId",
@@ -1723,7 +1718,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_products_types.ProductResponse": {
+        "project-2026-06-misoastory-be-go_internal_modules_products_dto.ProductResponse": {
             "type": "object",
             "properties": {
                 "category": {
@@ -1767,7 +1762,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_products_types.UpdateProductRequest": {
+        "project-2026-06-misoastory-be-go_internal_modules_products_dto.UpdateProductRequest": {
             "type": "object",
             "properties": {
                 "categoryId": {
@@ -1803,7 +1798,7 @@ const docTemplate = `{
                 }
             }
         },
-        "project-2026-06-misoastory-be-go_internal_modules_users_types.UserResponse": {
+        "project-2026-06-misoastory-be-go_internal_modules_users_dto.UserResponse": {
             "type": "object",
             "properties": {
                 "email": {
