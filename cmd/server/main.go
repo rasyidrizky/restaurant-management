@@ -7,6 +7,7 @@ import (
 	"project-2026-06-misoastory-be-go/internal/config"
 	"project-2026-06-misoastory-be-go/internal/common/middleware"
 	"project-2026-06-misoastory-be-go/internal/modules/auth"
+	"project-2026-06-misoastory-be-go/internal/modules/careers"
 	"project-2026-06-misoastory-be-go/internal/modules/categories"
 	"project-2026-06-misoastory-be-go/internal/modules/locations"
 	"project-2026-06-misoastory-be-go/internal/modules/products"
@@ -34,6 +35,7 @@ func registerAllRoutes(
 	cfg *config.Config,
 	m *middleware.AuthMiddleware,
 	authH *auth.AuthHandler,
+	careerH *careers.CareerHandler,
 	catH *categories.CategoryHandler,
 	locH *locations.LocationHandler,
 	userH *users.UserHandler,
@@ -50,6 +52,7 @@ func registerAllRoutes(
 	
 	// Let each module register its own routes
 	authH.RegisterRoutes(v1)
+	careerH.RegisterRoutes(v1, m)
 	catH.RegisterRoutes(v1, m)
 	locH.RegisterRoutes(v1, m)
 	userH.RegisterRoutes(v1, m)
@@ -60,6 +63,7 @@ func main() {
 	fx.New(
 		core.Module,
 		auth.Module,
+		careers.Module,
 		categories.Module,
 		locations.Module,
 		users.Module,

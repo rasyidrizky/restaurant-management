@@ -95,6 +95,199 @@
                 }
             }
         },
+        "/careers": {
+            "get": {
+                "description": "Get a paginated list of job posts",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Careers"
+                ],
+                "summary": "Get all job posts",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Items per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search by title, division, or city",
+                        "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort order",
+                        "name": "sort",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_careers_dto_JobPostResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create a new job post",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Careers"
+                ],
+                "summary": "Create a job post",
+                "parameters": [
+                    {
+                        "description": "Job Post data",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_careers_dto.CreateJobPostRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_careers_dto_JobPostResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/careers/slug/{slug}": {
+            "get": {
+                "description": "Get a job post's details by its slug",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Careers"
+                ],
+                "summary": "Get a job post by slug",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Job Post Slug",
+                        "name": "slug",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_careers_dto_JobPostResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/careers/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Delete an existing job post",
+                "tags": [
+                    "Careers"
+                ],
+                "summary": "Delete a job post by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Job Post ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-string"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update an existing job post",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Careers"
+                ],
+                "summary": "Update a job post by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Job Post ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Updated data",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_careers_dto.UpdateJobPostRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_careers_dto_JobPostResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/categories": {
             "get": {
                 "description": "Get a list of all categories with optional search",
@@ -1054,6 +1247,26 @@
                 }
             }
         },
+        "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_careers_dto_JobPostResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_careers_dto.JobPostResponse"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "meta": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Meta"
+                }
+            }
+        },
         "project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse": {
             "type": "object",
             "properties": {
@@ -1156,6 +1369,20 @@
                 },
                 "data": {
                     "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.AuthResponse"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_careers_dto_JobPostResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/project-2026-06-misoastory-be-go_internal_modules_careers_dto.JobPostResponse"
                 },
                 "message": {
                     "type": "string"
@@ -1442,6 +1669,127 @@
                 "password": {
                     "type": "string",
                     "minLength": 6
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_careers_dto.CreateJobPostRequest": {
+            "type": "object",
+            "required": [
+                "city",
+                "description",
+                "division",
+                "education_level",
+                "employment_type",
+                "experience_level",
+                "requirements",
+                "title"
+            ],
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "division": {
+                    "type": "string"
+                },
+                "education_level": {
+                    "type": "string"
+                },
+                "employment_type": {
+                    "type": "string"
+                },
+                "experience_level": {
+                    "type": "string"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "requirements": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_careers_dto.JobPostResponse": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "division": {
+                    "type": "string"
+                },
+                "education_level": {
+                    "type": "string"
+                },
+                "employment_type": {
+                    "type": "string"
+                },
+                "experience_level": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "published_at": {
+                    "type": "string"
+                },
+                "requirements": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "project-2026-06-misoastory-be-go_internal_modules_careers_dto.UpdateJobPostRequest": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "division": {
+                    "type": "string"
+                },
+                "education_level": {
+                    "type": "string"
+                },
+                "employment_type": {
+                    "type": "string"
+                },
+                "experience_level": {
+                    "type": "string"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "requirements": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
                 }
             }
         },

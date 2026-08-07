@@ -27,6 +27,7 @@ func NewHTTPServer(lc fx.Lifecycle, cfg *config.Config, db *gorm.DB) *gin.Engine
 		&models.PositionPermission{},
 		&models.Product{},
 		&models.ProductLocation{},
+		&models.JobPost{},
 	); err != nil {
 		log.Fatalf("Failed to auto migrate database: %v", err)
 	}

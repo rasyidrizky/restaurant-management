@@ -28,6 +28,19 @@ definitions:
       total_pages:
         type: integer
     type: object
+  ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_careers_dto_JobPostResponse
+  : properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_careers_dto.JobPostResponse'
+        type: array
+      message:
+        type: string
+      meta:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Meta'
+    type: object
   ? project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_categories_dto_CategoryResponse
   : properties:
       code:
@@ -95,6 +108,15 @@ definitions:
         type: integer
       data:
         $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_auth_dto.AuthResponse'
+      message:
+        type: string
+    type: object
+  ? project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_careers_dto_JobPostResponse
+  : properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_careers_dto.JobPostResponse'
       message:
         type: string
     type: object
@@ -282,6 +304,88 @@ definitions:
     - first_name
     - last_name
     - password
+    type: object
+  project-2026-06-misoastory-be-go_internal_modules_careers_dto.CreateJobPostRequest:
+    properties:
+      city:
+        type: string
+      description:
+        type: string
+      division:
+        type: string
+      education_level:
+        type: string
+      employment_type:
+        type: string
+      experience_level:
+        type: string
+      is_active:
+        type: boolean
+      requirements:
+        type: string
+      title:
+        type: string
+    required:
+    - city
+    - description
+    - division
+    - education_level
+    - employment_type
+    - experience_level
+    - requirements
+    - title
+    type: object
+  project-2026-06-misoastory-be-go_internal_modules_careers_dto.JobPostResponse:
+    properties:
+      city:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      division:
+        type: string
+      education_level:
+        type: string
+      employment_type:
+        type: string
+      experience_level:
+        type: string
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      published_at:
+        type: string
+      requirements:
+        type: string
+      slug:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  project-2026-06-misoastory-be-go_internal_modules_careers_dto.UpdateJobPostRequest:
+    properties:
+      city:
+        type: string
+      description:
+        type: string
+      division:
+        type: string
+      education_level:
+        type: string
+      employment_type:
+        type: string
+      experience_level:
+        type: string
+      is_active:
+        type: boolean
+      requirements:
+        type: string
+      title:
+        type: string
     type: object
   project-2026-06-misoastory-be-go_internal_modules_categories_dto.CategoryResponse:
     properties:
@@ -589,6 +693,129 @@ paths:
       summary: Register a new user
       tags:
       - auth
+  /careers:
+    get:
+      consumes:
+      - application/json
+      description: Get a paginated list of job posts
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Search by title, division, or city
+        in: query
+        name: search
+        type: string
+      - description: Sort order
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.PaginatedResponse-array_project-2026-06-misoastory-be-go_internal_modules_careers_dto_JobPostResponse'
+      summary: Get all job posts
+      tags:
+      - Careers
+    post:
+      consumes:
+      - application/json
+      description: Create a new job post
+      parameters:
+      - description: Job Post data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_careers_dto.CreateJobPostRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_careers_dto_JobPostResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a job post
+      tags:
+      - Careers
+  /careers/{id}:
+    delete:
+      description: Delete an existing job post
+      parameters:
+      - description: Job Post ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-string'
+      security:
+      - BearerAuth: []
+      summary: Delete a job post by ID
+      tags:
+      - Careers
+    patch:
+      consumes:
+      - application/json
+      description: Update an existing job post
+      parameters:
+      - description: Job Post ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_modules_careers_dto.UpdateJobPostRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_careers_dto_JobPostResponse'
+      security:
+      - BearerAuth: []
+      summary: Update a job post by ID
+      tags:
+      - Careers
+  /careers/slug/{slug}:
+    get:
+      consumes:
+      - application/json
+      description: Get a job post's details by its slug
+      parameters:
+      - description: Job Post Slug
+        in: path
+        name: slug
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/project-2026-06-misoastory-be-go_internal_common_dto.Response-project-2026-06-misoastory-be-go_internal_modules_careers_dto_JobPostResponse'
+      summary: Get a job post by slug
+      tags:
+      - Careers
   /categories:
     get:
       description: Get a list of all categories with optional search
