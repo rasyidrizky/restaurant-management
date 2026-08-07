@@ -3,7 +3,7 @@ package locations
 import (
 	"errors"
 	"project-2026-06-misoastory-be-go/internal/common/dto"
-	locationtypes "project-2026-06-misoastory-be-go/internal/modules/locations/types"
+	locationdto "project-2026-06-misoastory-be-go/internal/modules/locations/dto"
 	"project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 
@@ -28,7 +28,7 @@ func NewLocationService(db *gorm.DB) *LocationService {
 	}
 }
 
-func (s *LocationService) GetLocations(req *locationtypes.LocationQuery) ([]models.Location, dto.Meta, error) {
+func (s *LocationService) GetLocations(req *locationdto.LocationQuery) ([]models.Location, dto.Meta, error) {
 	var locations []models.Location
 	var total int64
 
@@ -67,7 +67,7 @@ func (s *LocationService) GetLocationByID(id uint) (*models.Location, error) {
 	return &location, nil
 }
 
-func (s *LocationService) CreateLocation(req *locationtypes.CreateLocationRequest) (*models.Location, error) {
+func (s *LocationService) CreateLocation(req *locationdto.CreateLocationRequest) (*models.Location, error) {
 	slug := utils.ToSlug(req.Name)
 
 	// Check conflict
@@ -89,7 +89,7 @@ func (s *LocationService) CreateLocation(req *locationtypes.CreateLocationReques
 	return &location, nil
 }
 
-func (s *LocationService) UpdateLocation(id uint, req *locationtypes.UpdateLocationRequest) (*models.Location, error) {
+func (s *LocationService) UpdateLocation(id uint, req *locationdto.UpdateLocationRequest) (*models.Location, error) {
 	location, err := s.GetLocationByID(id)
 	if err != nil {
 		return nil, err

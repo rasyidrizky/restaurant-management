@@ -6,7 +6,7 @@ import (
 	"project-2026-06-misoastory-be-go/internal/common/dto"
 	"project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
-	producttypes "project-2026-06-misoastory-be-go/internal/modules/products/types"
+	productdto "project-2026-06-misoastory-be-go/internal/modules/products/dto"
 
 	"github.com/jinzhu/copier"
 	"gorm.io/gorm"
@@ -27,7 +27,7 @@ func NewProductService(db *gorm.DB) *ProductService {
 	return &ProductService{db: db}
 }
 
-func (s *ProductService) CreateProduct(req *producttypes.CreateProductRequest) (*models.Product, error) {
+func (s *ProductService) CreateProduct(req *productdto.CreateProductRequest) (*models.Product, error) {
 	slug := utils.ToSlug(req.Name)
 
 	var existing models.Product
@@ -71,7 +71,7 @@ func (s *ProductService) CreateProduct(req *producttypes.CreateProductRequest) (
 	return s.GetProductByID(product.ID)
 }
 
-func (s *ProductService) UpdateProduct(id uint, req *producttypes.UpdateProductRequest) (*models.Product, error) {
+func (s *ProductService) UpdateProduct(id uint, req *productdto.UpdateProductRequest) (*models.Product, error) {
 	product, err := s.GetProductByID(id)
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (s *ProductService) UpdateProduct(id uint, req *producttypes.UpdateProductR
 		product.Slug = newSlug
 	}
 
-	if err := copier.CopyWithOption(product, req, copier.Option{IgnoreEmpty: true, DeepCopy: true}); err != nil {
+	if err := copier.CopyWithOption(product, req, copier.Option{IgnoreEmpty: true}); err != nil {
 		return nil, err
 	}
 
@@ -126,7 +126,7 @@ func (s *ProductService) UpdateProduct(id uint, req *producttypes.UpdateProductR
 	return s.GetProductByID(product.ID)
 }
 
-func (s *ProductService) GetProducts(q *producttypes.ProductQuery) ([]models.Product, dto.Meta, error) {
+func (s *ProductService) GetProducts(q *productdto.ProductQuery) ([]models.Product, dto.Meta, error) {
 	var products []models.Product
 	var total int64
 

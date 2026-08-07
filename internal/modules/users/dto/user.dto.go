@@ -1,4 +1,4 @@
-package usertypes
+package dto
 
 import (
 	"project-2026-06-misoastory-be-go/internal/common/models"

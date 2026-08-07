@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"project-2026-06-misoastory-be-go/internal/common/middleware"
 	"project-2026-06-misoastory-be-go/internal/common/dto"
-	usertypes "project-2026-06-misoastory-be-go/internal/modules/users/types"
+	userdto "project-2026-06-misoastory-be-go/internal/modules/users/dto"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 
 	"github.com/gin-gonic/gin"
@@ -34,14 +34,14 @@ func (h *UserHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.Auth
 // @Param limit query int false "Page size"
 // @Param search query string false "Search term"
 // @Param sort query string false "Sort order"
-// @Success 200 {object} dto.PaginatedResponse[[]usertypes.UserResponse]
+// @Success 200 {object} dto.PaginatedResponse[[]userdto.UserResponse]
 // @Failure 401 {object} dto.ErrorResponse
 // @Failure 403 {object} dto.ErrorResponse
 // @Failure 500 {object} dto.ErrorResponse
 // @Router /users [get]
 // @Security BearerAuth
 func (h *UserHandler) GetUsers(c *gin.Context) {
-	var req usertypes.GetAllUsersRequest
+	var req userdto.GetAllUsersRequest
 	if err := c.ShouldBindQuery(&req); err != nil {
 		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid query parameters", err))
 		return
@@ -53,7 +53,7 @@ func (h *UserHandler) GetUsers(c *gin.Context) {
 		return
 	}
 
-	utils.SuccessPaginatedResponse(c, http.StatusOK, "Users retrieved successfully", usertypes.MapToUserResponses(users), meta)
+	utils.SuccessPaginatedResponse(c, http.StatusOK, "Users retrieved successfully", userdto.MapToUserResponses(users), meta)
 }
 
 var _ dto.Response[any]

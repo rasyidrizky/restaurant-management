@@ -10,7 +10,7 @@ import (
 	"project-2026-06-misoastory-be-go/internal/common/dto"
 	"project-2026-06-misoastory-be-go/internal/common/middleware"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
-	producttypes "project-2026-06-misoastory-be-go/internal/modules/products/types"
+	productdto "project-2026-06-misoastory-be-go/internal/modules/products/dto"
 )
 
 // ProductHandler processes HTTP requests for Products.
@@ -46,11 +46,11 @@ func (h *ProductHandler) RegisterRoutes(router *gin.RouterGroup, m *middleware.A
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Param request body producttypes.CreateProductRequest true "Product data"
-// @Success 201 {object} dto.Response[producttypes.ProductResponse]
+// @Param request body productdto.CreateProductRequest true "Product data"
+// @Success 201 {object} dto.Response[productdto.ProductResponse]
 // @Router /api/v1/products [post]
 func (h *ProductHandler) CreateProduct(c *gin.Context) {
-	var req producttypes.CreateProductRequest
+	var req productdto.CreateProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
@@ -66,7 +66,7 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(c, http.StatusCreated, "Product created successfully", producttypes.MapToProductResponse(product))
+	utils.SuccessResponse(c, http.StatusCreated, "Product created successfully", productdto.MapToProductResponse(product))
 }
 
 // FindAll godoc
@@ -81,10 +81,10 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 // @Param sort query string false "Sort order"
 // @Param categoryId query int false "Filter by category ID"
 // @Param locationId query int false "Filter by location ID"
-// @Success 200 {object} dto.PaginatedResponse[[]producttypes.ProductResponse]
+// @Success 200 {object} dto.PaginatedResponse[[]productdto.ProductResponse]
 // @Router /api/v1/products [get]
 func (h *ProductHandler) GetProducts(c *gin.Context) {
-	var q producttypes.ProductQuery
+	var q productdto.ProductQuery
 	if err := c.ShouldBindQuery(&q); err != nil {
 		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid query parameters", err))
 		return
@@ -96,7 +96,7 @@ func (h *ProductHandler) GetProducts(c *gin.Context) {
 		return
 	}
 
-	utils.SuccessPaginatedResponse(c, http.StatusOK, "Products retrieved successfully", producttypes.MapToProductResponses(products), meta)
+	utils.SuccessPaginatedResponse(c, http.StatusOK, "Products retrieved successfully", productdto.MapToProductResponses(products), meta)
 }
 
 // FindOne godoc
@@ -106,7 +106,7 @@ func (h *ProductHandler) GetProducts(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "Product ID"
-// @Success 200 {object} dto.Response[producttypes.ProductResponse]
+// @Success 200 {object} dto.Response[productdto.ProductResponse]
 // @Router /api/v1/products/{id} [get]
 func (h *ProductHandler) GetProductByID(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
@@ -125,7 +125,7 @@ func (h *ProductHandler) GetProductByID(c *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(c, http.StatusOK, "Product retrieved successfully", producttypes.MapToProductResponse(product))
+	utils.SuccessResponse(c, http.StatusOK, "Product retrieved successfully", productdto.MapToProductResponse(product))
 }
 
 // Update godoc
@@ -136,8 +136,8 @@ func (h *ProductHandler) GetProductByID(c *gin.Context) {
 // @Produce json
 // @Security BearerAuth
 // @Param id path int true "Product ID"
-// @Param request body producttypes.UpdateProductRequest true "Updated data"
-// @Success 200 {object} dto.Response[producttypes.ProductResponse]
+// @Param request body productdto.UpdateProductRequest true "Updated data"
+// @Success 200 {object} dto.Response[productdto.ProductResponse]
 // @Router /api/v1/products/{id} [patch]
 func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
@@ -146,7 +146,7 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 		return
 	}
 
-	var req producttypes.UpdateProductRequest
+	var req productdto.UpdateProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.Error(utils.NewAppError(http.StatusBadRequest, "Invalid request payload", err))
 		return
@@ -166,7 +166,7 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 		return
 	}
 
-	utils.SuccessResponse(c, http.StatusOK, "Product updated successfully", producttypes.MapToProductResponse(product))
+	utils.SuccessResponse(c, http.StatusOK, "Product updated successfully", productdto.MapToProductResponse(product))
 }
 
 // Delete godoc

@@ -6,7 +6,7 @@ import (
 	"project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/dto"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
-	usertypes "project-2026-06-misoastory-be-go/internal/modules/users/types"
+	userdto "project-2026-06-misoastory-be-go/internal/modules/users/dto"
 )
 
 // UserService handles business logic for Users
@@ -21,7 +21,7 @@ func NewUserService(db *gorm.DB) *UserService {
 	}
 }
 
-func (s *UserService) GetUsers(req *usertypes.GetAllUsersRequest) ([]models.User, dto.Meta, error) {
+func (s *UserService) GetUsers(req *userdto.GetAllUsersRequest) ([]models.User, dto.Meta, error) {
 	var users []models.User
 	var total int64
 	if s.db == nil {

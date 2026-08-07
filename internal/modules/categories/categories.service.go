@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"project-2026-06-misoastory-be-go/internal/common/dto"
-	categorytypes "project-2026-06-misoastory-be-go/internal/modules/categories/types"
+	categorydto "project-2026-06-misoastory-be-go/internal/modules/categories/dto"
 	"project-2026-06-misoastory-be-go/internal/common/models"
 	"project-2026-06-misoastory-be-go/internal/common/utils"
 
@@ -30,7 +30,7 @@ func NewCategoryService(db *gorm.DB) *CategoryService {
 	}
 }
 
-func (s *CategoryService) GetAllCategories(req *categorytypes.GetAllCategoriesRequest) ([]models.Category, dto.Meta, error) {
+func (s *CategoryService) GetAllCategories(req *categorydto.GetAllCategoriesRequest) ([]models.Category, dto.Meta, error) {
 	var categories []models.Category
 	var total int64
 	query := s.db.Model(&models.Category{})
@@ -68,7 +68,7 @@ func (s *CategoryService) GetCategoryByID(id uint) (*models.Category, error) {
 	return &category, nil
 }
 
-func (s *CategoryService) CreateCategory(req *categorytypes.CreateCategoryRequest) (*models.Category, error) {
+func (s *CategoryService) CreateCategory(req *categorydto.CreateCategoryRequest) (*models.Category, error) {
 	slug := utils.ToSlug(req.Name)
 
 	// Check if slug exists
@@ -95,7 +95,7 @@ func (s *CategoryService) CreateCategory(req *categorytypes.CreateCategoryReques
 	return &category, nil
 }
 
-func (s *CategoryService) UpdateCategory(id uint, req *categorytypes.UpdateCategoryRequest) (*models.Category, error) {
+func (s *CategoryService) UpdateCategory(id uint, req *categorydto.UpdateCategoryRequest) (*models.Category, error) {
 	category, err := s.GetCategoryByID(id)
 	if err != nil {
 		return nil, err
